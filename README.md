@@ -1,1 +1,1 @@
-# scrabbleJava
+# Scrabble
