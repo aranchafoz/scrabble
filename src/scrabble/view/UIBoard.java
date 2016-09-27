@@ -27,8 +27,12 @@ public class UIBoard extends UIObject {
     }
 
     @Override
-    public boolean receiveInput() {
-        return false;
+    public boolean receiveInput(Point p) {
+        if (super.receiveInput(p)) {
+
+            return true;
+        } else
+            return false;
     }
 
     @Override

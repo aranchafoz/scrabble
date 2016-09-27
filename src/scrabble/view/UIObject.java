@@ -1,5 +1,7 @@
 package scrabble.view;
 
+import scrabble.exceptions.OccupiedCellException;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -33,6 +35,9 @@ public abstract class UIObject {
         g.drawImage(image, x, y, context);
     }
 
+    public boolean receiveInput(Point p) throws OccupiedCellException {
+        return p.x > x && p.x < x + w && p.y > y && p.y < y + h;
+    }
+
     abstract public void update();
-    abstract public boolean receiveInput();
 }
