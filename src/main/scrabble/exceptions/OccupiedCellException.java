@@ -1,6 +1,6 @@
-package scrabble.exceptions;
+package main.scrabble.exceptions;
 
-import scrabble.model.Cell;
+import main.scrabble.model.Cell;
 
 /**
  * Created by enrique on 27/09/16.

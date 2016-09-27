@@ -1,4 +1,4 @@
-package scrabble.model;
+package main.scrabble.model;
 
 /**
  * Created by enrique on 27/09/16.

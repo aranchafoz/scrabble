@@ -1,4 +1,4 @@
-package scrabble.view;
+package main.scrabble.view;
 
 import javax.swing.*;
 import java.awt.*;

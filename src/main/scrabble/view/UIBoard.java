@@ -1,6 +1,4 @@
-package scrabble.view;
-
-import javafx.scene.control.Cell;
+package main.scrabble.view;
 
 import javax.swing.*;
 import java.awt.*;

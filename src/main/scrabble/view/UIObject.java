@@ -1,6 +1,6 @@
-package scrabble.view;
+package main.scrabble.view;
 
-import scrabble.exceptions.OccupiedCellException;
+import main.scrabble.exceptions.OccupiedCellException;
 
 import javax.swing.*;
 import java.awt.*;

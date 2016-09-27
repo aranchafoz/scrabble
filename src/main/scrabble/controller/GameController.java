@@ -1,12 +1,11 @@
-package scrabble.controller;
+package main.scrabble.controller;
 
-import scrabble.model.Game;
-import scrabble.view.*;
+import main.scrabble.model.Game;
+import main.scrabble.view.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

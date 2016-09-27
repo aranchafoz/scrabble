@@ -1,10 +1,10 @@
-package scrabble.view;
+package main.scrabble.view;
 
 /**
  * Created by enrique on 27/09/16.
  */
-public class UIPiece extends UIObject {
-    public UIPiece(int x, int y) {
+public class UIPlayer extends UIObject {
+    public UIPlayer(int x, int y) {
         super(x, y);
     }
 

@@ -1,4 +1,4 @@
-package scrabble.controller;
+package main.scrabble.controller;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

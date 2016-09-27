@@ -1,7 +1,7 @@
-package scrabble.view;
+package main.scrabble.view;
 
 import javafx.scene.control.Cell;
-import scrabble.exceptions.OccupiedCellException;
+import main.scrabble.exceptions.OccupiedCellException;
 
 import java.awt.*;
 

@@ -1,4 +1,4 @@
-package scrabble.model;
+package main.scrabble.model;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
