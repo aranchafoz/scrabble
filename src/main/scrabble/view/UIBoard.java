@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Created by enrique on 27/09/16.
- */
+ *//*
 public class UIBoard extends UIObject {
     private Board board;
     private ArrayList<UICell> cells;
@@ -38,3 +38,4 @@ public class UIBoard extends UIObject {
 
     }
 }
+*/

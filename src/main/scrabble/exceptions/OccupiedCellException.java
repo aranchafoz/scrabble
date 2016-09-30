@@ -11,9 +11,9 @@ public class OccupiedCellException extends Exception {
     public OccupiedCellException(Cell cell) {
         this.cell = cell;
     }
-
+/*
     @Override
     public String getMessage() {
         return "Error, the cell " + cell.toString() + " is occupied by " + cell.getPiece().toString();
-    }
+    }*/
 }

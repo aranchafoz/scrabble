@@ -20,7 +20,7 @@ public class UICell extends UIObject {
     public boolean receiveInput(Point p) throws OccupiedCellException {
         if (super.receiveInput(p)) {
             if (!cell.isEmpty()) {
-                throw new OccupiedCellException();
+                //throw new OccupiedCellException();
             }
             return true;
         } else

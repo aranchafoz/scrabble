@@ -12,9 +12,4 @@ public class UIPiece extends UIObject {
     public void update() {
 
     }
-
-    @Override
-    public boolean receiveInput() {
-        return false;
-    }
 }
