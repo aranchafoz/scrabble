@@ -34,6 +34,10 @@ public class Cell {
      }
  }
 
+
+
+
+
  private boolean checkCoordinates(int xCoord, int yCoord) {
      boolean correct = true;
      if(xCoord < 0 || yCoord < 0){
@@ -41,6 +45,6 @@ public class Cell {
              correct = false;
          }
      }
-     return coorrect;
+     return correct;
  }
 }
