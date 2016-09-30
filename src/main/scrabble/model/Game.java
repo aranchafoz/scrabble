@@ -11,13 +11,13 @@ public class Game {
 
     private ArrayList<Player> players;
     private Board board;
-    private Bag bag;
+    //private Bag bag;
 
     public Game(ArrayList<Player> players) {
         this.players = players;
 
         board = new Board();
-        bag = new Bag();
+        //bag = new Bag();
 
         round = 0;
         turn = (new Random()).nextInt(players.size());
@@ -30,16 +30,17 @@ public class Game {
         }
         return player;
     }
-
+/*
     public int playTurn(Word word) {
         return board.insertWord(word);
     }
-
+*/
     public Piece playTurn(Piece piece) {
 
+        return new Piece();
     }
-
+/*
     public ArrayList<Players> getPlayers() {
         return players;
-    }
+    }*/
 }

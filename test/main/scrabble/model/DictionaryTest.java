@@ -23,4 +23,9 @@ public class DictionaryTest {
         assertFalse(dic.existWord("alsjkdnf"));
     }
 
+    @Test
+    public void wordFits() throws Exception {
+        assertTrue(dic.wordFits("asdf", "fdsa"));
+    }
+
 }

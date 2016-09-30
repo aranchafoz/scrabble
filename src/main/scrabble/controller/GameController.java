@@ -55,7 +55,7 @@ public class GameController extends JFrame {
 
         state = GameState.menu;
 
-        game = new Game();
+        //game = new Game();
         background = new UIBackground();
         board = new UIBoard();
 
@@ -91,9 +91,9 @@ public class GameController extends JFrame {
     private void update() {
         Point mouseClick = inputHandler.getInputs();
         if (mouseClick != null) {
-            if ()
-            rack.receiveInput();
-            board.receiveInput(mouseClick);
+
+            //rack.receiveInput();
+            //board.receiveInput(mouseClick);
 
             //x = mouseClick.getX();
             //y = mouseClick.getY();
