@@ -30,7 +30,7 @@ public class GameController extends JFrame {
     private InputHandler inputHandler;
     private ArrayList<UIPiece> playedPieces;
     private ArrayList<UIPiece> tempPieces; // Pieces in the board but not yet played
-    //private UIBoard board; // The board already includes all cells
+    private UIBoard board; // The board already includes all cells
     private UIRack rack; // The rack already includes the player's pieces
     private ArrayList<UIPlayer> players;
 

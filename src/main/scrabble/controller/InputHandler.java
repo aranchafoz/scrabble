@@ -1,4 +1,4 @@
-package test.scrabble.model.scrabble.controller;
+package main.scrabble.controller;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -7,7 +7,7 @@ import java.awt.event.MouseListener;
 /**
  * Created by enrique on 26/09/16.
  */
-class InputHandler implements MouseListener {
+public class InputHandler implements MouseListener {
     private Point lastClick;
 
     @Override
