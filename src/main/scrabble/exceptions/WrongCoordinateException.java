@@ -1,4 +1,4 @@
-package test.scrabble.model.scrabble.exceptions;
+package main.scrabble.exceptions;
 
 /**
  * Created by Ivorra on 30/09/16.
@@ -14,6 +14,6 @@ public class WrongCoordinateException extends Exception {
 
     @Override
     public String getMessage() {
-        return "Error, the coordinates " + String.valueOf(x) + "," + String.valueOf(y) " are incorrect";
+        return "Error, the coordinates " + String.valueOf(x) + "," + String.valueOf(y) + " are incorrect";
     }
 }
