@@ -19,7 +19,7 @@ public class Cell {
             this.y = y;
 //            this.type = type;
         } else {
-            //throw new WrongCoordinateException(x, y);
+            throw new WrongCoordinateException(x, y);
         }
     }
     //Getters
@@ -44,22 +44,22 @@ public class Cell {
         return type;
     }
 */
+    public boolean isEmpty() {
+        boolean empty = false;
+        if(piece == null){
+            empty = true;
+        }
+        return empty;
+    }
     @Override
     public String toString() {
-        return Integer.toString(x + 'A') + Integer.toString(y);
+        return Integer.toString(x + 'A') + Integer.toString(y + 1);
     }
 
-    /*
-     @Override
-     public String toString() {
-         String s =  String.valueOf(x) + String.valueOf(y);
-         return s;
-     }
-    */
-    private boolean checkCoordinates(int xCoord, int yCoord) {
+    public boolean checkCoordinates(int xCoord, int yCoord) {
         boolean correct = true;
-        if(xCoord < 'A' || yCoord < 1){
-            if(xCoord > 'O' || yCoord > 15) {
+        if(xCoord < 0 || yCoord < 0){
+            if(xCoord > 14 || yCoord > 14) {
                 correct = false;
             }
         }
