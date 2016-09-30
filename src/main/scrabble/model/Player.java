@@ -1,4 +1,4 @@
-package test.scrabble.model.scrabble.model;
+package main.scrabble.model;
 
 
 public class Player {
