@@ -1,6 +1,7 @@
 package main.scrabble.controller;
 
 import main.scrabble.model.Game;
+import main.scrabble.model.Piece;
 import main.scrabble.view.*;
 
 import javax.swing.*;
@@ -28,12 +29,17 @@ public class GameController extends JFrame {
 
     private InputHandler inputHandler;
 
+    private UIPiece selectedPiece;
+
     private UIBackground background;
     private ArrayList<UIPiece> playedPieces;
     private ArrayList<UIPiece> tempPieces; // Pieces in the board but not yet played
     private UIBoard board; // The board already includes all cells
     private UIRack rack; // The rack already includes the player's pieces
     private ArrayList<UIPlayer> players;
+
+    private UIButton play;
+    private UIButton mix;
 
     public GameController() {
         setTitle(WINDOW_TITLE);
@@ -85,6 +91,7 @@ public class GameController extends JFrame {
     private void update() {
         Point mouseClick = inputHandler.getInputs();
         if (mouseClick != null) {
+            if ()
             rack.receiveInput();
             board.receiveInput(mouseClick);
 

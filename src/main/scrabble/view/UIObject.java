@@ -31,6 +31,11 @@ public abstract class UIObject {
         this.y = y;
     }
 
+    public int getX() { return x; }
+    public int getY() { return y; }
+    public int getW() { return w; }
+    public int getH() { return h; }
+
     public void draw(Graphics g, JFrame context) {
         g.drawImage(image, x, y, context);
     }

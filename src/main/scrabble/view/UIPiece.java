@@ -1,6 +1,8 @@
 package main.scrabble.view;
 
 
+import main.scrabble.model.Piece;
+
 /**
  * Created by enrique on 27/09/16.
  */

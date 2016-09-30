@@ -1,6 +1,5 @@
 package main.scrabble.model;
 
-import com.sun.org.apache.xpath.internal.operations.String;
 import main.scrabble.exceptions.*;
 
 /**
