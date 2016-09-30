@@ -27,9 +27,4 @@ public class UIRack extends UIObject {
             piece.draw(g, context);
     }
 
-    @Override
-    public void update() {
-
-    }
-
 }

@@ -39,5 +39,4 @@ public abstract class UIObject {
         return p.x > x && p.x < x + w && p.y > y && p.y < y + h;
     }
 
-    abstract public void update();
 }

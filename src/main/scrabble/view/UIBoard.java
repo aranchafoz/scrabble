@@ -38,8 +38,4 @@ public class UIBoard extends UIObject {
             return false;
     }
 
-    @Override
-    public void update() {
-
-    }
 }

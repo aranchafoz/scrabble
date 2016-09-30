@@ -9,8 +9,4 @@ public class UIPiece extends UIObject {
         super(x, y);
     }
 
-    @Override
-    public void update() {
-
-    }
 }

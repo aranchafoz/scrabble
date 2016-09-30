@@ -8,8 +8,4 @@ public class UIMainMenu extends UIObject {
         super(x, y);
     }
 
-    @Override
-    public void update() {
-
-    }
 }

@@ -27,8 +27,4 @@ public class UICell extends UIObject {
             return false;
     }
 
-    @Override
-    public void update() {
-
-    }
 }
