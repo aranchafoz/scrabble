@@ -4,10 +4,10 @@ package main.scrabble.exceptions;
  * Created by Ivorra on 30/09/16.
  */
 public class WrongCoordinateException extends Exception {
-    private int x;
+    private char x;
     private int y;
 
-    public WrongCoordinateException(int x, int y) {
+    public WrongCoordinateException(char x, int y) {
         this.x = x;
         this.y = y;
     }
