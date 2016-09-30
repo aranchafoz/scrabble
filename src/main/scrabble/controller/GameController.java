@@ -85,8 +85,13 @@ public class GameController extends JFrame {
     private void update() {
         Point mouseClick = inputHandler.getInputs();
         if (mouseClick != null) {
+            rack.receiveInput();
+            board.receiveInput(mouseClick);
+
             //x = mouseClick.getX();
             //y = mouseClick.getY();
+
+
         }
     }
 
@@ -115,6 +120,5 @@ public class GameController extends JFrame {
         }
 
         g.drawImage(buffer, 0, 0, this);
-
     }
 }
