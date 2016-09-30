@@ -13,17 +13,18 @@ public class UIRack extends UIObject {
     public UIRack(int x, int y) {
         super(x, y);
     }
-/*
+
     public void setPieces(ArrayList<Piece> pieces) {
         for (Piece p : pieces) {
             pieces.add(new UIPiece(p));
         }
     }
-*/
+
     @Override
     public void draw(Graphics g, JFrame context) {
         super.draw(g, context);
-
+        for (UIPiece piece : pieces)
+            piece.draw(g, context);
     }
 
     @Override

@@ -24,18 +24,38 @@ public class GameController extends JFrame {
 
     private BufferedImage buffer;
 
-    private double x = 50;
-    private double y = 60;
+    private GameState state;
 
     private InputHandler inputHandler;
+
+    private UIBackground background;
     private ArrayList<UIPiece> playedPieces;
     private ArrayList<UIPiece> tempPieces; // Pieces in the board but not yet played
-    //private UIBoard board; // The board already includes all cells
+    private UIBoard board; // The board already includes all cells
     private UIRack rack; // The rack already includes the player's pieces
     private ArrayList<UIPlayer> players;
 
     public GameController() {
+        setTitle(WINDOW_TITLE);
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        setResizable(false);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setVisible(true);
+
+        buffer = new BufferedImage(WINDOW_WIDTH, WINDOW_HEIGHT, BufferedImage.TYPE_INT_RGB);
+
+        inputHandler = new InputHandler();
+        this.addMouseListener(inputHandler);
+
+        state = GameState.menu;
+
         game = new Game();
+        background = new UIBackground();
+        board = new UIBoard();
+
+
+        playedPieces = new ArrayList<>();
+        tempPieces = new ArrayList<>();
     }
 
     public static void main(String[] args) {
@@ -44,7 +64,6 @@ public class GameController extends JFrame {
     }
 
     private void run() {
-        initialize();
         while (isRunning) {
             long time = System.currentTimeMillis();
 
@@ -63,24 +82,11 @@ public class GameController extends JFrame {
         setVisible(false);
     }
 
-    private void initialize() {
-        setTitle(WINDOW_TITLE);
-        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        setResizable(false);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setVisible(true);
-
-        buffer = new BufferedImage(WINDOW_WIDTH, WINDOW_HEIGHT, BufferedImage.TYPE_INT_RGB);
-
-        inputHandler = new InputHandler();
-        this.addMouseListener(inputHandler);
-    }
-
     private void update() {
         Point mouseClick = inputHandler.getInputs();
         if (mouseClick != null) {
-            x = mouseClick.getX();
-            y = mouseClick.getY();
+            //x = mouseClick.getX();
+            //y = mouseClick.getY();
         }
     }
 
@@ -89,12 +95,24 @@ public class GameController extends JFrame {
         Graphics bg = buffer.getGraphics();
 
         // Draw the background
+        /*
         bg.setColor(Color.RED);
         bg.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
         bg.setColor(Color.BLACK);
         bg.fillOval((int)x - 10, (int)y - 10, 20, 20);
+        */
+        background.draw(bg, this);
+        board.draw(bg, this);
+        rack.draw(bg, this);
 
+        for (UIPiece piece : playedPieces)
+            piece.draw(bg, this);
+        for (UIPiece piece : tempPieces)
+            piece.draw(bg, this);
+        for (UIPlayer player : players) {
+            player.draw(bg, this);
+        }
 
         g.drawImage(buffer, 0, 0, this);
 

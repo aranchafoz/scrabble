@@ -1,7 +1,7 @@
 package main.scrabble.view;
 
-import javafx.scene.control.Cell;
-import main.scrabble.exceptions.OccupiedCellException;
+import main.scrabble.model.Cell;
+import main.scrabble.exceptions.*;
 
 import java.awt.*;
 
@@ -20,7 +20,7 @@ public class UICell extends UIObject {
     public boolean receiveInput(Point p) throws OccupiedCellException {
         if (super.receiveInput(p)) {
             if (!cell.isEmpty()) {
-                //throw new OccupiedCellException();
+                throw new OccupiedCellException(cell);
             }
             return true;
         } else

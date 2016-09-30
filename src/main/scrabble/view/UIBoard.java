@@ -1,12 +1,15 @@
 package main.scrabble.view;
 
+import main.scrabble.exceptions.OccupiedCellException;
+import main.scrabble.model.Board;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 /**
  * Created by enrique on 27/09/16.
- *//*
+ */
 public class UIBoard extends UIObject {
     private Board board;
     private ArrayList<UICell> cells;
@@ -21,11 +24,13 @@ public class UIBoard extends UIObject {
     public void draw(Graphics g, JFrame context) {
         super.draw(g, context);
 
+        for (UICell cell : cells)
+            cell.draw(g, context);
         // draw the board (super.draw) and all its cells
     }
 
     @Override
-    public boolean receiveInput(Point p) {
+    public boolean receiveInput(Point p) throws OccupiedCellException {
         if (super.receiveInput(p)) {
 
             return true;
@@ -38,4 +43,3 @@ public class UIBoard extends UIObject {
 
     }
 }
-*/
