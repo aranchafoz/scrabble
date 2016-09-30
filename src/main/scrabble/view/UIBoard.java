@@ -1,5 +1,6 @@
 package main.scrabble.view;
 
+import main.scrabble.exceptions.OccupiedCellException;
 import main.scrabble.model.Board;
 
 import javax.swing.*;
@@ -29,7 +30,7 @@ public class UIBoard extends UIObject {
     }
 
     @Override
-    public boolean receiveInput(Point p) {
+    public boolean receiveInput(Point p) throws OccupiedCellException {
         if (super.receiveInput(p)) {
 
             return true;
