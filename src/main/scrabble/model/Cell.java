@@ -58,11 +58,10 @@ public class Cell {
 
     public boolean checkCoordinates(int xCoord, int yCoord) {
         boolean correct = true;
-        if(xCoord < 0 || yCoord < 0){
-            if(xCoord > 14 || yCoord > 14) {
+        if(xCoord < 0 || yCoord < 0 || xCoord > 14 || yCoord > 14) {
                 correct = false;
             }
-        }
+
         return correct;
     }
 

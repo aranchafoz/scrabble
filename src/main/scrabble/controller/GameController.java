@@ -13,14 +13,11 @@ import java.util.ArrayList;
  * Created by enrique on 26/09/16.
  */
 public class GameController extends JFrame {
-    private Game game;
-
     private final int FPS = 60;
-
     private final String WINDOW_TITLE = "Scrabble";
     private final int WINDOW_HEIGHT = 1000;
     private final int WINDOW_WIDTH = 1000;
-
+    private Game game;
     private boolean isRunning = true;
 
     private BufferedImage buffer;
@@ -57,7 +54,7 @@ public class GameController extends JFrame {
 
         //game = new Game();
         background = new UIBackground();
-        board = new UIBoard();
+        board = null; //new UIBoard();
 
 
         playedPieces = new ArrayList<>();
