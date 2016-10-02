@@ -5,6 +5,9 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Random;
 
+import main.scrabble.exceptions.*;
+
+
 public class Game {
     private int round;
     private int turn;
@@ -13,7 +16,7 @@ public class Game {
     private Board board;
     //private Bag bag;
 
-    public Game(ArrayList<Player> players) {
+    public Game(ArrayList<Player> players) throws WrongCoordinateException{
         this.players = players;
 
         board = new Board();
