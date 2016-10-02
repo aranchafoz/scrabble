@@ -14,6 +14,6 @@ public class WrongCoordinateException extends Exception {
 
     @Override
     public String getMessage() {
-        return "Error, the coordinates " + Integer.toString(x + 'A') + "," + (y + 1) + " are incorrect";
+        return "Error, the coordinate " + (char)(x + 'A') + (y + 1) + " are incorrect";
     }
 }

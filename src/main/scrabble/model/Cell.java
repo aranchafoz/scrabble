@@ -11,13 +11,13 @@ public class Cell {
     private Piece piece;
     private int x;
     private int y;
-//    private CellType type;
+    private CellType type;
 
-    public Cell(int x, int y/*, CellType type*/) throws WrongCoordinateException {
+    public Cell(int x, int y, CellType type) throws WrongCoordinateException {
         if (checkCoordinates(x, y)) {
             this.x = x;
             this.y = y;
-//            this.type = type;
+            this.type = type;
         } else {
             throw new WrongCoordinateException(x, y);
         }
@@ -39,11 +39,11 @@ public class Cell {
     public int getY() {
         return y;
     }
-/*
+
     public CellType getType() {
         return type;
     }
-*/
+
     public boolean isEmpty() {
         boolean empty = false;
         if(piece == null){
