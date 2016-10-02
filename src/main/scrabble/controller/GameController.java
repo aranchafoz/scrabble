@@ -1,5 +1,7 @@
 package main.scrabble.controller;
 
+import main.scrabble.exceptions.WrongCoordinateException;
+import main.scrabble.model.Board;
 import main.scrabble.model.Game;
 import main.scrabble.model.Piece;
 import main.scrabble.view.*;
@@ -38,7 +40,7 @@ public class GameController extends JFrame {
     private UIButton play;
     private UIButton mix;
 
-    public GameController() {
+    public GameController() throws WrongCoordinateException {
         setTitle(WINDOW_TITLE);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setResizable(false);
@@ -53,15 +55,16 @@ public class GameController extends JFrame {
         state = GameState.menu;
 
         //game = new Game();
-        background = new UIBackground();
-        board = null; //new UIBoard();
+        background = new UIBackground(WINDOW_WIDTH, WINDOW_HEIGHT);
+        Board b = new Board();
+        board = new UIBoard(50, 100, 703, b); //game.getBoard); // 675 for 15 cells of 45 + 28 for 14 lines of 2
 
 
         playedPieces = new ArrayList<>();
         tempPieces = new ArrayList<>();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws WrongCoordinateException {
         GameController g = new GameController();
         g.run();
     }
@@ -113,8 +116,8 @@ public class GameController extends JFrame {
         */
         background.draw(bg, this);
         board.draw(bg, this);
-        rack.draw(bg, this);
-
+//        rack.draw(bg, this);
+/*
         for (UIPiece piece : playedPieces)
             piece.draw(bg, this);
         for (UIPiece piece : tempPieces)
@@ -122,7 +125,7 @@ public class GameController extends JFrame {
         for (UIPlayer player : players) {
             player.draw(bg, this);
         }
-
+*/
         g.drawImage(buffer, 0, 0, this);
     }
 }

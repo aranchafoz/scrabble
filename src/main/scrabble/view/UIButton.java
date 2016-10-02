@@ -9,10 +9,12 @@ import java.awt.*;
  */
 public class UIButton extends UIObject {
     private String text;
+    private String image;
 
     public UIButton(int x, int y, String text) {
         super(x, y);
         this.text = text;
+        setImage(text);
     }
 
     public boolean isPressed(Point p) throws OccupiedCellException {
@@ -20,5 +22,9 @@ public class UIButton extends UIObject {
             return true;
         else
             return false;
+    }
+
+    private void setImage(String text) {
+
     }
 }
