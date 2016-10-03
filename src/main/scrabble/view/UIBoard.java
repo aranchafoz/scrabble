@@ -25,7 +25,7 @@ public class UIBoard extends UIObject {
 
         for(int i = 0; i<15; i++) {
             for(int j = 0; j<15; j++) {
-                UICell cell = new UICell(x + i * 47, y + j * 47, 45, b.getCell(i+1,j+1));
+                UICell cell = new UICell(x + i * 59, y + j * 59, 57, b.getCell(i+1,j+1));
                 cells.add(cell);
             }
         }

@@ -57,7 +57,7 @@ public class GameController extends JFrame {
         //game = new Game();
         background = new UIBackground(WINDOW_WIDTH, WINDOW_HEIGHT);
         Board b = new Board();
-        board = new UIBoard(50, 100, 703, b); //game.getBoard); // 675 for 15 cells of 45 + 28 for 14 lines of 2
+        board = new UIBoard(50, 75, 883, b); //game.getBoard); // 675 for 15 cells of 45 + 28 for 14 lines of 2
 
 
         playedPieces = new ArrayList<>();
