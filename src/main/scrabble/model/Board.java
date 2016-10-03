@@ -19,15 +19,15 @@ public class Board {
         for(int i = 0; i < DIM; i++) {
             for(int j = 0; j < DIM; j++) {
                 if(fillTW(i,j)) {
-                    matrix[i][j] = new Cell(i, j , CellType.tw);
+                    matrix[i][j] = new Cell(i, j , CellType.TRIPLE_WORD);
                 } else if (fillTL(i,j)) {
-                    matrix[i][j] = new Cell(i, j , CellType.tl);
+                    matrix[i][j] = new Cell(i, j , CellType.TRIPLE_LETTER);
                 } else if(fillDW(i,j)) {
-                    matrix[i][j] = new Cell(i, j , CellType.dw);
+                    matrix[i][j] = new Cell(i, j , CellType.DOUBLE_WORD);
                 } else if(fillDL(i,j)) {
-                    matrix[i][j] = new Cell(i, j , CellType.dl);
+                    matrix[i][j] = new Cell(i, j , CellType.DOUBLE_LETTER);
                 } else {
-                    matrix[i][j] = new Cell(i, j , CellType.plain);
+                    matrix[i][j] = new Cell(i, j , CellType.PLAIN);
                 }
             }
         }
