@@ -19,6 +19,16 @@ public class UIBoard extends UIObject {
         w = sideWidth;
         h = sideWidth;
         // Receive board and create the UICell array from it
+        board = b;
+
+        cells = new ArrayList<UICell>();
+
+        for(int i = 0; i<15; i++) {
+            for(int j = 0; j<15; j++) {
+                UICell cell = new UICell(x + i * 47, y + j * 47, 45, b.getCell(i+1,j+1));
+                cells.add(cell);
+            }
+        }
     }
 
     @Override
@@ -32,7 +42,7 @@ public class UIBoard extends UIObject {
         g2.setStroke(in);
         g2.setColor(Color.white);
         g2.drawRect(x-3,y-3,w+6,h+6);
-        g2.setColor(Color.GREEN);
+        g2.setColor(Color.white);
         g2.fillRect(x,y,w,h);
         BasicStroke mid = new BasicStroke(2f);
         g2.setStroke(mid);
@@ -43,8 +53,8 @@ public class UIBoard extends UIObject {
         g2.setColor(Color.white);
         g2.drawRect(x-12,y-12,w+24,h+24);
 
-       /* for (UICell cell : cells)
-            cell.draw(g, context); */
+        for (UICell cell : cells)
+            cell.draw(g, context);
     }
 
     @Override

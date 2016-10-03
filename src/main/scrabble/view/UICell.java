@@ -2,7 +2,9 @@ package main.scrabble.view;
 
 import main.scrabble.model.Cell;
 import main.scrabble.exceptions.*;
+import main.scrabble.model.CellType;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -11,9 +13,13 @@ import java.awt.*;
 public class UICell extends UIObject {
     private Cell cell;
 
-    public UICell(int x, int y, Cell cell) {
+    public UICell(int x, int y, int sideWidth, Cell cell) {
         super(x, y);
+        w =  sideWidth;
+        h = sideWidth;
         this.cell = cell;
+
+        setImage(this.cell.getType());
     }
 
     @Override
@@ -27,4 +33,31 @@ public class UICell extends UIObject {
             return false;
     }
 
+    @Override
+    public void draw(Graphics g, JFrame context) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(Color.blue);
+        g2.fillRect(x,y,w,h);
+    }
+
+    public void setImage(CellType type) {
+
+        switch (type) {
+            case plain:
+                //this.image = image;
+                break;
+            case dl:
+                //this.image = image;
+                break;
+            case tl:
+                //this.image = image;
+                break;
+            case dw:
+                //this.image = image;
+                break;
+            case tw:
+                //this.image = image;
+                break;
+        }
+    }
 }

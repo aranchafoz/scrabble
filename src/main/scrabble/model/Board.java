@@ -93,7 +93,10 @@ public class Board {
         return fill;
     }
 
-
+    public Cell getCell(int x, int y) {
+        Cell cell = new Cell(matrix[x-1][y-1]);
+        return cell;
+    }
 
 }
 

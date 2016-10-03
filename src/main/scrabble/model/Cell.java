@@ -22,6 +22,14 @@ public class Cell {
             throw new WrongCoordinateException(x, y);
         }
     }
+
+    public Cell(Cell c) {
+        setPiece(c.getPiece());
+        x = c.getX();
+        y = c.getY();
+        type = c.getType();
+    }
+
     //Getters
     public Piece getPiece() {
         return piece;
