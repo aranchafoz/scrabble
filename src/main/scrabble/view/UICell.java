@@ -61,7 +61,7 @@ public class UICell extends UIObject {
     public void setImage(CellType type) throws IOException {
 
         switch (type) {
-            case plain:
+            case PLAIN:
                 //this.image = image;
                 /*BufferedImage img = null;
                 try {
@@ -74,16 +74,16 @@ public class UICell extends UIObject {
                 //g.drawImage(img,0,0,null);
                 //g.drawImage(image, x, y, context);
                 break;
-            case dl:
+            case DOUBLE_LETTER:
                 //this.image = image;
                 break;
-            case tl:
+            case TRIPLE_LETTER:
                 //this.image = image;
                 break;
-            case dw:
+            case DOUBLE_WORD:
                 //this.image = image;
                 break;
-            case tw:
+            case TRIPLE_WORD:
                 //this.image = image;
                 break;
         }

@@ -1,12 +1,25 @@
 package main.scrabble.model;
 
-/**
- * Created by ivorra on 02/10/16.
- */
 public enum CellType {
-    plain,
-    dl,
-    tl,
-    dw,
-    tw
+	PLAIN 			(1),
+	DOUBLE_LETTER 	(2),
+	TRIPLE_LETTER 	(3),
+	DOUBLE_WORD 	(2),
+	TRIPLE_WORD 	(3);
+	
+	private final int multiplier;
+	CellType(int multiplier){
+		this.multiplier = multiplier;
+	}
+
+	public static void main(String[] args) {
+		for (CellType x : CellType.values()){
+			System.out.printf("A %s cell has a multiplier of %d.%n", x, x.multiplier());
+		}
+
+	}
+
+	private int multiplier(){
+		return multiplier;
+	}
 }

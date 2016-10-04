@@ -15,7 +15,7 @@ public class CellTest {
 
     @Before
     public void initialize() throws WrongCoordinateException{
-        cell = new Cell(1, 2, CellType.plain);
+        cell = new Cell(1, 2, CellType.PLAIN);
         exc = new WrongCoordinateException(9,4);
     }
 
