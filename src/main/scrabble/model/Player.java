@@ -1,8 +1,12 @@
 package main.scrabble.model;
 
 
+import main.scrabble.exceptions.NoPiecesInBagException;
+
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public class Player {
     private final int RACK_SIZE = 7;
@@ -23,6 +27,10 @@ public class Player {
         return punctuation;
     }
 
+    public ArrayList<Piece> getPieces() {
+        return pieces;
+    }
+
     public boolean rackFilled() {
         return pieces.size() >= RACK_SIZE;
     }
@@ -33,5 +41,14 @@ public class Player {
 
     public void removePiece(Piece piece) {
         pieces.remove(piece);
+    }
+
+    public void mixPieces() {
+        Collections.shuffle(pieces, new Random(System.nanoTime()));
+    }
+
+    public void fillRack(Bag bag) throws NoPiecesInBagException {
+        while (!rackFilled())
+            addPiece(bag.takePiece());
     }
 }

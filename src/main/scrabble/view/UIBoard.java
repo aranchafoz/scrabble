@@ -2,6 +2,7 @@ package main.scrabble.view;
 
 import main.scrabble.exceptions.OccupiedCellException;
 import main.scrabble.model.Board;
+import main.scrabble.model.Cell;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,13 +58,10 @@ public class UIBoard extends UIObject {
             cell.draw(g, context);
     }
 
-    @Override
-    public boolean receiveInput(Point p) throws OccupiedCellException {
-        if (super.receiveInput(p)) {
+    public Cell getSelectedCell(Point p) {
+        int h = (int) ((p.x - x) / (w / 15f));
+        int v = (int) ((p.y - y) / (h / 15f));
 
-            return true;
-        } else
-            return false;
+        return cells.get(h + v * 15).getcell();
     }
-
 }

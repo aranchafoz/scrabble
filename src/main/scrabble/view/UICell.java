@@ -31,12 +31,17 @@ public class UICell extends UIObject {
         //setImage(this.cell.getType());
     }
 
+    public Cell getcell() {
+        return cell;
+    }
+
     @Override
     public boolean receiveInput(Point p) throws OccupiedCellException {
         if (super.receiveInput(p)) {
+            /*
             if (!cell.isEmpty()) {
                 throw new OccupiedCellException(cell);
-            }
+            }*/
             return true;
         } else
             return false;

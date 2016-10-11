@@ -1,9 +1,11 @@
 package main.scrabble.controller;
 
+import main.scrabble.exceptions.NoPiecesInBagException;
+import main.scrabble.exceptions.OccupiedCellException;
 import main.scrabble.exceptions.WrongCoordinateException;
 import main.scrabble.model.Board;
 import main.scrabble.model.Game;
-import main.scrabble.model.Piece;
+import main.scrabble.model.Player;
 import main.scrabble.view.*;
 
 import javax.swing.*;
@@ -15,11 +17,15 @@ import java.util.ArrayList;
  * Created by enrique on 26/09/16.
  */
 public class GameController extends JFrame {
+    private Game game;
+    private Player currentPlayer;
+
     private final int FPS = 60;
+
     private final String WINDOW_TITLE = "Scrabble";
     private final int WINDOW_HEIGHT = 1000;
     private final int WINDOW_WIDTH = 1000;
-    private Game game;
+
     private boolean isRunning = true;
 
     private BufferedImage buffer;
@@ -39,6 +45,8 @@ public class GameController extends JFrame {
 
     private UIButton play;
     private UIButton mix;
+    private UIButton change;
+    private UIButton cancel;
 
     public GameController() throws WrongCoordinateException {
         setTitle(WINDOW_TITLE);
@@ -70,6 +78,7 @@ public class GameController extends JFrame {
     }
 
     private void run() {
+        newTurn();
         while (isRunning) {
             long time = System.currentTimeMillis();
 
@@ -88,17 +97,45 @@ public class GameController extends JFrame {
         setVisible(false);
     }
 
-    private void update() {
+    private void update() throws OccupiedCellException, NoPiecesInBagException {
+
         Point mouseClick = inputHandler.getInputs();
         if (mouseClick != null) {
 
-            //rack.receiveInput();
-            //board.receiveInput(mouseClick);
 
-            //x = mouseClick.getX();
-            //y = mouseClick.getY();
+            if (rack.receiveInput(mouseClick)){
+                selectedPiece = rack.getSelectedPiece(mouseClick);
+            } else {
+                if (board.receiveInput(mouseClick)) {
 
+                    /**
+                     * TODO
+                     * if (selectedPiece)
+                     *  take the piece from the rake and put it in the
+                     */
 
+                } else if (play.isPressed(mouseClick)) {
+                    /**
+                     * TODO
+                     * - Take temp pieces and check if can be played
+                     * - Try to insert in board
+                     * - Take them out from the player
+                     */
+
+                    game.fillPlayerRack();
+                    newTurn();
+                } else if (mix.isPressed(mouseClick)) {
+                    currentPlayer.mixPieces();
+                    rack.setPieces(currentPlayer.getPieces());
+                } else if (change.isPressed(mouseClick)) {
+                    currentPlayer.addPiece(game.playTurn(selectedPiece.getPiece()));
+                    newTurn();
+                } else if (cancel.isPressed(mouseClick)) {
+                    revokeTempPieces();
+                }
+
+                selectedPiece = null; // We nullify this if anything but piece is clicked
+            }
         }
     }
 
@@ -116,8 +153,8 @@ public class GameController extends JFrame {
         */
         background.draw(bg, this);
         board.draw(bg, this);
-//        rack.draw(bg, this);
-/*
+        rack.draw(bg, this);
+
         for (UIPiece piece : playedPieces)
             piece.draw(bg, this);
         for (UIPiece piece : tempPieces)
@@ -125,7 +162,16 @@ public class GameController extends JFrame {
         for (UIPlayer player : players) {
             player.draw(bg, this);
         }
-*/
+
         g.drawImage(buffer, 0, 0, this);
+    }
+
+    public void revokeTempPieces() {
+
+    }
+
+    public void newTurn() {
+        currentPlayer = game.nextTurn();
+        rack.setPieces(currentPlayer.getPieces());
     }
 }

@@ -14,16 +14,20 @@ public class Game {
 
     private ArrayList<Player> players;
     private Board board;
-    //private Bag bag;
+    private Bag bag;
 
-    public Game(ArrayList<Player> players) throws WrongCoordinateException{
+    public Game(ArrayList<Player> players) throws WrongCoordinateException {
         this.players = players;
 
         board = new Board();
-        //bag = new Bag();
+        bag = new Bag();
 
         round = 0;
         turn = (new Random()).nextInt(players.size());
+    }
+
+    public void fillPlayerRack() throws NoPiecesInBagException {
+        players.get(turn).fillRack(bag);
     }
 
     public Player nextTurn() {
@@ -38,12 +42,11 @@ public class Game {
         return board.insertWord(word);
     }
 */
-    public Piece playTurn(Piece piece) {
-
-        return new Piece();
+    public Piece playTurn(Piece piece) throws NoPiecesInBagException {
+        return bag.changePiece(piece);
     }
-/*
-    public ArrayList<Players> getPlayers() {
+
+    public ArrayList<Player> getPlayers() {
         return players;
-    }*/
+    }
 }
