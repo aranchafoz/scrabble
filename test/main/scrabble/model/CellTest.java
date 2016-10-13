@@ -36,7 +36,7 @@ public class CellTest {
     @Test
     public void testIsEmpty() throws Exception {
         assertTrue(cell.isEmpty());
-        cell.setPiece(new Piece());
+        cell.setPiece(new Piece('a',3));
         assertFalse(cell.isEmpty());
         cell.setPiece(null);
     }

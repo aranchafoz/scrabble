@@ -82,7 +82,13 @@ public class GameController extends JFrame {
         while (isRunning) {
             long time = System.currentTimeMillis();
 
-            update();
+            try {
+                update();
+            } catch (OccupiedCellException e) {
+                e.printStackTrace();
+            } catch (NoPiecesInBagException e) {
+                e.printStackTrace();
+            }
             draw();
 
             time = (1000 / FPS) - (System.currentTimeMillis() - time);
@@ -153,15 +159,15 @@ public class GameController extends JFrame {
         */
         background.draw(bg, this);
         board.draw(bg, this);
-        rack.draw(bg, this);
+        //rack.draw(bg, this);
 
         for (UIPiece piece : playedPieces)
             piece.draw(bg, this);
         for (UIPiece piece : tempPieces)
             piece.draw(bg, this);
-        for (UIPlayer player : players) {
-            player.draw(bg, this);
-        }
+//        for (UIPlayer player : players) {
+ //           player.draw(bg, this);
+ //       }
 
         g.drawImage(buffer, 0, 0, this);
     }
@@ -171,7 +177,7 @@ public class GameController extends JFrame {
     }
 
     public void newTurn() {
-        currentPlayer = game.nextTurn();
-        rack.setPieces(currentPlayer.getPieces());
+//       currentPlayer = game.nextTurn();
+//        rack.setPieces(currentPlayer.getPieces());
     }
 }
