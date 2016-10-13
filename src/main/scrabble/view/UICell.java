@@ -24,7 +24,7 @@ public class UICell extends UIObject {
 
     public UICell(int x, int y, int sideWidth, Cell cell) {
         super(x, y);
-        w =  sideWidth;
+        w = sideWidth;
         h = sideWidth;
         this.cell = cell;
 
@@ -51,7 +51,7 @@ public class UICell extends UIObject {
     public void draw(Graphics g, JFrame context) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.getHSBColor(50, 68, 70));
-        g2.fillRect(x,y,w,h);
+        g2.fillRect(x, y, w, h);
         /*String fileName = "Background.png";
         File file = new File(fileName);
         try {

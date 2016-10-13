@@ -2,8 +2,11 @@ package main.scrabble.view;
 
 import main.scrabble.exceptions.OccupiedCellException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by enrique on 26/09/16.
@@ -44,4 +47,11 @@ public abstract class UIObject {
         return p.x > x && p.x < x + w && p.y > y && p.y < y + h;
     }
 
+    public void setImage(String imagePath) {
+        try {
+            image = ImageIO.read(new File(imagePath));
+        } catch (IOException e) {
+
+        }
+    }
 }

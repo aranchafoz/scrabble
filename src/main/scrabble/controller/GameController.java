@@ -48,6 +48,8 @@ public class GameController extends JFrame {
     private UIButton change;
     private UIButton cancel;
 
+    private UIButton test;
+
     public GameController() throws WrongCoordinateException {
         setTitle(WINDOW_TITLE);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -67,6 +69,8 @@ public class GameController extends JFrame {
         Board b = new Board();
         board = new UIBoard(50, 75, 883, b); //game.getBoard); // 675 for 15 cells of 45 + 28 for 14 lines of 2
 
+        // image test
+        test = new UIButton(20, 20, "test");
 
         playedPieces = new ArrayList<>();
         tempPieces = new ArrayList<>();
@@ -159,6 +163,7 @@ public class GameController extends JFrame {
         */
         background.draw(bg, this);
         board.draw(bg, this);
+
         //rack.draw(bg, this);
 
         for (UIPiece piece : playedPieces)

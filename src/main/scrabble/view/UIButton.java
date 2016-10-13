@@ -2,19 +2,21 @@ package main.scrabble.view;
 
 import main.scrabble.exceptions.OccupiedCellException;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by enrique on 30/09/16.
  */
 public class UIButton extends UIObject {
     private String text;
-    private String image;
 
     public UIButton(int x, int y, String text) {
         super(x, y);
         this.text = text;
-        setImage(text);
+        //setImage(text);
     }
 
     public boolean isPressed(Point p) throws OccupiedCellException {
@@ -22,9 +24,5 @@ public class UIButton extends UIObject {
             return true;
         else
             return false;
-    }
-
-    private void setImage(String text) {
-
     }
 }
