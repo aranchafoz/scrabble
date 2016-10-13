@@ -28,7 +28,7 @@ public class UICell extends UIObject {
         h = sideWidth;
         this.cell = cell;
 
-        //setImage(this.cell.getType());
+        setImageforType(this.cell.getType());
     }
 
     public Cell getcell() {
@@ -46,7 +46,7 @@ public class UICell extends UIObject {
         } else
             return false;
     }
-
+    /*
     @Override
     public void draw(Graphics g, JFrame context) {
         Graphics2D g2 = (Graphics2D) g;
@@ -60,36 +60,29 @@ public class UICell extends UIObject {
             e.printStackTrace();
         }
         JLabel label = new JLabel(new ImageIcon(image));
-        context.getContentPane().add(label);*/
-    }
+        context.getContentPane().add(label);
+    }*/
 
-    public void setImage(CellType type) throws IOException {
+    public void setImageforType(CellType type) {
 
         switch (type) {
             case PLAIN:
-                //this.image = image;
-                /*BufferedImage img = null;
-                try {
-                    img = ImageIO.read(new File("Background.png"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
-
-                //Graphics2D g2 = (Graphics2D) g;
-                //g.drawImage(img,0,0,null);
-                //g.drawImage(image, x, y, context);
+                setImage("assets/plain.png");
                 break;
             case DOUBLE_LETTER:
-                //this.image = image;
+                setImage("assets/dl.png");
                 break;
             case TRIPLE_LETTER:
-                //this.image = image;
+                setImage("assets/tl.png");
                 break;
             case DOUBLE_WORD:
-                //this.image = image;
+                setImage("assets/dw.png");
                 break;
             case TRIPLE_WORD:
-                //this.image = image;
+                setImage("assets/tw.png");
+                break;
+            case CENTRAL_CELL:
+                setImage("assets/startCell.png");
                 break;
         }
     }

@@ -26,6 +26,8 @@ public class Board {
                     matrix[i][j] = new Cell(i, j , CellType.DOUBLE_WORD);
                 } else if(fillDL(i,j)) {
                     matrix[i][j] = new Cell(i, j , CellType.DOUBLE_LETTER);
+                } else if(i == 7 && j == 7) {
+                    matrix[i][j] = new Cell(i, j , CellType.CENTRAL_CELL);
                 } else {
                     matrix[i][j] = new Cell(i, j , CellType.PLAIN);
                 }
@@ -68,9 +70,9 @@ public class Board {
              fill = true;
         } else if ((i == 4 || i == 10) && (j == 4|| j == 10)) {
              fill = true;
-        }  else if (i == 7 && j == 7) {
+        }  /*else if (i == 7 && j == 7) {
              fill = true;
-        }
+        }*/
 
         return fill;
     }
