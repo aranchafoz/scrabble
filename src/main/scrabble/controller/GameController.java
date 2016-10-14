@@ -192,6 +192,8 @@ public class GameController extends JFrame {
             player.draw(bg, this);
         }
 
+        // Draw best player
+
         g.drawImage(buffer, 0, 0, this);
     }
 

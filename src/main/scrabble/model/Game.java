@@ -12,6 +12,8 @@ public class Game {
     private int round;
     private int turn;
 
+    private Player bestPlayer;
+
     private ArrayList<Player> players;
     private Board board;
     private Bag bag;
@@ -24,6 +26,8 @@ public class Game {
 
         round = 0;
         turn = (new Random()).nextInt(players.size());
+        // Borrar después, solo pruebas
+        bestPlayer = players.get(0);
     }
 
     public void fillPlayerRack() throws NoPiecesInBagException {
