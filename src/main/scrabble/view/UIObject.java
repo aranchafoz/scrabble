@@ -40,7 +40,7 @@ public abstract class UIObject {
     public int getH() { return h; }
 
     public void draw(Graphics g, JFrame context) {
-        g.drawImage(image, x, y, context);
+        g.drawImage(image, x, y, w, h, context);
     }
 
     public boolean receiveInput(Point p) throws OccupiedCellException {
