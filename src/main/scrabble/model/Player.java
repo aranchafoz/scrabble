@@ -19,7 +19,7 @@ public class Player {
     public Player(String name, String avatarPath) {
         this.name = name;
         this.avatarPath = avatarPath;
-
+        punctuation = 0;
     }
 
     public int increasePunctuarion(int value) {
