@@ -24,7 +24,7 @@ public class GameController extends JFrame {
 
     private final String WINDOW_TITLE = "Scrabble";
     private final int WINDOW_HEIGHT = 1000;
-    private final int WINDOW_WIDTH = 1000;
+    private final int WINDOW_WIDTH = 1800;
 
     private boolean isRunning = true;
 
@@ -64,7 +64,25 @@ public class GameController extends JFrame {
 
         state = GameState.menu;
 
-        //game = new Game();
+        // Random Players for UI pattern design
+        Player p1 = new Player("WikiIvorra","assets/ivorra_player.png");
+        Player p2 = new Player("#PeloGuay","assets/ivorra_player.png");
+        Player p3 = new Player("Aranchunfli","assets/ivorra_player.png");
+        Player p4 = new Player("Photohannes","assets/ivorra_player.png");
+        ArrayList<Player> player = new ArrayList<Player>();
+        player.add(p1);    player.add(p2);    player.add(p3);    player.add(p4);
+
+        UIPlayer uip1 = new UIPlayer(1000,75,150,p1);
+        UIPlayer uip2 = new UIPlayer(1400,75,150,p2);
+        UIPlayer uip3 = new UIPlayer(1000,225 + 50,150,p3);
+        UIPlayer uip4 = new UIPlayer(1400,225 + 50,150,p4);
+
+        players = new ArrayList<UIPlayer>();
+        players.add(uip1);    players.add(uip2);    players.add(uip3);    players.add(uip4);
+
+        game = new Game(player);
+
+        // Background & Board
         background = new UIBackground(WINDOW_WIDTH, WINDOW_HEIGHT);
         Board b = new Board();
         board = new UIBoard(50, 75, 883, b); //game.getBoard); // 675 for 15 cells of 45 + 28 for 14 lines of 2
@@ -170,9 +188,9 @@ public class GameController extends JFrame {
             piece.draw(bg, this);
         for (UIPiece piece : tempPieces)
             piece.draw(bg, this);
-//        for (UIPlayer player : players) {
- //           player.draw(bg, this);
- //       }
+        for (UIPlayer player : players) {
+            player.draw(bg, this);
+        }
 
         g.drawImage(buffer, 0, 0, this);
     }

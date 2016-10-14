@@ -13,12 +13,12 @@ public class Player {
     private int punctuation;
 
     private String name;
-    private Image avatar;
+    private String avatarPath;
     private ArrayList<Piece> pieces;
 
-    public Player(String name, Image avatar) {
+    public Player(String name, String avatarPath) {
         this.name = name;
-        this.avatar = avatar;
+        this.avatarPath = avatarPath;
 
     }
 
@@ -29,6 +29,10 @@ public class Player {
 
     public ArrayList<Piece> getPieces() {
         return pieces;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
     }
 
     public boolean rackFilled() {
