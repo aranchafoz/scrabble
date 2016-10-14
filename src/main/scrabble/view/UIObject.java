@@ -39,9 +39,7 @@ public abstract class UIObject {
     public int getW() { return w; }
     public int getH() { return h; }
 
-    public void draw(Graphics g, JFrame context) {
-        g.drawImage(image, x, y, w, h, context);
-    }
+    public void draw(Graphics g, JFrame context) {  g.drawImage(image, x, y, w, h, context);  }
 
     public boolean receiveInput(Point p) throws OccupiedCellException {
         return p.x > x && p.x < x + w && p.y > y && p.y < y + h;
