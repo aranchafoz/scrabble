@@ -2,6 +2,10 @@ package main.scrabble.model;
 
 import main.scrabble.exceptions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 /**
  * Created by Ivorra on 30/09/16.
  */
@@ -13,6 +17,78 @@ public class Board {
     public Board() throws WrongCoordinateException {
         matrix = new Cell[DIM][DIM];
         fillBoard();
+    }
+
+    public int checkOpositeDirection(Word word) {
+        int score = 0;
+        Direction direction;
+        if (word.getDirection() == Direction.HORIZONTAL) {
+            direction = Direction.VERTICAL;
+        } else {
+            direction = Direction.HORIZONTAL;
+        }
+
+        ArrayList<Piece> pieces = word.getPieces();
+        List<Piece> oppositePieces = new ArrayList<Piece>();
+        Coordinate c = new Coordinate();
+        int size = pieces.size();
+        Dictionary dic = new Dictionary(); //Better static?
+
+        for (int i = 0; i < size; i++) {
+
+              c = pieces.get(i).getCoordinates();
+
+            while (matrix[c.x][c.y].getType() != CellType.PLAIN) {
+                oppositePieces.add(0, matrix[c.x][c.y].getPiece());
+                updateCoordinate(c,direction,"-");
+            }
+
+            c = pieces.get(i).getCoordinates();
+
+            updateCoordinate(c,direction,"+");
+            while (matrix[c.x][c.y].getType() != CellType.PLAIN) {
+                oppositePieces.add(matrix[c.x][c.y].getPiece());
+                updateCoordinate(c,direction,"+");
+            }
+
+            String s = createWordFromPieces((ArrayList<Piece>)oppositePieces);
+            dic.existWord(s);
+            //PONER LO DE PUNTUACIONES
+            oppositePieces.clear();
+
+        }
+        return score;
+
+    }
+
+    private void updateCoordinate(Coordinate c, Direction dir, String op){
+        if(op == "-") {
+            if (dir == Direction.HORIZONTAL) {
+                c.x--;
+            } else {
+                c.y--;
+            }
+        } else if(op == "+") {
+            if (dir == Direction.HORIZONTAL) {
+                c.x++;
+            } else {
+                c.y++;
+            }
+        }
+    }
+
+    public String createWordFromPieces(ArrayList<Piece> p){
+        int size = p.size();
+        String s = "";
+        for(int i = 0; i < size; i++ ){
+            s = s + p.get(i).getLetter();
+        }
+        return s;
+    }
+
+    public Cell getCell(int x, int y) {
+        Cell cell = matrix[x-1][y-1];
+        return cell;
     }
 
     private void fillBoard() throws WrongCoordinateException {
@@ -62,14 +138,14 @@ public class Board {
     private boolean fillDW(int i, int j) throws WrongCoordinateException {
         boolean fill = false;
 
-         if ((i == 1 || i == 13) && (j == 1|| j == 13)) {
-             fill = true;
+        if ((i == 1 || i == 13) && (j == 1|| j == 13)) {
+            fill = true;
         } else if ((i == 2 || i == 12) && (j == 2|| j == 12)) {
-             fill = true;
+            fill = true;
         } else if ((i == 3 || i == 11) && (j == 3|| j == 11)) {
-             fill = true;
+            fill = true;
         } else if ((i == 4 || i == 10) && (j == 4|| j == 10)) {
-             fill = true;
+            fill = true;
         }  /*else if (i == 7 && j == 7) {
              fill = true;
         }*/
@@ -93,11 +169,6 @@ public class Board {
         }
 
         return fill;
-    }
-
-    public Cell getCell(int x, int y) {
-        Cell cell = matrix[x-1][y-1];
-        return cell;
     }
 
 }
