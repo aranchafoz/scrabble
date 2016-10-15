@@ -52,7 +52,7 @@ public class UICell extends UIObject {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.getHSBColor(50, 68, 70));
         g2.fillRect(x, y, w, h);
-        /*String fileName = "Background.png";
+        /*String fileName = "";
         File file = new File(fileName);
         try {
             BufferedImage img = ImageIO.read(file);

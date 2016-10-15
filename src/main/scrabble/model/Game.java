@@ -53,4 +53,20 @@ public class Game {
     public ArrayList<Player> getPlayers() {
         return players;
     }
+
+    public Player getBestPlayer() {
+        Player op = players.get(0);
+
+        for (Player player: players) {
+            if (player.getPunctuation() > op.getPunctuation())
+                op = player;
+        }
+
+        bestPlayer = op;
+        return bestPlayer;
+    }
+
+    public void setBestPlayer(Player bestPlayer) {
+        this.bestPlayer = bestPlayer;
+    }
 }

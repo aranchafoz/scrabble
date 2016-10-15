@@ -35,6 +35,8 @@ public class Player {
         return avatarPath;
     }
 
+    public int getPunctuation() { return punctuation; }
+
     public boolean rackFilled() {
         return pieces.size() >= RACK_SIZE;
     }

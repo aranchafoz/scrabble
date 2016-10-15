@@ -172,14 +172,8 @@ public class GameController extends JFrame {
         Graphics bg = buffer.getGraphics();
 
         // Draw the background
-        /*
-        bg.setColor(Color.RED);
-        bg.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-
-        bg.setColor(Color.BLACK);
-        bg.fillOval((int)x - 10, (int)y - 10, 20, 20);
-        */
         background.draw(bg, this);
+
         board.draw(bg, this);
 
         //rack.draw(bg, this);
@@ -193,6 +187,13 @@ public class GameController extends JFrame {
         }
 
         // Draw best player
+        Player bestp = game.getBestPlayer();
+        for (UIPlayer player : players) {
+            if (player.getPlayer() == bestp) {
+                player.drawCrown(bg,this);
+
+            }
+        }
 
         g.drawImage(buffer, 0, 0, this);
     }
