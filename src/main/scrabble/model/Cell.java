@@ -9,14 +9,13 @@ import main.scrabble.exceptions.*;
 public class Cell {
 
     private Piece piece;
-    private int x;
-    private int y;
+    private Coordinate coordinate;
     private CellType type;
 
     public Cell(int x, int y, CellType type) throws WrongCoordinateException {
         if (checkCoordinates(x, y)) {
-            this.x = x;
-            this.y = y;
+            coordinate.x = x;
+            coordinate.y = y;
             this.type = type;
         } else {
             throw new WrongCoordinateException(x, y);
@@ -25,8 +24,8 @@ public class Cell {
 
     public Cell(Cell c) {
         setPiece(c.getPiece());
-        x = c.getX();
-        y = c.getY();
+        coordinate.x = c.getX();
+        coordinate.y = c.getY();
         type = c.getType();
     }
 
@@ -41,11 +40,11 @@ public class Cell {
     }
 
     public int getX() {
-        return x;
+        return coordinate.x;
     }
 
     public int getY() {
-        return y;
+        return coordinate.y;
     }
 
     public CellType getType() {
@@ -61,7 +60,7 @@ public class Cell {
     }
     @Override
     public String toString() {
-        return Integer.toString(x + 'A') + Integer.toString(y + 1);
+        return Integer.toString(coordinate.x + 'A') + Integer.toString(coordinate.y + 1);
     }
 
     public boolean checkCoordinates(int xCoord, int yCoord) {

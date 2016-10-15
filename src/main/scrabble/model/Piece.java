@@ -11,6 +11,9 @@ public class Piece {
         this.letter = c;
         this.punctuation = punctuation;
     }
+    public Coordinate getCoordinates(){
+        return (new Coordinate());
+    }
 
     public char getLetter() {
         return letter;

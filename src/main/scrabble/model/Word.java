@@ -15,4 +15,13 @@ public class Word {
         this.start = start;
         this.pieces = pieces;
     }
+
+    public Direction getDirection(){
+        return dir;
+    }
+
+    public ArrayList<Piece> getPieces() {
+        return pieces;
+    }
+
 }
