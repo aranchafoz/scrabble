@@ -14,6 +14,7 @@ public class Cell {
 
     public Cell(int x, int y, CellType type) throws WrongCoordinateException {
         if (checkCoordinates(x, y)) {
+            coordinate = new Coordinate();
             coordinate.x = x;
             coordinate.y = y;
             this.type = type;
