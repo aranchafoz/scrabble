@@ -67,8 +67,8 @@ public class GameController extends JFrame {
         // Random Players for UI pattern design
         Player p1 = new Player("WikiIvorra","assets/ivorra_player.png");
         Player p2 = new Player("#PeloGuay","assets/ivorra_player.png");
-        Player p3 = new Player("Aranchunfli","assets/ivorra_player.png");
-        Player p4 = new Player("Photohannes","assets/ivorra_player.png");
+        Player p3 = new Player("Aranchunfli","assets/arancha_avatar.png");
+        Player p4 = new Player("Johannes","assets/ivorra_player.png");
         ArrayList<Player> player = new ArrayList<Player>();
         player.add(p1);    player.add(p2);    player.add(p3);    player.add(p4);
 

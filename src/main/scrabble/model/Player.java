@@ -22,7 +22,7 @@ public class Player {
         punctuation = 0;
     }
 
-    public int increasePunctuarion(int value) {
+    public int increasePunctuation(int value) {
         punctuation += value;
         return punctuation;
     }
@@ -30,6 +30,8 @@ public class Player {
     public ArrayList<Piece> getPieces() {
         return pieces;
     }
+
+    public String getName() { return name; }
 
     public String getAvatarPath() {
         return avatarPath;

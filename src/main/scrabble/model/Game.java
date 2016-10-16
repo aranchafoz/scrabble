@@ -27,7 +27,7 @@ public class Game {
         round = 0;
         turn = (new Random()).nextInt(players.size());
         // Borrar después, solo pruebas
-        bestPlayer = players.get(0);
+        bestPlayer = players.get(1);
     }
 
     public void fillPlayerRack() throws NoPiecesInBagException {

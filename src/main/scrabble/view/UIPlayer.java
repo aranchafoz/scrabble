@@ -27,9 +27,16 @@ public class UIPlayer extends UIObject {
         super.draw(g,context);
 
         // Draw name
+        Graphics2D g2 = (Graphics2D) g;
 
-        // Draw puntuation
+        g2.setColor(Color.BLACK);
+        g2.setFont(new Font("Monaco",Font.BOLD, 25));
+        g2.drawString(player.getName(), x + 165, y + 45);
 
+        // Draw punctuation
+        g2.setColor(Color.darkGray);
+        g2.setFont(new Font("Monaco",Font.ITALIC, 20));
+        g2.drawString(String.valueOf(player.getPunctuation()) + " points", x + 165, y + 100);
     }
 
     public Player getPlayer() {
@@ -43,7 +50,7 @@ public class UIPlayer extends UIObject {
     public void drawCrown(Graphics g, JFrame context) {
 
         try {
-            Image crown = ImageIO.read(new File("assets/Crown-80.png"));
+            Image crown = ImageIO.read(new File("assets/Queen UK-80.png"));
             g.drawImage(crown, x + 35, y - 50, context);
         } catch (IOException e) {
 
