@@ -24,4 +24,16 @@ public class Word {
         return pieces;
     }
 
+    public int getOriginX(){
+        return start.getX();
+    }
+
+    public int getOriginY(){
+        return start.getY();
+    }
+
+    public Cell getOrigin(){
+        return start;
+    }
+
 }

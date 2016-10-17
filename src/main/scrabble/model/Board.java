@@ -1,6 +1,7 @@
 package main.scrabble.model;
 
 import main.scrabble.exceptions.*;
+import org.omg.CosNaming.NamingContextPackage.NotEmpty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,38 @@ import java.util.List;
 /**
  * Created by Ivorra on 30/09/16.
  */
+
+class Coordinate {
+    public int x;
+    public int y;
+
+    public Coordinate(int cx, int cy){
+        x = cx;
+        y = cy;
+    }
+
+    public Coordinate(Coordinate c){
+        x = c.x;
+        y = c.y;
+    }
+
+    public void updateCoordinate(Direction dir, String op){
+        if(op == "-") {
+            if (dir == Direction.HORIZONTAL) {
+                x--;
+            } else {
+                y--;
+            }
+        } else if(op == "+") {
+            if (dir == Direction.HORIZONTAL) {
+                x++;
+            } else {
+                y++;
+            }
+        }
+    }
+
+}
 public class Board {
 
     private static final int DIM = 15;
@@ -31,27 +64,27 @@ public class Board {
 
         ArrayList<Piece> pieces = word.getPieces();
         ArrayList<Piece> oppositePieces = new ArrayList<>();
-        int cx = 0;
-        int cy = 0;
+        Coordinate c = new Coordinate(0,0);
 
         for (int i = 0; i < pieces.size(); i++) {
-              cx = pieces.get(i).getCoordinateX();
-              cy = pieces.get(i).getCoordinateY();
+              c.x = pieces.get(i).getCoordinateX();
+              c.y = pieces.get(i).getCoordinateY();
 
-            while (matrix[cx][cy].getType() != CellType.PLAIN) {
-                oppositePieces.add(0, matrix[cx][cy].getPiece());
-                updateCoordinate(cx,cy,direction,"-");
+            while (matrix[c.x][c.y].getType() != CellType.PLAIN) {
+                oppositePieces.add(0, matrix[c.x][c.y].getPiece());
+                c.updateCoordinate(direction,"-");
             }
 
-            cx = pieces.get(i).getCoordinateX();
-            cy = pieces.get(i).getCoordinateY();
+            c.x = pieces.get(i).getCoordinateX();
+            c.y = pieces.get(i).getCoordinateY();
+            c.updateCoordinate(direction,"+");
 
-            updateCoordinate(cx,cy,direction,"+");
-            while (matrix[cx][cy].getType() != CellType.PLAIN) {
-                oppositePieces.add(matrix[cx][cy].getPiece());
-                updateCoordinate(cx,cy,direction,"+");
+            while (matrix[c.x][c.y].getType() != CellType.PLAIN) {
+                oppositePieces.add(matrix[c.x][c.y].getPiece());
+                c.updateCoordinate(direction,"+");
             }
 
+            //PONER LO DE PUNTUACIONES
             String s = createWordFromPieces(oppositePieces);
             Dictionary.existWord(s);
             //PONER LO DE PUNTUACIONES
@@ -60,32 +93,34 @@ public class Board {
         return score;
     }
 
-    private void updateCoordinate(int cx,int cy, Direction dir, String op){
-        if(op == "-") {
-            if (dir == Direction.HORIZONTAL) {
-                cx--;
-            } else {
-                cy--;
-            }
-        } else if(op == "+") {
-            if (dir == Direction.HORIZONTAL) {
-                cx++;
-            } else {
-                cy++;
-            }
-        }
-    }
-
     public String createWordFromPieces(ArrayList<Piece> p){
-        int size = p.size();
         String s = "";
-        for(int i = 0; i < size; i++ ){
+        for(int i = 0; i < p.size(); i++ ){
             s = s + p.get(i).getLetter();
         }
         return s;
     }
 
+    public int insertWord(Word word) throws OccupiedCellException{
+        int score = 0;
+        Coordinate origin = new Coordinate(word.getOriginX(),word.getOriginY());
 
+        if(!matrix[origin.x][origin.y].isEmpty()){
+            throw new OccupiedCellException(word.getOrigin());
+        }
+        Coordinate c = new Coordinate(origin);
+        c.x--;
+        c.y--;
+
+        while(!matrix[c.x][c.y].isEmpty()){
+
+        }
+
+
+
+        return score;
+
+    }
 
 
 
