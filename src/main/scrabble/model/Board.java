@@ -101,7 +101,7 @@ public class Board {
         return s;
     }
 
-    public int insertWord(Word word) throws OccupiedCellException, /*WrongWordException*/{
+    public int insertWord(Word word) throws OccupiedCellException /*,WrongWordException*/{
         int score = 0;
         Direction direction = word.getDirection();
         Coordinate origin = new Coordinate(word.getOriginX(),word.getOriginY());
@@ -119,37 +119,67 @@ public class Board {
         }
         c = new Coordinate(origin);
         c.updateCoordinate(direction,"+");
-        int i = 0;
-        if(direction == Direction.HORIZONTAL){
-            i = c.x;
-        } else { i = c.y;}
 
         ArrayList<Piece> auxWord = new ArrayList<>();
+        ArrayList<Piece> pieces = word.getPieces();
 
-        while()
+        for(Piece p : pieces) {
+            auxWord.add(p);
+        }
+        auxWord.remove(0); //Inserted before
 
-
-
-            completedWord.add(matrix[c.x][c.y].getPiece());
-
-
-
-
+        while(!auxWord.isEmpty()){
+            if(!matrix[c.x][c.y].isEmpty()){
+                completedWord.add(matrix[c.x][c.y].getPiece());
+            } else {
+                completedWord.add(auxWord.get(0));
+                auxWord.remove(0);
+            }
             c.updateCoordinate(direction,"+");
+
+        }
+
+        for(Piece p : pieces) {
+            auxWord.add(p);
+        }
+        auxWord.remove(0); //Inserted before
+
+        while(!auxWord.isEmpty()){
+            if(matrix[c.x][c.y].isEmpty()){
+                matrix[c.x][c.y].setPiece(auxWord.get(0));
+                auxWord.remove(0);
+            }
+            c.updateCoordinate(direction,"+");
+
         }
 
         //PONER LO DE PUNTUACIONES
-        String s = createWordFromPieces(oppositePieces);
-       // if(!Dictionary.existWord(s)){throw new  WrongWordException(s);}
+        String s = createWordFromPieces(completedWord);
+        // if(!Dictionary.existWord(s)){throw new  WrongWordException(s);}
         //PONER LO DE PUNTUACIONES
 
-        //Insertarla al final!!!
-
+        //Insertarla al final!!! (iterar igual que el bucle de antes, donde haya vacio poner la pieza)
 
 
         return score;
 
-    }
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
 
 
 
