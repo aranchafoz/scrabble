@@ -113,6 +113,7 @@ public class Board {
         Coordinate c = new Coordinate(origin);
         ArrayList<Piece> completedWord = new ArrayList<>();
 
+
         while(!matrix[c.x][c.y].isEmpty()){
             completedWord.add(0,matrix[c.x][c.y].getPiece());
             c.updateCoordinate(direction,"-");
