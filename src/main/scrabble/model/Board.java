@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * Created by Ivorra on 30/09/16.
- */
+
+
+//getCell why -1?? Use in other methods!!??
 
 class Coordinate {
     public int x;
@@ -101,20 +101,49 @@ public class Board {
         return s;
     }
 
-    public int insertWord(Word word) throws OccupiedCellException{
+    public int insertWord(Word word) throws OccupiedCellException, /*WrongWordException*/{
         int score = 0;
+        Direction direction = word.getDirection();
         Coordinate origin = new Coordinate(word.getOriginX(),word.getOriginY());
 
         if(!matrix[origin.x][origin.y].isEmpty()){
             throw new OccupiedCellException(word.getOrigin());
         }
+
         Coordinate c = new Coordinate(origin);
-        c.x--;
-        c.y--;
+        ArrayList<Piece> completedWord = new ArrayList<>();
 
         while(!matrix[c.x][c.y].isEmpty()){
-
+            completedWord.add(0,matrix[c.x][c.y].getPiece());
+            c.updateCoordinate(direction,"-");
         }
+        c = new Coordinate(origin);
+        c.updateCoordinate(direction,"+");
+        int i = 0;
+        if(direction == Direction.HORIZONTAL){
+            i = c.x;
+        } else { i = c.y;}
+
+        ArrayList<Piece> auxWord = new ArrayList<>();
+
+        while()
+
+
+
+            completedWord.add(matrix[c.x][c.y].getPiece());
+
+
+
+
+            c.updateCoordinate(direction,"+");
+        }
+
+        //PONER LO DE PUNTUACIONES
+        String s = createWordFromPieces(oppositePieces);
+       // if(!Dictionary.existWord(s)){throw new  WrongWordException(s);}
+        //PONER LO DE PUNTUACIONES
+
+        //Insertarla al final!!!
 
 
 
