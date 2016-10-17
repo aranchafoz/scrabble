@@ -11,18 +11,17 @@ import static org.junit.Assert.*;
  * Created by enrique on 27/09/16.
  */
 public class DictionaryTest {
-    private Dictionary dic;
 
     @Before
     public void initialize() {
-        dic = new Dictionary();
+
     }
 
     @Test
     public void existWord() throws Exception {
-        assertTrue(dic.existWord("house"));
-        assertTrue(dic.existWord("coffee"));
-        assertFalse(dic.existWord("alsjkdnf"));
+        assertTrue(Dictionary.existWord("house"));
+        assertTrue(Dictionary.existWord("coffee"));
+        assertFalse(Dictionary.existWord("alsjkdnf"));
     }
 
     @Test
@@ -33,7 +32,7 @@ public class DictionaryTest {
         chars.add('l');
         chars.add('l');
         chars.add('o');
-        ArrayList<String> words = dic.getWordsWith(chars);
+        ArrayList<String> words = Dictionary.getWordsWith(chars);
 
         assertTrue(words.contains("hello"));
         assertFalse(words.contains("hell"));
@@ -46,7 +45,7 @@ public class DictionaryTest {
         chars.add('d');
         chars.add('e');
         chars.add('r');
-        words = dic.getWordsWith(chars);
+        words = Dictionary.getWordsWith(chars);
 
         assertTrue(words.contains("friend"));
         assertTrue(words.contains("finder"));

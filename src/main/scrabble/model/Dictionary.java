@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class Dictionary {
     private final String FILENAME = "eng_dic";
-    private ArrayList<String> words;
+    private static ArrayList<String> words;
 
     public Dictionary() {
         words = new ArrayList<>();
@@ -25,19 +25,19 @@ public class Dictionary {
         }
     }
 
-    public boolean existWord(String word) {
+    public static boolean existWord(String word) {
         return words.contains(word);
     }
 
-    public ArrayList<String> getWords(int size) {
-        ArrayList<String> words = new ArrayList<>();
-        for (String w : this.words)
+    public static  ArrayList<String> getWords(int size) {
+        ArrayList<String> wrds = new ArrayList<>();
+        for (String w : words)
             if (w.length() == size)
-                words.add(w);
-        return words;
+                wrds.add(w);
+        return wrds;
     }
 
-    public boolean wordFits(String letters, String word) {
+    public static boolean wordFits(String letters, String word) {
         ArrayList<Character> l = new ArrayList<Character>();
         ArrayList<Character> w = new ArrayList<Character>();
 
@@ -49,7 +49,7 @@ public class Dictionary {
         return wordFits(l, w);
     }
 
-    private boolean wordFits(ArrayList<Character> letters, ArrayList<Character> word) {
+    private static boolean wordFits(ArrayList<Character> letters, ArrayList<Character> word) {
         if (letters.size() != word.size())
             return false;
         ArrayList<Character> l = new ArrayList<>(letters);
@@ -62,7 +62,7 @@ public class Dictionary {
         return l.isEmpty(); // If it's not empty (error) it returns false
     }
 
-    public ArrayList<String> getWordsWith(ArrayList<Character> letters) {
+    public static ArrayList<String> getWordsWith(ArrayList<Character> letters) {
         ArrayList<String> words = getWords(letters.size());
         ArrayList<String> validWords = new ArrayList<>();
         for (String w : words) {

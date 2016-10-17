@@ -22,6 +22,7 @@ public class Board {
     public int checkOpositeDirection(Word word) {
         int score = 0;
         Direction direction;
+
         if (word.getDirection() == Direction.HORIZONTAL) {
             direction = Direction.VERTICAL;
         } else {
@@ -29,52 +30,48 @@ public class Board {
         }
 
         ArrayList<Piece> pieces = word.getPieces();
-        List<Piece> oppositePieces = new ArrayList<Piece>();
-        Coordinate c = new Coordinate();
-        int size = pieces.size();
-        Dictionary dic = new Dictionary(); //Better static?
+        ArrayList<Piece> oppositePieces = new ArrayList<>();
+        int cx = 0;
+        int cy = 0;
 
+        for (int i = 0; i < pieces.size(); i++) {
+              cx = pieces.get(i).getCoordinateX();
+              cy = pieces.get(i).getCoordinateY();
 
-
-        for (int i = 0; i < size; i++) {
-
-              c = pieces.get(i).getCoordinates();
-
-            while (matrix[c.x][c.y].getType() != CellType.PLAIN) {
-                oppositePieces.add(0, matrix[c.x][c.y].getPiece());
-                updateCoordinate(c,direction,"-");
+            while (matrix[cx][cy].getType() != CellType.PLAIN) {
+                oppositePieces.add(0, matrix[cx][cy].getPiece());
+                updateCoordinate(cx,cy,direction,"-");
             }
 
-            c = pieces.get(i).getCoordinates();
+            cx = pieces.get(i).getCoordinateX();
+            cy = pieces.get(i).getCoordinateY();
 
-            updateCoordinate(c,direction,"+");
-            while (matrix[c.x][c.y].getType() != CellType.PLAIN) {
-                oppositePieces.add(matrix[c.x][c.y].getPiece());
-                updateCoordinate(c,direction,"+");
+            updateCoordinate(cx,cy,direction,"+");
+            while (matrix[cx][cy].getType() != CellType.PLAIN) {
+                oppositePieces.add(matrix[cx][cy].getPiece());
+                updateCoordinate(cx,cy,direction,"+");
             }
 
-            String s = createWordFromPieces((ArrayList<Piece>)oppositePieces);
-            dic.existWord(s);
+            String s = createWordFromPieces(oppositePieces);
+            Dictionary.existWord(s);
             //PONER LO DE PUNTUACIONES
             oppositePieces.clear();
-
         }
         return score;
-
     }
 
-    private void updateCoordinate(Coordinate c, Direction dir, String op){
+    private void updateCoordinate(int cx,int cy, Direction dir, String op){
         if(op == "-") {
             if (dir == Direction.HORIZONTAL) {
-                c.x--;
+                cx--;
             } else {
-                c.y--;
+                cy--;
             }
         } else if(op == "+") {
             if (dir == Direction.HORIZONTAL) {
-                c.x++;
+                cx++;
             } else {
-                c.y++;
+                cy++;
             }
         }
     }
@@ -87,6 +84,20 @@ public class Board {
         }
         return s;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public Cell getCell(int x, int y) {
         Cell cell = matrix[x-1][y-1];
