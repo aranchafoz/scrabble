@@ -45,12 +45,10 @@ public class UIRack extends UIObject {
     }
 
     @Override
-    public void draw(Graphics g, JFrame context) {
+    public void draw(Graphics2D g2, JFrame context) {
 
         float hsb[] = new float[3];
         float color[];
-
-        Graphics2D g2 = (Graphics2D) g;
 
         BasicStroke backShadow = new BasicStroke(4f);
         g2.setStroke(backShadow);
@@ -66,14 +64,14 @@ public class UIRack extends UIObject {
         g2.setStroke(frontShadow);
         color = Color.RGBtoHSB(192,128,64,hsb); // 192,128,64
         g2.setColor(Color.getHSBColor(color[0], color[1], color[2]));
-        g2.drawRoundRect(x,y + h - 45,w,45,15,15);
+        g2.drawRoundRect(x,y + h - 47,w,45,15,15);
 
         color = Color.RGBtoHSB(204,153,102,hsb); // 192,128,64
         g2.setColor(Color.getHSBColor(color[0], color[1], color[2]));
-        g2.fillRoundRect(x,y + h - 45,w,45,15,15);
+        g2.fillRoundRect(x,y + h - 47,w,45,15,15);
 
         for (UIPiece piece : pieces)
-            piece.draw(g, context);
+            piece.draw(g2, context);
     }
 
     public UIPiece getSelectedPiece(Point point) throws OccupiedCellException {

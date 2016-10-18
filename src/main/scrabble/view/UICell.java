@@ -31,7 +31,7 @@ public class UICell extends UIObject {
         setImageforType(this.cell.getType());
     }
 
-    public Cell getcell() {
+    public Cell getCell() {
         return cell;
     }
 

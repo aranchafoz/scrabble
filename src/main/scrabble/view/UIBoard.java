@@ -1,6 +1,5 @@
 package main.scrabble.view;
 
-import main.scrabble.exceptions.OccupiedCellException;
 import main.scrabble.model.Board;
 import main.scrabble.model.Cell;
 
@@ -33,12 +32,12 @@ public class UIBoard extends UIObject {
     }
 
     @Override
-    public void draw(Graphics g, JFrame context) {
+    public void draw(Graphics2D g2, JFrame context) {
         //super.draw(g, context);
 
         // draw the board (super.draw) and all its cells
         // draw Rectangle2D.Double
-        Graphics2D g2 = (Graphics2D) g;
+
         BasicStroke in = new BasicStroke(6f);
         g2.setStroke(in);
         g2.setColor(Color.white);
@@ -55,13 +54,13 @@ public class UIBoard extends UIObject {
         g2.drawRect(x-12,y-12,w+24,h+24);
 
         for (UICell cell : cells)
-            cell.draw(g, context);
+            cell.draw(g2, context);
     }
 
     public Cell getSelectedCell(Point p) {
         int h = (int) ((p.x - x) / (w / 15f));
         int v = (int) ((p.y - y) / (h / 15f));
 
-        return cells.get(h + v * 15).getcell();
+        return cells.get(h + v * 15).getCell();
     }
 }

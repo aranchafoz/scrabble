@@ -15,8 +15,4 @@ public class UIBackground extends UIObject {
         setImage("assets/bck2.png");
     }
 
-    /*public void draw(Graphics g,JFrame context) {
-        g.setColor(Color.getHSBColor(40, 68, 75)); // marrón clarito RGB(227,220,186)
-        g.fillRect(0, 0, w, h);
-    }*/
 }

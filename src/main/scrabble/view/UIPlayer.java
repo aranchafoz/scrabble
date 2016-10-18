@@ -23,11 +23,11 @@ public class UIPlayer extends UIObject {
     }
 
     @Override
-    public void draw(Graphics g, JFrame context) {
-        super.draw(g,context);
+    public void draw(Graphics2D g2, JFrame context) {
+        super.draw(g2,context);
 
         // Draw name
-        Graphics2D g2 = (Graphics2D) g;
+        //Graphics2D g2 = (Graphics2D) g;
 
         g2.setColor(Color.BLACK);
         g2.setFont(new Font("Monaco",Font.BOLD, 25));
@@ -47,11 +47,11 @@ public class UIPlayer extends UIObject {
         this.player = player;
     }
 
-    public void drawCrown(Graphics g, JFrame context) {
+    public void drawCrown(Graphics2D g2, JFrame context) {
 
         try {
             Image crown = ImageIO.read(new File("assets/Queen UK-80.png"));
-            g.drawImage(crown, x + 35, y - 50, context);
+            g2.drawImage(crown, x + 35, y - 50, context);
         } catch (IOException e) {
 
         }
