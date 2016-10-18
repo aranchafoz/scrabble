@@ -5,11 +5,11 @@ package main.scrabble.model;
  */
 public class Piece {
     private char letter;
-    private int punctuation;
+    private int score;
 
-    public Piece(char c, int punctuation) {
+    public Piece(char c, int score) {
         this.letter = c;
-        this.punctuation = punctuation;
+        this.score = score;
     }
     public int getCoordinateX(){
         return 0;
@@ -19,12 +19,11 @@ public class Piece {
         return 0;
     }
 
-
     public char getLetter() {
         return letter;
     }
 
-    public int getPunctuation() {
-        return punctuation;
+    public int getScore() {
+        return score;
     }
 }

@@ -1,4 +1,4 @@
-package test.scrabble.model.scrabble.exceptions;
+package main.scrabble.exceptions;
 
 /**
  * Created by enrique on 27/09/16.

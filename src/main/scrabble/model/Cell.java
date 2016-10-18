@@ -74,6 +74,17 @@ public class Cell {
         return correct;
     }
 
+    public int getWordMultiplier() {
+        if (type == CellType.DOUBLE_WORD || type == CellType.CENTRAL_CELL) return 2;
+        if (type == CellType.TRIPLE_WORD) return 3;
+        return 1;
+    }
+
+    public int getLetterMultiplier() {
+        if (type == CellType.DOUBLE_LETTER) return 2;
+        if (type == CellType.TRIPLE_LETTER) return 3;
+        return 1;
+    }
 }
 
 

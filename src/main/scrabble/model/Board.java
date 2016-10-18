@@ -1,16 +1,12 @@
 package main.scrabble.model;
 
+
 import main.scrabble.exceptions.*;
-import org.omg.CosNaming.NamingContextPackage.NotEmpty;
-
 import java.util.ArrayList;
-import java.util.List;
-
-
 
 
 //getCell why -1?? Use in other methods!!??
-
+/*
 class Coordinate {
     public int x;
     public int y;
@@ -40,19 +36,21 @@ class Coordinate {
             }
         }
     }
-
 }
+*/
+
 public class Board {
 
     private static final int DIM = 15;
-    private Cell matrix[][];
+    private Cell cells[][];
 
     public Board() throws WrongCoordinateException {
-        matrix = new Cell[DIM][DIM];
+        cells = new Cell[DIM][DIM];
         fillBoard();
     }
-
+/*
     public int checkOpositeDirection(Word word) {
+
         int score = 0;
         Direction direction;
 
@@ -70,8 +68,8 @@ public class Board {
               c.x = pieces.get(i).getCoordinateX();
               c.y = pieces.get(i).getCoordinateY();
 
-            while (matrix[c.x][c.y].getType() != CellType.PLAIN) {
-                oppositePieces.add(0, matrix[c.x][c.y].getPiece());
+            while (cells[c.x][c.y].getType() != CellType.PLAIN) {
+                oppositePieces.add(0, cells[c.x][c.y].getPiece());
                 c.updateCoordinate(direction,"-");
             }
 
@@ -79,8 +77,8 @@ public class Board {
             c.y = pieces.get(i).getCoordinateY();
             c.updateCoordinate(direction,"+");
 
-            while (matrix[c.x][c.y].getType() != CellType.PLAIN) {
-                oppositePieces.add(matrix[c.x][c.y].getPiece());
+            while (cells[c.x][c.y].getType() != CellType.PLAIN) {
+                oppositePieces.add(cells[c.x][c.y].getPiece());
                 c.updateCoordinate(direction,"+");
             }
 
@@ -92,6 +90,54 @@ public class Board {
         }
         return score;
     }
+    */
+
+    private int checkOppositeDirection(Piece piece, Cell cell, Direction direction) throws WrongWordException {
+        int score = 0;
+        int multiplier = 1;
+        ArrayList<Character> newWord = new ArrayList<>();
+
+        newWord.add(piece.getLetter());
+        score += piece.getScore() * cell.getLetterMultiplier();
+        multiplier *= cell.getLetterMultiplier();
+
+        Cell currentCell = cell;
+        do {
+            if (!currentCell.isEmpty())
+                score += currentCell.getPiece().getScore();
+            currentCell = getPreviousCell(currentCell, direction);
+        } while (!currentCell.isEmpty());
+
+        currentCell = getNextCell(currentCell, direction);
+        do {
+            if (!currentCell.isEmpty())
+                score += currentCell.getPiece().getScore();
+            currentCell = getNextCell(currentCell, direction);
+        } while (!currentCell.isEmpty());
+
+        String nw = "";
+        for (char c : newWord)
+            nw += c;
+
+        if (!Dictionary.existWord(nw))
+            throw new WrongWordException(nw);
+
+        return score * multiplier;
+    }
+
+    private Cell getNextCell(Cell currentCell, Direction dir) {
+        if (dir == Direction.HORIZONTAL)
+            return cells[currentCell.getX() - 1][currentCell.getY()];
+        else
+            return cells[currentCell.getX()][currentCell.getY() - 1];
+    }
+
+    private Cell getPreviousCell(Cell currentCell, Direction dir) {
+        if (dir == Direction.HORIZONTAL)
+            return cells[currentCell.getX() + 1][currentCell.getY()];
+        else
+            return cells[currentCell.getX()][currentCell.getY() + 1];
+    }
 
     public String createWordFromPieces(ArrayList<Piece> p){
         String s = "";
@@ -101,12 +147,13 @@ public class Board {
         return s;
     }
 
-    public int insertWord(Word word) throws OccupiedCellException /*,WrongWordException*/{
+    public int insertWord(Word word) throws OccupiedCellException ,WrongWordException {
+        /*
         int score = 0;
         Direction direction = word.getDirection();
         Coordinate origin = new Coordinate(word.getOriginX(),word.getOriginY());
 
-        if(!matrix[origin.x][origin.y].isEmpty()){
+        if(!cells[origin.x][origin.y].isEmpty()){
             throw new OccupiedCellException(word.getOrigin());
         }
 
@@ -114,8 +161,8 @@ public class Board {
         ArrayList<Piece> completedWord = new ArrayList<>();
 
 
-        while(!matrix[c.x][c.y].isEmpty()){
-            completedWord.add(0,matrix[c.x][c.y].getPiece());
+        while(!cells[c.x][c.y].isEmpty()){
+            completedWord.add(0, cells[c.x][c.y].getPiece());
             c.updateCoordinate(direction,"-");
         }
         c = new Coordinate(origin);
@@ -130,8 +177,8 @@ public class Board {
         auxWord.remove(0); //Inserted before
 
         while(!auxWord.isEmpty()){
-            if(!matrix[c.x][c.y].isEmpty()){
-                completedWord.add(matrix[c.x][c.y].getPiece());
+            if(!cells[c.x][c.y].isEmpty()){
+                completedWord.add(cells[c.x][c.y].getPiece());
             } else {
                 completedWord.add(auxWord.get(0));
                 auxWord.remove(0);
@@ -146,8 +193,8 @@ public class Board {
         auxWord.remove(0); //Inserted before
 
         while(!auxWord.isEmpty()){
-            if(matrix[c.x][c.y].isEmpty()){
-                matrix[c.x][c.y].setPiece(auxWord.get(0));
+            if(cells[c.x][c.y].isEmpty()){
+                cells[c.x][c.y].setPiece(auxWord.get(0));
                 auxWord.remove(0);
             }
             c.updateCoordinate(direction,"+");
@@ -163,39 +210,64 @@ public class Board {
 
 
         return score;
+        */
 
+        /**
+         * TODO:
+         * - Check if the cell is out of bounds
+         */
+        int wordScore = 0;
+        int extraWordsScore = 0;
+        int wordMultiplier = 1;
+        Direction oppositeDir;
+        ArrayList<Character> newWord = new ArrayList<>();
 
+        Cell currentCell = word.getOrigin();
 
+        if (word.getDirection() == Direction.HORIZONTAL) oppositeDir = Direction.VERTICAL;
+        else oppositeDir = Direction.HORIZONTAL;
 
+        do {
+            currentCell = getPreviousCell(currentCell, word.getDirection());
+            if (!currentCell.isEmpty()) {
+                newWord.add(0, currentCell.getPiece().getLetter());
+                wordScore += currentCell.getPiece().getScore();
+            }
+        } while (!currentCell.isEmpty());
 
+        for (Piece p : word.getPieces()) {
+            /** If the piece was already inserted we don't want to
+             * compute the score of its opposite direction
+             */
+            while (!currentCell.isEmpty()) {
+                newWord.add(currentCell.getPiece().getLetter());
+                wordScore += currentCell.getPiece().getScore();
+                getNextCell(currentCell, word.getDirection());
+            }
+            newWord.add(currentCell.getPiece().getLetter());
+            wordMultiplier *= currentCell.getWordMultiplier();
+            extraWordsScore += checkOppositeDirection(p, currentCell, oppositeDir);
 
-
-
+            currentCell = getNextCell(currentCell, word.getDirection());
         }
 
+        do {
+            currentCell = getNextCell(currentCell, word.getDirection());
+            newWord.add(currentCell.getPiece().getLetter());
+            wordScore += currentCell.getPiece().getScore();
+        } while (!currentCell.isEmpty());
 
+        String nw = "";
+        for (char c : newWord) nw += c;
 
+        if (!Dictionary.existWord(nw))
+            throw new WrongWordException(nw);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return wordScore * wordMultiplier + extraWordsScore;
+    }
 
     public Cell getCell(int x, int y) {
-        Cell cell = matrix[x-1][y-1];
+        Cell cell = cells[x-1][y-1];
         return cell;
     }
 
@@ -203,17 +275,17 @@ public class Board {
         for(int i = 0; i < DIM; i++) {
             for(int j = 0; j < DIM; j++) {
                 if(fillTW(i,j)) {
-                    matrix[i][j] = new Cell(i, j , CellType.TRIPLE_WORD);
+                    cells[i][j] = new Cell(i, j , CellType.TRIPLE_WORD);
                 } else if (fillTL(i,j)) {
-                    matrix[i][j] = new Cell(i, j , CellType.TRIPLE_LETTER);
+                    cells[i][j] = new Cell(i, j , CellType.TRIPLE_LETTER);
                 } else if(fillDW(i,j)) {
-                    matrix[i][j] = new Cell(i, j , CellType.DOUBLE_WORD);
+                    cells[i][j] = new Cell(i, j , CellType.DOUBLE_WORD);
                 } else if(fillDL(i,j)) {
-                    matrix[i][j] = new Cell(i, j , CellType.DOUBLE_LETTER);
+                    cells[i][j] = new Cell(i, j , CellType.DOUBLE_LETTER);
                 } else if(i == 7 && j == 7) {
-                    matrix[i][j] = new Cell(i, j , CellType.CENTRAL_CELL);
+                    cells[i][j] = new Cell(i, j , CellType.CENTRAL_CELL);
                 } else {
-                    matrix[i][j] = new Cell(i, j , CellType.PLAIN);
+                    cells[i][j] = new Cell(i, j , CellType.PLAIN);
                 }
             }
         }
