@@ -172,8 +172,14 @@ public class GameController extends JFrame {
 
     private void draw() {
         Graphics g = getGraphics();
-        Graphics bg = buffer.getGraphics();
+        Graphics2D g2= (Graphics2D) g;
+        RenderingHints rh = new RenderingHints(
+                RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2.setRenderingHints(rh);
 
+        Graphics2D bg = (Graphics2D) buffer.getGraphics();
+        bg.setRenderingHints(rh);
         // Draw the background
         background.draw(bg, this);
 
@@ -198,7 +204,7 @@ public class GameController extends JFrame {
             }
         }
 
-        g.drawImage(buffer, 0, 0, this);
+        g2.drawImage(buffer, 0, 0, this);
     }
 
     public void revokeTempPieces() {
