@@ -66,7 +66,7 @@ public class GameController extends JFrame {
 
         // Random Players for UI pattern design
         Player p1 = new Player("WikiIvorra","assets/ivorra_player.png");
-        Player p2 = new Player("#PeloGuay","assets/ivorra_player.png");
+        Player p2 = new Player("#PeloGuay","assets/enrique_avatar.png");
         Player p3 = new Player("Aranchunfli","assets/arancha_avatar.png");
         Player p4 = new Player("Johannes","assets/ivorra_player.png");
         ArrayList<Player> player = new ArrayList<Player>();
@@ -86,6 +86,9 @@ public class GameController extends JFrame {
         background = new UIBackground(WINDOW_WIDTH, WINDOW_HEIGHT);
         Board b = new Board();
         board = new UIBoard(50, 75, 883, b); //game.getBoard); // 675 for 15 cells of 45 + 28 for 14 lines of 2
+
+        // Rack
+        rack = new UIRack(1000 + 20, 500, 700, 170);
 
         // image test
         test = new UIButton(20, 20, "test");
@@ -176,7 +179,7 @@ public class GameController extends JFrame {
 
         board.draw(bg, this);
 
-        //rack.draw(bg, this);
+        rack.draw(bg, this);
 
         for (UIPiece piece : playedPieces)
             piece.draw(bg, this);

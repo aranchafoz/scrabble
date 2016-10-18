@@ -55,7 +55,7 @@ public class Game {
     }
 
     public Player getBestPlayer() {
-        Player op = players.get(0);
+        Player op = players.get(1);
 
         for (Player player: players) {
             if (player.getPunctuation() > op.getPunctuation())
