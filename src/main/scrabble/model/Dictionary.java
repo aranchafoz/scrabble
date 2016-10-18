@@ -11,10 +11,12 @@ import java.util.Scanner;
  */
 
 public class Dictionary {
-    private final String FILENAME = "eng_dic";
+    private static final String FILENAME = "eng_dic";
     private static ArrayList<String> words;
 
-    public Dictionary() {
+    private static Dictionary dic = new Dictionary();
+
+    private Dictionary() {
         words = new ArrayList<>();
         try {
             Scanner input = new Scanner(new FileReader("assets/" + FILENAME));
@@ -29,9 +31,9 @@ public class Dictionary {
         return words.contains(word);
     }
 
-    public static  ArrayList<String> getWords(int size) {
+    public static ArrayList<String> getWords(int size) {
         ArrayList<String> wrds = new ArrayList<>();
-        for (String w : words)
+        for (String w : dic.words)
             if (w.length() == size)
                 wrds.add(w);
         return wrds;
@@ -65,7 +67,7 @@ public class Dictionary {
     public static ArrayList<String> getWordsWith(ArrayList<Character> letters) {
         ArrayList<String> words = getWords(letters.size());
         ArrayList<String> validWords = new ArrayList<>();
-        for (String w : words) {
+        for (String w : dic.words) {
             ArrayList<Character> word = new ArrayList<>();
             for (int i = 0; i < w.length(); i++)
                 word.add(w.charAt(i));
