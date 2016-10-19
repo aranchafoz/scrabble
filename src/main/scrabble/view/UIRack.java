@@ -13,21 +13,14 @@ import java.util.ArrayList;
 public class UIRack extends UIObject {
     private ArrayList<UIPiece> pieces;
 
-    private int paddingBottom = 5;
-    private int paddingTop = 5;
-    private int paddingRight = 5;
-    private int paddingLeft = 5;
-
-    private final int PIECE_WIDTH = 20;
+    private int backHmargin = 16;
+    private int backHpadding = 9;
+    private int pieceSeparator = 8;
+    private int frontHeight = 25;
+    private int backTopPadding = 13;
 
     public UIRack(int x, int y, int width, int height) {
         super(x, y);
-        /*
-        x += paddingLeft;
-        w -= paddingLeft + paddingRight;
-        y += paddingTop;
-        h -= paddingTop + paddingBottom;
-        */
         this.x = x;
         this.y = y;
 
@@ -35,12 +28,17 @@ public class UIRack extends UIObject {
         h = height;
 
         pieces = new ArrayList<>();
+        for(int i=0;i<7;i++) {
+            Piece piece = new Piece('A',1);
+            pieces.add(new UIPiece(x + backHmargin + backHpadding + ((86 + pieceSeparator) * i), y + backTopPadding, piece, true));
+        }
     }
 
     public void setPieces(ArrayList<Piece> pieces) {
         int i = 0;
+        // Check if pieces size equals to 7, else ERROR
         for (Piece p : pieces) {
-            this.pieces.add(new UIPiece(x + i * PIECE_WIDTH, y, p));
+            this.pieces.add(new UIPiece(x + backHmargin + backHpadding + ((86 + pieceSeparator) * i), y + backTopPadding, p, true));
         }
     }
 
@@ -54,21 +52,21 @@ public class UIRack extends UIObject {
         g2.setStroke(backShadow);
         color = Color.RGBtoHSB(192,128,64,hsb);//204,153,102,hsb); // 192,128,64
         g2.setColor(Color.getHSBColor(color[0], color[1], color[2]));
-        g2.drawRoundRect(x + 20,y,w - 40,h,20,20);
+        g2.drawRoundRect(x + backHmargin, y, w - (backHmargin * 2), h, 20, 20);
 
         color = Color.RGBtoHSB(250,223,173,hsb); // 192,128,64
         g2.setColor(Color.getHSBColor(color[0], color[1], color[2]));
-        g2.fillRoundRect(x + 20,y,w - 40,h,20,20);
+        g2.fillRoundRect(x + backHmargin, y, w - (backHmargin * 2), h, 20, 20);
 
         BasicStroke frontShadow = new BasicStroke(3f);
         g2.setStroke(frontShadow);
         color = Color.RGBtoHSB(192,128,64,hsb); // 192,128,64
         g2.setColor(Color.getHSBColor(color[0], color[1], color[2]));
-        g2.drawRoundRect(x,y + h - 47,w,45,15,15);
+        g2.drawRoundRect(x, y + h - frontHeight, w, frontHeight, 15, 15);
 
         color = Color.RGBtoHSB(204,153,102,hsb); // 192,128,64
         g2.setColor(Color.getHSBColor(color[0], color[1], color[2]));
-        g2.fillRoundRect(x,y + h - 47,w,45,15,15);
+        g2.fillRoundRect(x, y + h - frontHeight, w, frontHeight, 15, 15);
 
         for (UIPiece piece : pieces)
             piece.draw(g2, context);

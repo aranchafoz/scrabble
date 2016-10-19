@@ -88,7 +88,7 @@ public class GameController extends JFrame {
         board = new UIBoard(50, 75, 883, b); //game.getBoard); // 675 for 15 cells of 45 + 28 for 14 lines of 2
 
         // Rack
-        rack = new UIRack(1000 + 20, 500, 700, 170);
+        rack = new UIRack(1000 + 20, 500, 700, 126);//170);
 
         // image test
         test = new UIButton(20, 20, "test");
