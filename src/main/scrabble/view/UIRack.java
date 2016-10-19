@@ -13,11 +13,11 @@ import java.util.ArrayList;
 public class UIRack extends UIObject {
     private ArrayList<UIPiece> pieces;
 
-    private int backHmargin = 16;
-    private int backHpadding = 9;
-    private int pieceSeparator = 8;
-    private int frontHeight = 25;
-    private int backTopPadding = 13;
+    private static final int backHmargin = 16;
+    private static final int backHpadding = 9;
+    private static final int pieceSeparator = 8;
+    private static final int frontHeight = 25;
+    private static final int backTopPadding = 13;
 
     public UIRack(int x, int y, int width, int height) {
         super(x, y);
@@ -38,7 +38,7 @@ public class UIRack extends UIObject {
         int i = 0;
         // Check if pieces size equals to 7, else ERROR
         for (Piece p : pieces) {
-            this.pieces.add(new UIPiece(x + backHmargin + backHpadding + ((86 + pieceSeparator) * i), y + backTopPadding, p, true));
+            this.pieces.add(new UIPiece(x + backHmargin + backHpadding + ((UIPiece.sideWidthRack + pieceSeparator) * i), y + backTopPadding, p, true));
         }
     }
 

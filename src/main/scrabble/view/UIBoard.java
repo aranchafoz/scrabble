@@ -14,6 +14,9 @@ public class UIBoard extends UIObject {
     private Board board;
     private ArrayList<UICell> cells;
 
+    private static final int sideSizeCells = 15;
+    private static final int cellSeparator = 2;
+
     public UIBoard(int x, int y, int sideWidth, Board b) {
         super(x, y);
         w = sideWidth;
@@ -21,11 +24,11 @@ public class UIBoard extends UIObject {
         // Receive board and create the UICell array from it
         board = b;
 
-        cells = new ArrayList<UICell>();
+        cells = new ArrayList<>();
 
-        for(int i = 0; i<15; i++) {
-            for(int j = 0; j<15; j++) {
-                UICell cell = new UICell(x + i * 59, y + j * 59, 57, b.getCell(i+1,j+1));
+        for(int i = 0; i < sideSizeCells; i++) {
+            for(int j = 0; j < sideSizeCells; j++) {
+                UICell cell = new UICell(x + i * (UICell.sideWidth + cellSeparator), y + j * (UICell.sideWidth + cellSeparator), b.getCell(i+1,j+1));
                 cells.add(cell);
             }
         }
@@ -33,11 +36,8 @@ public class UIBoard extends UIObject {
 
     @Override
     public void draw(Graphics2D g2, JFrame context) {
-        //super.draw(g, context);
 
-        // draw the board (super.draw) and all its cells
-        // draw Rectangle2D.Double
-
+        // Draw Board
         BasicStroke in = new BasicStroke(6f);
         g2.setStroke(in);
         g2.setColor(Color.white);
@@ -53,6 +53,7 @@ public class UIBoard extends UIObject {
         g2.setColor(Color.white);
         g2.drawRect(x-12,y-12,w+24,h+24);
 
+        // Draw Cells
         for (UICell cell : cells)
             cell.draw(g2, context);
     }

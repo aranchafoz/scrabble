@@ -13,6 +13,13 @@ import java.io.IOException;
  */
 public class UIPlayer extends UIObject {
     private Player player;
+
+    private static final int imgRightMargin = 15;
+    private static final int playerNameTopMargin = 45;
+    private static final int playerPunctTopMargin = 100;
+    private static final int crownHfit = 35;
+    private static final int crownVfit = -50;
+
     public UIPlayer(int x, int y,int sideWidth, Player p) {
         super(x, y);
         w = sideWidth;
@@ -31,12 +38,12 @@ public class UIPlayer extends UIObject {
 
         g2.setColor(Color.BLACK);
         g2.setFont(new Font("Monaco",Font.BOLD, 25));
-        g2.drawString(player.getName(), x + 165, y + 45);
+        g2.drawString(player.getName(), x + w + imgRightMargin, y + playerNameTopMargin);
 
         // Draw punctuation
         g2.setColor(Color.darkGray);
         g2.setFont(new Font("Monaco",Font.ITALIC, 20));
-        g2.drawString(String.valueOf(player.getPunctuation()) + " points", x + 165, y + 100);
+        g2.drawString(String.valueOf(player.getPunctuation()) + " points", x + w + imgRightMargin, y + playerPunctTopMargin);
     }
 
     public Player getPlayer() {
@@ -51,7 +58,7 @@ public class UIPlayer extends UIObject {
 
         try {
             Image crown = ImageIO.read(new File("assets/Queen UK-80.png"));
-            g2.drawImage(crown, x + 35, y - 50, context);
+            g2.drawImage(crown, x + crownHfit, y + crownVfit, context);
         } catch (IOException e) {
 
         }

@@ -12,8 +12,8 @@ import java.awt.*;
 public class UIPiece extends UIObject {
     private Piece piece;
 
-    private int sideWidthBoard = 57;
-    private int sideWidthRack = 86;
+    public static final int sideWidthBoard = 57;
+    public static final int sideWidthRack = 86;
 
     public UIPiece(int x, int y, Piece piece) {
         super(x, y);

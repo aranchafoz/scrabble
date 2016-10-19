@@ -22,7 +22,9 @@ import static com.sun.javafx.tk.Toolkit.getToolkit;
 public class UICell extends UIObject {
     private Cell cell;
 
-    public UICell(int x, int y, int sideWidth, Cell cell) {
+    public static final int sideWidth = 57;
+
+    public UICell(int x, int y, Cell cell) {
         super(x, y);
         w = sideWidth;
         h = sideWidth;
