@@ -12,8 +12,6 @@ public class Game {
     private int round;
     private int turn;
 
-    private Player bestPlayer;
-
     private ArrayList<Player> players;
     private Board board;
     private Bag bag;
@@ -27,7 +25,6 @@ public class Game {
         round = 0;
         turn = (new Random()).nextInt(players.size());
         // Borrar después, solo pruebas
-        bestPlayer = players.get(1);
     }
 
     public void fillPlayerRack() throws NoPiecesInBagException {
@@ -55,18 +52,13 @@ public class Game {
     }
 
     public Player getBestPlayer() {
-        Player op = players.get(1);
+        Player bestPlayer = players.get(0);
 
         for (Player player: players) {
-            if (player.getPunctuation() > op.getPunctuation())
-                op = player;
+            if (player.getPunctuation() > bestPlayer.getPunctuation())
+                bestPlayer = player;
         }
 
-        bestPlayer = op;
         return bestPlayer;
-    }
-
-    public void setBestPlayer(Player bestPlayer) {
-        this.bestPlayer = bestPlayer;
     }
 }
