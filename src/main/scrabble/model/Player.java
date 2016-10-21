@@ -22,9 +22,8 @@ public class Player {
         punctuation = 0;
     }
 
-    public int increasePunctuation(int value) {
+    public void increasePunctuation(int value) {
         punctuation += value;
-        return punctuation;
     }
 
     public ArrayList<Piece> getPieces() {

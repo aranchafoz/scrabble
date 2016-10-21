@@ -11,13 +11,6 @@ public class Piece {
         this.letter = c;
         this.score = score;
     }
-    public int getCoordinateX(){
-        return 0;
-    }
-
-    public int getCoordinateY(){
-        return 0;
-    }
 
     public char getLetter() {
         return letter;

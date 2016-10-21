@@ -12,11 +12,6 @@ import static org.junit.Assert.*;
  */
 public class DictionaryTest {
 
-    @Before
-    public void initialize() {
-
-    }
-
     @Test
     public void existWord() throws Exception {
         assertTrue(Dictionary.existWord("house"));

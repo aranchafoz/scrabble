@@ -42,7 +42,7 @@ public class CellTest {
     }
     @Test
     public void testToString() throws Exception {
-        assertEquals("B3",cell.toString());
+        assertEquals("B3", cell.toString());
     }
     @Test
     public void testWrongCoordinateException() throws Exception {

@@ -8,6 +8,7 @@ import java.util.*;
  * Created by enrique on 11/10/16.
  */
 public class Bag {
+
     private ArrayList<Piece> pieces;
     private HashMap letters;
     private HashMap punctuations;
@@ -62,6 +63,14 @@ public class Bag {
         Piece p = pieces.get(0);
         pieces.remove(0);
         return p;
+    }
+
+    public int getRemaining() {
+        return pieces.size();
+    }
+
+    public boolean isEmpty() {
+        return pieces.size() == 0;
     }
 
     public Piece changePiece(Piece old) throws NoPiecesInBagException {

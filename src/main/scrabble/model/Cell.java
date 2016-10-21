@@ -54,15 +54,11 @@ public class Cell {
     }
 
     public boolean isEmpty() {
-        boolean empty = false;
-        if(piece == null){
-            empty = true;
-        }
-        return empty;
+        return piece == null;
     }
     @Override
     public String toString() {
-        return (char) (cx + 65) + Integer.toString(cy + 1);
+        return (char) (cx + 'A') + Integer.toString(cy + 1);
     }
 
     public boolean checkCoordinates(int xCoord, int yCoord) {
