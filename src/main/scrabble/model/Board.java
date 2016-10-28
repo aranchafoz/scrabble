@@ -3,41 +3,6 @@ package main.scrabble.model;
 import main.scrabble.exceptions.*;
 import java.util.ArrayList;
 
-
-//getCell why -1?? Use in other methods!!??
-/**
-class Coordinate {
-    public int x;
-    public int y;
-
-    public Coordinate(int cx, int cy){
-        x = cx;
-        y = cy;
-    }
-
-    public Coordinate(Coordinate c){
-        x = c.x;
-        y = c.y;
-    }
-
-    public void updateCoordinate(Direction dir, String op){
-        if(op == "-") {
-            if (dir == Direction.HORIZONTAL) {
-                x--;
-            } else {
-                y--;
-            }
-        } else if(op == "+") {
-            if (dir == Direction.HORIZONTAL) {
-                x++;
-            } else {
-                y++;
-            }
-        }
-    }
-}
-*/
-
 public class Board {
 
     private static final int DIM = 15;
@@ -47,49 +12,6 @@ public class Board {
         cells = new Cell[DIM][DIM];
         fillBoard();
     }
-/**
-    public int checkOpositeDirection(Word word) {
-
-        int score = 0;
-        Direction direction;
-
-        if (word.getDirection() == Direction.HORIZONTAL) {
-            direction = Direction.VERTICAL;
-        } else {
-            direction = Direction.HORIZONTAL;
-        }
-
-        ArrayList<Piece> pieces = word.getPieces();
-        ArrayList<Piece> oppositePieces = new ArrayList<>();
-        Coordinate c = new Coordinate(0,0);
-
-        for (int i = 0; i < pieces.size(); i++) {
-              c.x = pieces.get(i).getCoordinateX();
-              c.y = pieces.get(i).getCoordinateY();
-
-            while (cells[c.x][c.y].getType() != CellType.PLAIN) {
-                oppositePieces.add(0, cells[c.x][c.y].getPiece());
-                c.updateCoordinate(direction,"-");
-            }
-
-            c.x = pieces.get(i).getCoordinateX();
-            c.y = pieces.get(i).getCoordinateY();
-            c.updateCoordinate(direction,"+");
-
-            while (cells[c.x][c.y].getType() != CellType.PLAIN) {
-                oppositePieces.add(cells[c.x][c.y].getPiece());
-                c.updateCoordinate(direction,"+");
-            }
-
-            //PONER LO DE PUNTUACIONES
-            String s = createWordFromPieces(oppositePieces);
-            Dictionary.existWord(s);
-            //PONER LO DE PUNTUACIONES
-            oppositePieces.clear();
-        }
-        return score;
-    }
-    */
 
     private int checkOppositeDirection(Piece piece, Cell cell, Direction direction) throws WrongWordException, OutOfBoundsException {
         int score = 0;
@@ -156,69 +78,6 @@ public class Board {
     }
 
     public int playWord(Word word) throws OccupiedCellException, WrongWordException, OutOfBoundsException, NoPieceInCenterException {
-        /*
-        int score = 0;
-        Direction direction = word.getDirection();
-        Coordinate origin = new Coordinate(word.getOriginX(),word.getOriginY());
-
-        if(!cells[origin.x][origin.y].isEmpty()){
-            throw new OccupiedCellException(word.getOrigin());
-        }
-
-        Coordinate c = new Coordinate(origin);
-        ArrayList<Piece> completedWord = new ArrayList<>();
-
-
-        while(!cells[c.x][c.y].isEmpty()){
-            completedWord.add(0, cells[c.x][c.y].getPiece());
-            c.updateCoordinate(direction,"-");
-        }
-        c = new Coordinate(origin);
-        c.updateCoordinate(direction,"+");
-
-        ArrayList<Piece> auxWord = new ArrayList<>();
-        ArrayList<Piece> pieces = word.getPieces();
-
-        for(Piece p : pieces) {
-            auxWord.add(p);
-        }
-        auxWord.remove(0); //Inserted before
-
-        while(!auxWord.isEmpty()){
-            if(!cells[c.x][c.y].isEmpty()){
-                completedWord.add(cells[c.x][c.y].getPiece());
-            } else {
-                completedWord.add(auxWord.get(0));
-                auxWord.remove(0);
-            }
-            c.updateCoordinate(direction,"+");
-
-        }
-
-        for(Piece p : pieces) {
-            auxWord.add(p);
-        }
-        auxWord.remove(0); //Inserted before
-
-        while(!auxWord.isEmpty()){
-            if(cells[c.x][c.y].isEmpty()){
-                cells[c.x][c.y].setPiece(auxWord.get(0));
-                auxWord.remove(0);
-            }
-            c.updateCoordinate(direction,"+");
-
-        }
-
-        //PONER LO DE PUNTUACIONES
-        String s = createWordFromPieces(completedWord);
-        // if(!Dictionary.existWord(s)){throw new  WrongWordException(s);}
-        //PONER LO DE PUNTUACIONES
-
-        //Insertarla al final!!! (iterar igual que el bucle de antes, donde haya vacio poner la pieza)
-
-
-        return score;
-        */
 
         if (cells[7][7].isEmpty()) {
             if (word.getDirection() == Direction.VERTICAL) {
