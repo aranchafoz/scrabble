@@ -74,7 +74,8 @@ public class BoardTest {
         assertEquals('e', board.getCell(8, 7).getPiece().getLetter());
         assertEquals('r', board.getCell(8, 8).getPiece().getLetter());
         assertEquals('a', board.getCell(8, 9).getPiece().getLetter());
-        assertEquals(23, score);
+        assertEquals(15, score); //We expect to get 15 = H(1) + L(1) + E(2) + R(3) + A(8)
+                                 //We get 17
 
     }
 
