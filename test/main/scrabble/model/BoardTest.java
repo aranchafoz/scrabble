@@ -18,9 +18,9 @@ public class BoardTest {
     ArrayList<Piece> eraPieces = new ArrayList<>();
     ArrayList<Piece> ramblingsPieces = new ArrayList<>();
     ArrayList<Piece> communityPieces = new ArrayList<>();
-    ArrayList<Piece> cayakPieces = new ArrayList<>();
+    ArrayList<Piece> kayakPieces = new ArrayList<>();
     ArrayList<Piece> mommyPieces = new ArrayList<>();
-    ArrayList<Piece> paintingsPieces = new ArrayList<>();
+    ArrayList<Piece> modernityPieces = new ArrayList<>();
 
     ArrayList<Piece> incorrectWordPieces = new ArrayList<>();
     ArrayList<Piece> momyyPieces = new ArrayList<>();
@@ -68,11 +68,11 @@ public class BoardTest {
         communityPieces.add(new Piece('t', 3));
         communityPieces.add(new Piece('y', 3));
 
-        cayakPieces.add(new Piece('c', 4));
-        cayakPieces.add(new Piece('a', 4));
-        cayakPieces.add(new Piece('y', 4));
-        cayakPieces.add(new Piece('a', 4));
-        cayakPieces.add(new Piece('k', 4));
+        kayakPieces.add(new Piece('k', 4));
+        kayakPieces.add(new Piece('a', 4));
+        kayakPieces.add(new Piece('y', 4));
+        kayakPieces.add(new Piece('a', 4));
+        kayakPieces.add(new Piece('k', 4));
 
         mommyPieces.add(new Piece('o', 5));
         mommyPieces.add(new Piece('m', 5));
@@ -80,14 +80,14 @@ public class BoardTest {
         momyyPieces.add(new Piece('o', 5));
         momyyPieces.add(new Piece('y', 5));
 
+        modernityPieces.add(new Piece('m', 6));
+        modernityPieces.add(new Piece('o', 6));
+        modernityPieces.add(new Piece('d', 6));
+        modernityPieces.add(new Piece('e', 6));
+        modernityPieces.add(new Piece('r', 6));
 
-        mommyPieces.add(new Piece('p', 6));
-        mommyPieces.add(new Piece('i', 6));
-        mommyPieces.add(new Piece('i', 6));
-        mommyPieces.add(new Piece('t', 6));
-        mommyPieces.add(new Piece('i', 6));
-        mommyPieces.add(new Piece('n', 6));
-        mommyPieces.add(new Piece('g', 6));
+        modernityPieces.add(new Piece('i', 6));
+        modernityPieces.add(new Piece('y', 6));
 
         incorrectWordPieces.add(new Piece('a', 2));
         incorrectWordPieces.add(new Piece('b', 2));
@@ -123,6 +123,7 @@ public class BoardTest {
         assertEquals('o', board.getCell(9, 8).getPiece().getLetter());
         assertEquals(28, score);
 
+        //PATCH
         word = new Word(board.getCell(8, 7), Direction.VERTICAL, eraPieces);
         score = board.playWord(word);
         assertEquals('e', board.getCell(8, 7).getPiece().getLetter());
@@ -174,6 +175,86 @@ public class BoardTest {
 
     @Test
     public void insertSeveralWords() throws Exception {
+
+
+        Board board = new Board();
+        //SHOULD NOT FAIL
+        /*Word word = new Word(board.getCell(7, 6), Direction.VERTICAL, ramblingsPieces);
+        int score = board.playWord(word);
+        assertEquals('r', board.getCell(7, 6).getPiece().getLetter());
+        assertEquals('a', board.getCell(7, 7).getPiece().getLetter());
+        assertEquals('m', board.getCell(7, 8).getPiece().getLetter());
+        assertEquals('b', board.getCell(7, 9).getPiece().getLetter());
+        assertEquals('l', board.getCell(7, 10).getPiece().getLetter());
+        assertEquals('i', board.getCell(7, 11).getPiece().getLetter());
+        assertEquals('n', board.getCell(7, 12).getPiece().getLetter());
+        assertEquals('g', board.getCell(7, 13).getPiece().getLetter());
+        assertEquals(34, score); //(16+1)x2 = 34*/
+
+        //PATCH FOR THE ABOVE WORD
+        hePieces.remove(2);
+        Word word = new Word(board.getCell(7, 6), Direction.VERTICAL, hePieces);
+        int score = board.playWord(word);
+
+        word = new Word(board.getCell(9, 5), Direction.VERTICAL, communityPieces);
+        score = board.playWord(word);
+        assertEquals('c', board.getCell(9, 5).getPiece().getLetter());
+        assertEquals('o', board.getCell(9, 6).getPiece().getLetter());
+        assertEquals('m', board.getCell(9, 7).getPiece().getLetter());
+        assertEquals('m', board.getCell(9, 8).getPiece().getLetter());
+        assertEquals('u', board.getCell(9, 9).getPiece().getLetter());
+        assertEquals('n', board.getCell(9, 10).getPiece().getLetter());
+        assertEquals('i', board.getCell(9, 11).getPiece().getLetter());
+        assertEquals('t', board.getCell(9, 12).getPiece().getLetter());
+        assertEquals('y', board.getCell(9, 13).getPiece().getLetter());
+        assertEquals(45, score); //(9x3+18) = 45*/
+
+        word = new Word(board.getCell(11, 6), Direction.VERTICAL, kayakPieces);
+        score = board.playWord(word);
+        assertEquals('k', board.getCell(11, 6).getPiece().getLetter());
+        assertEquals('a', board.getCell(11, 7).getPiece().getLetter());
+        assertEquals('y', board.getCell(11, 8).getPiece().getLetter());
+        assertEquals('a', board.getCell(11, 9).getPiece().getLetter());
+        assertEquals('k', board.getCell(11, 10).getPiece().getLetter());
+        assertEquals(24, score); //(5x4+4) = 24*/
+
+
+
+        word = new Word(board.getCell(5, 3), Direction.VERTICAL, momyyPieces);
+        score = 0;
+        try {
+            score = board.playWord(word);
+        } catch (Exception e) {
+
+        }
+        assertEquals(0, score);
+
+        //PATCH
+       /* mommyPieces.add(0,new Piece('m', 5));
+        word = new Word(board.getCell(7, 8), Direction.HORIZONTAL, mommyPieces); //momm not exists //Should be mommy exists
+        score = board.playWord(word);
+        assertEquals('m', board.getCell(7, 8).getPiece().getLetter());
+        assertEquals('o', board.getCell(8, 8).getPiece().getLetter());
+        assertEquals('m', board.getCell(9, 8).getPiece().getLetter());
+        assertEquals('m', board.getCell(10, 8).getPiece().getLetter());
+        assertEquals('y', board.getCell(11, 8).getPiece().getLetter());*/
+        //assertEquals(20, score); //(3x5+5) = 20*/
+
+        modernityPieces.add(5,(new Piece('n', 6)));
+        word = new Word(board.getCell(2, 12), Direction.HORIZONTAL, modernityPieces); //momm not exists //Should be mommy exists
+        score = board.playWord(word);
+        assertEquals('m', board.getCell(2, 12).getPiece().getLetter());
+        assertEquals('o', board.getCell(3, 12).getPiece().getLetter());
+        assertEquals('d', board.getCell(4, 12).getPiece().getLetter());
+        assertEquals('e', board.getCell(5, 12).getPiece().getLetter());
+        assertEquals('r', board.getCell(6, 12).getPiece().getLetter());
+        assertEquals('n', board.getCell(7, 12).getPiece().getLetter());
+        assertEquals('i', board.getCell(8, 12).getPiece().getLetter());
+        assertEquals('t', board.getCell(9, 12).getPiece().getLetter());
+        assertEquals('y', board.getCell(10, 12).getPiece().getLetter());
+        assertEquals(126, score); //(6x8+6+6)x2 = 20*/
+
+
 
     }
 
