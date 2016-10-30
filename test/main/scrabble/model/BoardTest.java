@@ -11,37 +11,84 @@ import static org.junit.Assert.assertEquals;
  * Created by enrique on 19/10/16.
  */
 public class BoardTest {
-    ArrayList<Piece> helloPieces;
-    ArrayList<Piece> heroPieces;
-    ArrayList<Piece> hePieces;
-    ArrayList<Piece> eraPieces;
-    ArrayList<Piece> incorrectWordPieces;
+    ArrayList<Piece> helloPieces = new ArrayList<>();
+    ArrayList<Piece> heroPieces  = new ArrayList<>();
+    ArrayList<Piece> hePieces = new ArrayList<>();
+
+    ArrayList<Piece> eraPieces = new ArrayList<>();
+    ArrayList<Piece> ramblingsPieces = new ArrayList<>();
+    ArrayList<Piece> communityPieces = new ArrayList<>();
+    ArrayList<Piece> cayakPieces = new ArrayList<>();
+    ArrayList<Piece> mommyPieces = new ArrayList<>();
+    ArrayList<Piece> paintingsPieces = new ArrayList<>();
+
+    ArrayList<Piece> incorrectWordPieces = new ArrayList<>();
+    ArrayList<Piece> momyyPieces = new ArrayList<>();
+
 
 
     @Before
     public void setUp() {
-        helloPieces = new ArrayList<>();
+
         helloPieces.add(new Piece('h', 1));
         helloPieces.add(new Piece('e', 1));
         helloPieces.add(new Piece('l', 1));
         helloPieces.add(new Piece('l', 1));
         helloPieces.add(new Piece('o', 1));
 
-        heroPieces = new ArrayList<>();
         heroPieces.add(new Piece('h', 10));
         heroPieces.add(new Piece('r', 3));
         heroPieces.add(new Piece('o', 1));
 
-        eraPieces = new ArrayList<>();
         eraPieces.add(new Piece('e', 2));
         eraPieces.add(new Piece('a', 8));
 
-        hePieces = new ArrayList<>();
         hePieces.add(new Piece('h', 5));
         hePieces.add(new Piece('e', 1));
 
+        hePieces.add(new Piece('h', 5));
 
-        incorrectWordPieces = new ArrayList<>();
+        ramblingsPieces.add(new Piece('r', 2));
+        ramblingsPieces.add(new Piece('a', 2));
+        ramblingsPieces.add(new Piece('m', 2));
+        ramblingsPieces.add(new Piece('b', 2));
+        ramblingsPieces.add(new Piece('l', 2));
+        ramblingsPieces.add(new Piece('i', 2));
+        ramblingsPieces.add(new Piece('n', 2));
+        ramblingsPieces.add(new Piece('g', 2));
+        ramblingsPieces.add(new Piece('s', 2));
+
+        communityPieces.add(new Piece('c', 3));
+        communityPieces.add(new Piece('o', 3));
+        communityPieces.add(new Piece('m', 3));
+        communityPieces.add(new Piece('m', 3));
+        communityPieces.add(new Piece('u', 3));
+        communityPieces.add(new Piece('n', 3));
+        communityPieces.add(new Piece('i', 3));
+        communityPieces.add(new Piece('t', 3));
+        communityPieces.add(new Piece('y', 3));
+
+        cayakPieces.add(new Piece('c', 4));
+        cayakPieces.add(new Piece('a', 4));
+        cayakPieces.add(new Piece('y', 4));
+        cayakPieces.add(new Piece('a', 4));
+        cayakPieces.add(new Piece('k', 4));
+
+        mommyPieces.add(new Piece('o', 5));
+        mommyPieces.add(new Piece('m', 5));
+
+        momyyPieces.add(new Piece('o', 5));
+        momyyPieces.add(new Piece('y', 5));
+
+
+        mommyPieces.add(new Piece('p', 6));
+        mommyPieces.add(new Piece('i', 6));
+        mommyPieces.add(new Piece('i', 6));
+        mommyPieces.add(new Piece('t', 6));
+        mommyPieces.add(new Piece('i', 6));
+        mommyPieces.add(new Piece('n', 6));
+        mommyPieces.add(new Piece('g', 6));
+
         incorrectWordPieces.add(new Piece('a', 2));
         incorrectWordPieces.add(new Piece('b', 2));
         incorrectWordPieces.add(new Piece('z', 2));
@@ -125,6 +172,10 @@ public class BoardTest {
 
     }
 
+    @Test
+    public void insertSeveralWords() throws Exception {
+
+    }
 
     @Test
     public void noPiecesInMiddle() throws Exception {
