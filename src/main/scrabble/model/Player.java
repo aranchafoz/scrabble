@@ -3,14 +3,13 @@ package main.scrabble.model;
 
 import main.scrabble.exceptions.NoPiecesInBagException;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
 public class Player {
     private final int RACK_SIZE = 7;
-    private int punctuation;
+    private int score;
 
     private String name;
     private String avatarPath;
@@ -19,11 +18,12 @@ public class Player {
     public Player(String name, String avatarPath) {
         this.name = name;
         this.avatarPath = avatarPath;
-        punctuation = 0;
+        pieces = new ArrayList<>();
+        score = 0;
     }
 
-    public void increasePunctuation(int value) {
-        punctuation += value;
+    public void increaseScore(int value) {
+        score += value;
     }
 
     public ArrayList<Piece> getPieces() {
@@ -36,7 +36,7 @@ public class Player {
         return avatarPath;
     }
 
-    public int getPunctuation() { return punctuation; }
+    public int getScore() { return score; }
 
     public boolean rackFilled() {
         return pieces.size() >= RACK_SIZE;

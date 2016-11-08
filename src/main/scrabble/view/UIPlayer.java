@@ -43,7 +43,7 @@ public class UIPlayer extends UIObject {
         // Draw punctuation
         g2.setColor(Color.darkGray);
         g2.setFont(new Font("Monaco",Font.ITALIC, 20));
-        g2.drawString(String.valueOf(player.getPunctuation()) + " points", x + w + imgRightMargin, y + playerPunctTopMargin);
+        g2.drawString(String.valueOf(player.getScore()) + " points", x + w + imgRightMargin, y + playerPunctTopMargin);
     }
 
     public Player getPlayer() {

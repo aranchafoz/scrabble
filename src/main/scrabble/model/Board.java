@@ -13,7 +13,7 @@ public class Board {
         fillBoard();
     }
 
-    private int checkOppositeDirection(Piece piece, Cell cell, Direction direction) throws WrongWordException, OutOfBoundsException {
+    private int checkOppositeDirection(Piece piece, Cell cell, Direction direction) throws WrongWordException {
         int score = 0;
         int multiplier = 1;
         ArrayList<Character> newWord = new ArrayList<>();
@@ -22,17 +22,33 @@ public class Board {
 
         Cell currentCell = cell;
         do {
-            if (!currentCell.isEmpty())
+            if (!currentCell.isEmpty()) {
                 score += currentCell.getPiece().getScore();
-            currentCell = getPreviousCell(currentCell, direction);
+                newWord.add(0, currentCell.getPiece().getLetter());
+            }
+            try {
+                currentCell = getPreviousCell(currentCell, direction);
+            } catch (OutOfBoundsException e) {
+                break;
+            }
         } while (!currentCell.isEmpty());
 
-        currentCell = getNextCell(currentCell, direction);
+        try {
+            currentCell = getNextCell(cell, direction);
+        } catch (OutOfBoundsException e) {
+
+        }
 
         do {
-            if (!currentCell.isEmpty())
+            if (!currentCell.isEmpty()) {
                 score += currentCell.getPiece().getScore();
-            currentCell = getNextCell(currentCell, direction);
+                newWord.add(currentCell.getPiece().getLetter());
+            }
+            try {
+                currentCell = getNextCell(currentCell, direction);
+            } catch (OutOfBoundsException e) {
+                break;
+            }
         } while (!currentCell.isEmpty());
 
         String nw = "";
@@ -41,6 +57,9 @@ public class Board {
 
         if (!Dictionary.existWord(nw) && nw.length() > 1)
             throw new WrongWordException(nw);
+
+        if (score > 0)
+            System.out.println("Opposite word: " + nw + "\tScore: " + Integer.toString(score * multiplier));
 
         return score * multiplier;
     }
@@ -77,7 +96,8 @@ public class Board {
         }
     }
 
-    public int playWord(Word word) throws OccupiedCellException, WrongWordException, OutOfBoundsException, NoPieceInCenterException {
+    public int playWord(Word word) throws OccupiedCellException, WrongWordException, NoPieceInCenterException, OutOfBoundsException, AloneWordException {
+        boolean validPosition = false;
 
         if (cells[7][7].isEmpty()) {
             if (word.getDirection() == Direction.VERTICAL) {
@@ -95,6 +115,7 @@ public class Board {
                     throw new NoPieceInCenterException();
                 }
             }
+            validPosition = true;
         }
 
         int wordScore = 0;
@@ -116,6 +137,7 @@ public class Board {
                 if (!currentCell.isEmpty()) {
                     newWord.add(0, currentCell.getPiece().getLetter());
                     wordScore += currentCell.getPiece().getScore();
+                    validPosition = true;
                 }
             } catch (OutOfBoundsException e) {
                 break;
@@ -125,13 +147,13 @@ public class Board {
         currentCell = word.getOrigin();
 
         for (Piece p : word.getPieces()) {
-            /** If the piece was already inserted we don't want to
-             * compute the score of its opposite direction
-             */
+            // If the piece was already inserted we don't want to
+            // compute the score of its opposite direction
             while (!currentCell.isEmpty()) {
                 newWord.add(currentCell.getPiece().getLetter());
                 wordScore += currentCell.getPiece().getScore();
                 currentCell = getNextCell(currentCell, word.getDirection());
+                validPosition = true;
             }
             newWord.add(p.getLetter());
             wordScore += p.getScore() * currentCell.getLetterMultiplier();
@@ -140,12 +162,14 @@ public class Board {
 
             currentCell = getNextCell(currentCell, word.getDirection());
         }
+
         try {
             do {
                 currentCell = getNextCell(currentCell, word.getDirection());
                 if (!currentCell.isEmpty()) {
                     newWord.add(currentCell.getPiece().getLetter());
                     wordScore += currentCell.getPiece().getScore();
+                    validPosition = true;
                 }
             } while (!currentCell.isEmpty());
         } catch (OutOfBoundsException e) { }
@@ -156,9 +180,18 @@ public class Board {
         if (!Dictionary.existWord(nw))
             throw new WrongWordException(nw);
 
+        if (extraWordsScore > 0) validPosition = true;
+
+        if (!validPosition) {
+            throw (new AloneWordException());
+        }
+
+        int totalScore = wordScore * wordMultiplier + extraWordsScore;
+        System.out.println("Word: " + nw + "\tBase score: " + Integer.toString(wordScore * wordMultiplier) + "\tTotal Score: " + Integer.toString(totalScore));
+
         insertWord(word);
 
-        return wordScore * wordMultiplier + extraWordsScore;
+        return totalScore;
     }
 
     public Cell getCell(int x, int y) {

@@ -1,7 +1,5 @@
 package main.scrabble.model;
 
-import javax.print.attribute.standard.DateTimeAtCompleted;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -38,13 +36,17 @@ public class Game {
         }
         return player;
     }
-/*
-    public int playTurn(Word word) {
-        return board.insertWord(word);
+
+    public int playTurn(Word word) throws WrongWordException, OutOfBoundsException, OccupiedCellException, NoPieceInCenterException, AloneWordException {
+        return board.playWord(word);
     }
-*/
+
     public Piece playTurn(Piece piece) throws NoPiecesInBagException {
         return bag.changePiece(piece);
+    }
+
+    public int getTurn() {
+        return turn;
     }
 
     public ArrayList<Player> getPlayers() {
@@ -55,7 +57,7 @@ public class Game {
         Player bestPlayer = players.get(0);
 
         for (Player player: players) {
-            if (player.getPunctuation() > bestPlayer.getPunctuation())
+            if (player.getScore() > bestPlayer.getScore())
                 bestPlayer = player;
         }
 

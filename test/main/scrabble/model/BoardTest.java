@@ -25,8 +25,6 @@ public class BoardTest {
     ArrayList<Piece> incorrectWordPieces = new ArrayList<>();
     ArrayList<Piece> momyyPieces = new ArrayList<>();
 
-
-
     @Before
     public void setUp() {
 
@@ -45,8 +43,6 @@ public class BoardTest {
 
         hePieces.add(new Piece('h', 5));
         hePieces.add(new Piece('e', 1));
-
-        hePieces.add(new Piece('h', 5));
 
         ramblingsPieces.add(new Piece('r', 2));
         ramblingsPieces.add(new Piece('a', 2));
@@ -158,6 +154,7 @@ public class BoardTest {
         Board board = new Board();
         Word word = new Word(board.getCell(7, 7), Direction.HORIZONTAL, hePieces);
         int score = board.playWord(word);
+
         assertEquals('h', board.getCell(7, 7).getPiece().getLetter());
         assertEquals('e', board.getCell(8, 7).getPiece().getLetter());
         assertEquals(12, score); //(5+1)x2 = 6x2 = 12
@@ -175,8 +172,6 @@ public class BoardTest {
 
     @Test
     public void insertSeveralWords() throws Exception {
-
-
         Board board = new Board();
         //SHOULD NOT FAIL
         /*Word word = new Word(board.getCell(7, 6), Direction.VERTICAL, ramblingsPieces);
@@ -192,7 +187,6 @@ public class BoardTest {
         assertEquals(34, score); //(16+1)x2 = 34*/
 
         //PATCH FOR THE ABOVE WORD
-        hePieces.remove(2);
         Word word = new Word(board.getCell(7, 6), Direction.VERTICAL, hePieces);
         int score = board.playWord(word);
 
@@ -253,11 +247,6 @@ public class BoardTest {
         assertEquals('t', board.getCell(9, 12).getPiece().getLetter());
         assertEquals('y', board.getCell(10, 12).getPiece().getLetter());
         assertEquals(126, score); //(6x8+6+6)x2 = 20*/
-
-
-
-
-
     }
 
     @Test
@@ -305,7 +294,7 @@ public class BoardTest {
         try {
             score = board.playWord(word);
         } catch (Exception e) {
-
+            System.out.println("Out of bounds exception");
         }
         assertEquals(0, score);
 
@@ -314,32 +303,23 @@ public class BoardTest {
         try {
             score = board.playWord(word);
         } catch (Exception e) {
-
+            System.out.println("Out of bounds exception");
         }
         assertEquals(0, score);
 
-        //Fails when checking for opposite direction and (obviously) there are not more cells because it's a border.
+        // Fails when checking for opposite direction and (obviously) there are not more cells because it's a border.
 
         word = new Word(board.getCell(0, 0), Direction.HORIZONTAL, helloPieces);
-        score = 0;
         score = board.playWord(word);
         assertEquals(18, score);
 
         word = new Word(board.getCell(0, 0), Direction.VERTICAL, helloPieces);
-        score = 0;
         score = board.playWord(word);
         assertEquals(18, score);
 
         word = new Word(board.getCell(0, 1), Direction.VERTICAL, helloPieces);
-        score = 0;
         score = board.playWord(word);
         assertEquals(10, score);
 
     }
-
-    @Test
-    public void checkOpposite() throws Exception {
-
-    }
-
 }
