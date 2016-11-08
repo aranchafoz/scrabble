@@ -186,6 +186,7 @@ public class BoardTest {
         assertEquals('g', board.getCell(7, 13).getPiece().getLetter());
         assertEquals(34, score); //(16+1)x2 = 34*/
 
+
         //PATCH FOR THE ABOVE WORD
         Word word = new Word(board.getCell(7, 6), Direction.VERTICAL, hePieces);
         int score = board.playWord(word);
