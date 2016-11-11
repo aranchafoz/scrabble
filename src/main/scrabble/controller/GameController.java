@@ -23,6 +23,7 @@ public class GameController extends JFrame {
     private final int FPS = 60;
 
     private final String WINDOW_TITLE = "Scrabble";
+
     private final int WINDOW_HEIGHT = 1000;
     private final int WINDOW_WIDTH = 1800;
 
@@ -43,17 +44,22 @@ public class GameController extends JFrame {
     private UIRack rack; // The rack already includes the player's pieces
     private ArrayList<UIPlayer> players;
 
-    private UIButton play;
+    private UIButton pass;
     private UIButton mix;
-    private UIButton change;
-    private UIButton cancel;
+    private UIButton exchange;
+    private UIButton undo;
 
-    private UIButton test;
 
     public GameController() throws WrongCoordinateException {
         setTitle(WINDOW_TITLE);
-        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        setResizable(false);
+
+        // Responsive screensize
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) screenSize.getWidth();
+        int height = (int) screenSize.getHeight();
+
+        setSize(width, height - 20);
+        setResizable(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
@@ -90,8 +96,11 @@ public class GameController extends JFrame {
         // Rack
         rack = new UIRack(1000 + 20, 500, 700, 126);//170);
 
-        // image test
-        test = new UIButton(20, 20, "test");
+        // Buttons
+        pass = new UIButton(1000 + 240, 750, "Pass","assets/buttons/Play-60.png");
+        mix = new UIButton(1000 + 170, 750, "Shuffle","assets/buttons/Shuffle-60.png");
+        exchange = new UIButton(1000 + 100, 750, "Exchange","assets/buttons/Replace-60.png");
+        undo = new UIButton(1000 + 30, 750, "Exchange","assets/buttons/Undo-60.png");
 
         playedPieces = new ArrayList<>();
         tempPieces = new ArrayList<>();
@@ -145,7 +154,7 @@ public class GameController extends JFrame {
                      *  take the piece from the rake and put it in the
                      */
 
-                } else if (play.isPressed(mouseClick)) {
+                } else if (pass.isPressed(mouseClick)) {
                     /**
                      * TODO
                      * - Take temp pieces and check if can be played
@@ -158,10 +167,10 @@ public class GameController extends JFrame {
                 } else if (mix.isPressed(mouseClick)) {
                     currentPlayer.mixPieces();
                     rack.setPieces(currentPlayer.getPieces());
-                } else if (change.isPressed(mouseClick)) {
+                } else if (exchange.isPressed(mouseClick)) {
                     currentPlayer.addPiece(game.playTurn(selectedPiece.getPiece()));
                     newTurn();
-                } else if (cancel.isPressed(mouseClick)) {
+                } else if (undo.isPressed(mouseClick)) {
                     revokeTempPieces();
                 }
 
@@ -204,7 +213,15 @@ public class GameController extends JFrame {
             }
         }
 
+        pass.draw(bg,this);
+        mix.draw(bg,this);
+        exchange.draw(bg,this);
+        undo.draw(bg,this);
+
+
+
         g2.drawImage(buffer, 0, 0, this);
+
     }
 
     public void revokeTempPieces() {

@@ -3,6 +3,7 @@ package main.scrabble.view;
 import main.scrabble.exceptions.OccupiedCellException;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -13,10 +14,15 @@ import java.io.IOException;
 public class UIButton extends UIObject {
     private String text;
 
-    public UIButton(int x, int y, String text) {
+    private int sideWidth = 60;
+
+    public UIButton(int x, int y, String text, String image) {
         super(x, y);
+        w = sideWidth;
+        h = sideWidth;
+
         this.text = text;
-        //setImage(text);
+        setImage(image);
     }
 
     public boolean isPressed(Point p) throws OccupiedCellException {
@@ -24,5 +30,11 @@ public class UIButton extends UIObject {
             return true;
         else
             return false;
+    }
+
+    public void draw(Graphics2D g2, JFrame context) {
+        super.draw(g2, context);
+
+
     }
 }
