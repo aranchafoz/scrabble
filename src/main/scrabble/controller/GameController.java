@@ -5,6 +5,7 @@ import main.scrabble.exceptions.OccupiedCellException;
 import main.scrabble.exceptions.WrongCoordinateException;
 import main.scrabble.model.Board;
 import main.scrabble.model.Game;
+import main.scrabble.model.GameState;
 import main.scrabble.model.Player;
 import main.scrabble.view.*;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
  */
 public class GameController extends JFrame {
     private Game game;
+    private GameState state;
     private Player currentPlayer;
 
     private final int FPS = 60;
@@ -31,8 +33,6 @@ public class GameController extends JFrame {
 
     private BufferedImage buffer;
 
-    private GameState state;
-
     private InputHandler inputHandler;
 
     private UIPiece selectedPiece;
@@ -43,6 +43,8 @@ public class GameController extends JFrame {
     private UIBoard board; // The board already includes all cells
     private UIRack rack; // The rack already includes the player's pieces
     private ArrayList<UIPlayer> players;
+
+    private UIButton play;
 
     private UIButton pass;
     private UIButton mix;
@@ -68,7 +70,8 @@ public class GameController extends JFrame {
         inputHandler = new InputHandler();
         this.addMouseListener(inputHandler);
 
-        state = GameState.menu;
+        // Initialize game status
+        state = GameState.START_MENU;
 
         // Random Players for UI pattern design
         Player p1 = new Player("WikiIvorra","assets/ivorra_player.png");
@@ -97,6 +100,7 @@ public class GameController extends JFrame {
         rack = new UIRack(1000 + 20, 500, 700, 126);//170);
 
         // Buttons
+        play =  new UIButton(155, 500);
         pass = new UIButton(1000 + 240, 750, "Pass","assets/buttons/Play-60.png");
         mix = new UIButton(1000 + 170, 750, "Shuffle","assets/buttons/Shuffle-60.png");
         exchange = new UIButton(1000 + 100, 750, "Exchange","assets/buttons/Replace-60.png");
@@ -112,29 +116,40 @@ public class GameController extends JFrame {
     }
 
     private void run() {
-        newTurn();
-        while (isRunning) {
-            long time = System.currentTimeMillis();
+        switch (state){
+            case START_MENU:
+                drawInitial();
+                //updateInitial() ??????????????????????????????????????????????????????????????????????????????????????????
+                break;
+            case IN_GAME:
+                newTurn();
+                while (isRunning) {
+                    long time = System.currentTimeMillis();
 
-            try {
-                update();
-            } catch (OccupiedCellException e) {
-                e.printStackTrace();
-            } catch (NoPiecesInBagException e) {
-                e.printStackTrace();
-            }
-            draw();
+                    try {
+                        update();
+                    } catch (OccupiedCellException e) {
+                        e.printStackTrace();
+                    } catch (NoPiecesInBagException e) {
+                        e.printStackTrace();
+                    }
+                    draw();
 
-            time = (1000 / FPS) - (System.currentTimeMillis() - time);
-            if (time > 0) {
-                try {
-                    Thread.sleep(time);
-                } catch (InterruptedException e) {
+                    time = (1000 / FPS) - (System.currentTimeMillis() - time);
+                    if (time > 0) {
+                        try {
+                            Thread.sleep(time);
+                        } catch (InterruptedException e) {
 
+                        }
+                    }
                 }
-            }
+                setVisible(false);
+                break;
+            case FINAL:
+                break;
         }
-        setVisible(false);
+
     }
 
     private void update() throws OccupiedCellException, NoPiecesInBagException {
@@ -218,6 +233,42 @@ public class GameController extends JFrame {
         exchange.draw(bg,this);
         undo.draw(bg,this);
 
+
+
+        g2.drawImage(buffer, 0, 0, this);
+
+    }
+
+    private void drawInitial() {
+        setSize(500, 600);
+
+        Graphics g = getGraphics();
+        Graphics2D g2= (Graphics2D) g;
+        RenderingHints rh = new RenderingHints(
+                RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2.setRenderingHints(rh);
+
+        Graphics2D bg = (Graphics2D) buffer.getGraphics();
+        bg.setRenderingHints(rh);
+
+        // Draw the background
+        background.draw(bg, this);
+
+        // Info
+        bg.setColor(Color.BLACK);
+        bg.setFont(new Font("Monaco",Font.BOLD, 25));
+        bg.drawString("Input players", 150, 70);
+
+        // Players
+        for(int i = 0; i < 4; i++){
+            bg.setColor(Color.darkGray);
+            bg.setFont(new Font("Monaco",Font.ITALIC, 20));
+            bg.drawString("Player " + (i + 1), 50, 150 + (i * 90));
+        }
+
+        // Play Button
+        play.draw(bg,this);
 
 
         g2.drawImage(buffer, 0, 0, this);

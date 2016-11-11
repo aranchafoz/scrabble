@@ -15,6 +15,16 @@ public class UIButton extends UIObject {
     private String text;
 
     private int sideWidth = 60;
+    private int sideWidthPlay = 200;
+    private int sideHeightPlay = 75;
+
+    public UIButton(int x, int y) {
+        super(x, y);
+        w = sideWidthPlay;
+        h = sideHeightPlay;
+
+        this.text = "";
+    }
 
     public UIButton(int x, int y, String text, String image) {
         super(x, y);
@@ -33,8 +43,25 @@ public class UIButton extends UIObject {
     }
 
     public void draw(Graphics2D g2, JFrame context) {
-        super.draw(g2, context);
 
+        if (image != null) {
 
+            super.draw(g2, context);
+
+        } else {
+
+            float hsb[] = new float[3];
+            float color[];
+
+            color = Color.RGBtoHSB(58,144,163,hsb);
+
+            g2.setColor(Color.getHSBColor(color[0], color[1], color[2]));
+            g2.fillRoundRect(x, y, sideWidthPlay, sideHeightPlay, 20, 20);
+
+            g2.setColor(Color.white);
+            g2.setFont(new Font("Monaco",Font.BOLD, 30));
+            g2.drawString("PLAY", 220, 550);
+
+        }
     }
 }

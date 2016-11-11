@@ -32,6 +32,7 @@ public abstract class UIObject {
     public UIObject(int x, int y) {
         this.x = x;
         this.y = y;
+        image = null;
     }
 
     public int getX() { return x; }
