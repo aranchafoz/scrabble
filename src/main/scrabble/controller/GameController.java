@@ -259,16 +259,16 @@ public class GameController extends JFrame implements ActionListener {
 
         float hsb[] = new float[3];
         float color[];
-
+        /*
         BasicStroke backShadow = new BasicStroke(4f);
         bg.setStroke(backShadow);
         color = Color.RGBtoHSB(58,144,163,hsb);
         bg.setColor(Color.getHSBColor(color[0], color[1], color[2]));
         bg.drawRoundRect(currentPlayerUI.getX() - 20, currentPlayerUI.getY() - 20, currentPlayerUI.getW(), currentPlayerUI.getH(), 20, 20);
-
+        */
         color = Color.RGBtoHSB(190,218,212,hsb); // 192,128,64
         bg.setColor(Color.getHSBColor(color[0], color[1], color[2]));
-        bg.fillRoundRect(currentPlayerUI.getX() - 20, currentPlayerUI.getY() - 20, currentPlayerUI.getW(), currentPlayerUI.getH(), 20, 20);
+        bg.fillRoundRect(currentPlayerUI.getX() - 20, currentPlayerUI.getY() - 20, currentPlayerUI.getW() + 240, currentPlayerUI.getH() + 40, 20, 20);
 
 
         for (UIPiece piece : playedPieces)
@@ -394,7 +394,7 @@ public class GameController extends JFrame implements ActionListener {
                 players.add(uip1);    players.add(uip2);    players.add(uip3);    players.add(uip4);
 
                 game.setPlayers(player);
-                currentPlayer = game.getPlayers().get(0);
+                currentPlayer = game.getPlayers().get(game.getTurn());
             }
 
             // Delete all components
