@@ -28,8 +28,9 @@ public class UIRack extends UIObject {
         h = height;
 
         pieces = new ArrayList<>();
+        // Design only, delete after finished
         for(int i=0;i<7;i++) {
-            Piece piece = new Piece('A',1);
+            Piece piece = new Piece('Z',1);
             pieces.add(new UIPiece(x + backHmargin + backHpadding + ((86 + pieceSeparator) * i), y + backTopPadding, piece, true));
         }
     }

@@ -22,7 +22,7 @@ public class UIPiece extends UIObject {
         w = sideWidthBoard;
         h = sideWidthBoard;
 
-        setImage("assets/alphabet/A.png");
+        setImage("assets/alphabet/" + piece.getLetter() +".png");
     }
 
     public UIPiece(int x, int y, Piece piece, boolean drawInRack) {
@@ -35,7 +35,7 @@ public class UIPiece extends UIObject {
             w = -1;
             h = -1;
         }
-        setImage("assets/alphabet/A.png");
+        setImage("assets/alphabet/" + piece.getLetter() +".png");
     }
 
     public Piece getPiece() {
