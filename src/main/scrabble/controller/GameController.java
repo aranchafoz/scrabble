@@ -10,14 +10,19 @@ import main.scrabble.model.Player;
 import main.scrabble.view.*;
 
 import javax.swing.*;
+import javax.swing.plaf.ButtonUI;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
  * Created by enrique on 26/09/16.
  */
-public class GameController extends JFrame {
+public class GameController extends JFrame implements ActionListener {
     private Game game;
     private GameState state;
     private Player currentPlayer;
@@ -44,23 +49,29 @@ public class GameController extends JFrame {
     private UIRack rack; // The rack already includes the player's pieces
     private ArrayList<UIPlayer> players;
 
-    private UIButton play;
+    private JButton playButton;
 
     private UIButton pass;
     private UIButton mix;
     private UIButton exchange;
     private UIButton undo;
 
+    private TextField player1textField;
+    private TextField player2textField;
+    private TextField player3textField;
+    private TextField player4textField;
+
 
     public GameController() throws WrongCoordinateException {
         setTitle(WINDOW_TITLE);
 
         // Responsive screensize
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = (int) screenSize.getWidth();
-        int height = (int) screenSize.getHeight();
+        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        //int width = (int) screenSize.getWidth();
+        //int height = (int) screenSize.getHeight();
 
-        setSize(width, height - 20);
+        //setSize(width, height - 20);
+        setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
         setResizable(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
@@ -73,24 +84,6 @@ public class GameController extends JFrame {
         // Initialize game status
         state = GameState.START_MENU;
 
-        // Random Players for UI pattern design
-        Player p1 = new Player("WikiIvorra","assets/ivorra_player.png");
-        Player p2 = new Player("#PeloGuay","assets/enrique_avatar.png");
-        Player p3 = new Player("Aranchunfli","assets/arancha_avatar.png");
-        Player p4 = new Player("Johannes","assets/ivorra_player.png");
-        ArrayList<Player> player = new ArrayList<Player>();
-        player.add(p1);    player.add(p2);    player.add(p3);    player.add(p4);
-
-        UIPlayer uip1 = new UIPlayer(1000,75,150,p1);
-        UIPlayer uip2 = new UIPlayer(1400,75,150,p2);
-        UIPlayer uip3 = new UIPlayer(1000,225 + 50,150,p3);
-        UIPlayer uip4 = new UIPlayer(1400,225 + 50,150,p4);
-
-        players = new ArrayList<UIPlayer>();
-        players.add(uip1);    players.add(uip2);    players.add(uip3);    players.add(uip4);
-
-        game = new Game(player);
-
         // Background & Board
         background = new UIBackground(WINDOW_WIDTH, WINDOW_HEIGHT);
         Board b = new Board();
@@ -99,12 +92,28 @@ public class GameController extends JFrame {
         // Rack
         rack = new UIRack(1000 + 20, 500, 700, 126);//170);
 
+        game = new Game();
+
         // Buttons
-        play =  new UIButton(155, 500);
+        //play =  new UIButton(155, 500);
         pass = new UIButton(1000 + 240, 750, "Pass","assets/buttons/Play-60.png");
         mix = new UIButton(1000 + 170, 750, "Shuffle","assets/buttons/Shuffle-60.png");
         exchange = new UIButton(1000 + 100, 750, "Exchange","assets/buttons/Replace-60.png");
         undo = new UIButton(1000 + 30, 750, "Exchange","assets/buttons/Undo-60.png");
+
+        // Text fields
+        player1textField = new TextField();
+        player1textField.setBounds(50,150,400,35);
+
+        player2textField = new TextField();
+        player2textField.setBounds(50,240,400,35);
+
+        player3textField = new TextField();
+        player3textField.setBounds(50,330,400,35);
+
+        player4textField = new TextField();
+        player4textField.setBounds(50,420,400,35);
+
 
         playedPieces = new ArrayList<>();
         tempPieces = new ArrayList<>();
@@ -204,6 +213,15 @@ public class GameController extends JFrame {
 
         Graphics2D bg = (Graphics2D) buffer.getGraphics();
         bg.setRenderingHints(rh);
+
+        // Responsive screensize
+        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        //int width = (int) screenSize.getWidth();
+        //int height = (int) screenSize.getHeight();
+
+        //setSize(width, height - 20);
+        setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
+
         // Draw the background
         background.draw(bg, this);
 
@@ -267,9 +285,21 @@ public class GameController extends JFrame {
             bg.drawString("Player " + (i + 1), 50, 150 + (i * 90));
         }
 
-        // Play Button
-        play.draw(bg,this);
+        // Input Player names
+        add(player1textField);
+        add(player2textField);
+        add(player3textField);
+        add(player4textField);
 
+
+        // Play Button
+        //play.draw(bg,this);
+        playButton = new JButton("START");
+        playButton.setBounds(155,500,200,50);
+
+        add(playButton);
+
+        playButton.addActionListener(this);
 
         g2.drawImage(buffer, 0, 0, this);
 
@@ -282,5 +312,40 @@ public class GameController extends JFrame {
     public void newTurn() {
 //       currentPlayer = game.nextTurn();
 //        rack.setPieces(currentPlayer.getPieces());
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        //System.out.printf(e.getSource().toString());
+
+        if (e.getSource() == playButton) {
+            for (int i = 0; i < 4; i++) {
+                // Random Players for UI pattern design
+                Player p1 = new Player(player1textField.getText(),"assets/ivorra_player.png");
+                Player p2 = new Player(player2textField.getText(),"assets/enrique_avatar.png");
+                Player p3 = new Player(player3textField.getText(),"assets/arancha_avatar.png");
+                Player p4 = new Player(player4textField.getText(),"assets/ivorra_player.png");
+                ArrayList<Player> player = new ArrayList<Player>();
+                player.add(p1);    player.add(p2);    player.add(p3);    player.add(p4);
+
+                UIPlayer uip1 = new UIPlayer(1000,75,150,p1);
+                UIPlayer uip2 = new UIPlayer(1400,75,150,p2);
+                UIPlayer uip3 = new UIPlayer(1000,225 + 50,150,p3);
+                UIPlayer uip4 = new UIPlayer(1400,225 + 50,150,p4);
+
+                players = new ArrayList<UIPlayer>();
+                players.add(uip1);    players.add(uip2);    players.add(uip3);    players.add(uip4);
+
+                game.setPlayers(player);
+            }
+
+            // Delete all components
+            removeAll();
+            // Set next GameState
+            state = GameState.IN_GAME;
+
+            run();
+        }
+
     }
 }

@@ -14,6 +14,17 @@ public class Game {
     private Board board;
     private Bag bag;
 
+    public Game() throws WrongCoordinateException {
+        this.players = new ArrayList<>();
+
+        board = new Board();
+        bag = new Bag();
+
+        round = 0;
+        //turn = (new Random()).nextInt(players.size());
+        // Borrar después, solo pruebas
+    }
+
     public Game(ArrayList<Player> players) throws WrongCoordinateException {
         this.players = players;
 
@@ -51,6 +62,12 @@ public class Game {
 
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+
+        turn = (new Random()).nextInt(players.size());
     }
 
     public Player getBestPlayer() {
