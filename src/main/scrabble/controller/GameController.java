@@ -112,10 +112,10 @@ public class GameController extends JFrame implements ActionListener {
         playButton = new JButton("START");
         playButton.setBounds(155,500,200,100);
 
-        pass = new UIButton(1000 + 240, 750, "Pass","assets/buttons/Play-60.png");
-        mix = new UIButton(1000 + 170, 750, "Shuffle","assets/buttons/Shuffle-60.png");
-        exchange = new UIButton(1000 + 100, 750, "Exchange","assets/buttons/Replace-60.png");
-        undo = new UIButton(1000 + 30, 750, "Exchange","assets/buttons/Undo-60.png");
+        pass = new UIButton(1000 + 360, 750, "Pass","assets/buttons/Play-90.png");
+        mix = new UIButton(1000 + 250, 750, "Shuffle","assets/buttons/Shuffle-90.png");
+        exchange = new UIButton(1000 + 140, 750, "Exchange","assets/buttons/Replace-90.png");
+        undo = new UIButton(1000 + 30, 750, "Exchange","assets/buttons/Undo-90.png");
 
         // Text fields
         player1textField = new TextField();

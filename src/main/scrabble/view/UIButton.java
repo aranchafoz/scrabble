@@ -14,7 +14,7 @@ import java.io.IOException;
 public class UIButton extends UIObject {
     private String text;
 
-    private int sideWidth = 60;
+    private int sideWidth = 90;
     private int sideWidthPlay = 200;
     private int sideHeightPlay = 75;
 
