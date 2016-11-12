@@ -45,9 +45,25 @@ public class UIButton extends UIObject {
     public void draw(Graphics2D g2, JFrame context) {
 
         if (image != null) {
-
             super.draw(g2, context);
 
+            g2.setColor(Color.BLACK);
+            g2.setFont(new Font("Monaco",Font.BOLD, 17));
+
+            switch (text) {
+                case "Undo":
+                    g2.drawString(text, x + 25, y + 120);
+                    break;
+                case "Exchange":
+                    g2.drawString(text, x + 9, y + 120);
+                    break;
+                case "Shuffle":
+                    g2.drawString(text, x + 18, y + 120);
+                    break;
+                case "Pass":
+                    g2.drawString(text, x + 30, y + 120);
+                    break;
+            }
         } else {
 
             float hsb[] = new float[3];

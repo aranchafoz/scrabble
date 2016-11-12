@@ -80,4 +80,8 @@ public class Game {
 
         return bestPlayer;
     }
+
+    public Bag getBag() {
+        return bag;
+    }
 }

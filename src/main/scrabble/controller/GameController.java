@@ -3,10 +3,7 @@ package main.scrabble.controller;
 import main.scrabble.exceptions.NoPiecesInBagException;
 import main.scrabble.exceptions.OccupiedCellException;
 import main.scrabble.exceptions.WrongCoordinateException;
-import main.scrabble.model.Board;
-import main.scrabble.model.Game;
-import main.scrabble.model.GameState;
-import main.scrabble.model.Player;
+import main.scrabble.model.*;
 import main.scrabble.view.*;
 
 import javax.imageio.ImageIO;
@@ -112,10 +109,10 @@ public class GameController extends JFrame implements ActionListener {
         playButton = new JButton("START");
         playButton.setBounds(155,500,200,100);
 
-        pass = new UIButton(1000 + 360, 750, "Pass","assets/buttons/Play-90.png");
-        mix = new UIButton(1000 + 250, 750, "Shuffle","assets/buttons/Shuffle-90.png");
-        exchange = new UIButton(1000 + 140, 750, "Exchange","assets/buttons/Replace-90.png");
-        undo = new UIButton(1000 + 30, 750, "Exchange","assets/buttons/Undo-90.png");
+        pass = new UIButton(1000 + 530 + 40, 750, "Pass","assets/buttons/Play-90.png");
+        mix = new UIButton(1000 + 370 + 40, 750, "Shuffle","assets/buttons/Shuffle-90.png");
+        exchange = new UIButton(1000 + 210 + 40, 750, "Exchange","assets/buttons/Replace-90.png");
+        undo = new UIButton(1000 + 50 + 40, 750, "Undo","assets/buttons/Undo-90.png");
 
         // Text fields
         player1textField = new TextField();
@@ -246,30 +243,28 @@ public class GameController extends JFrame implements ActionListener {
 
         board.draw(bg, this);
 
-        rack.draw(bg, this);
-
         // Draw current player
         UIPlayer currentPlayerUI = null;
         for (UIPlayer player : players) {
             if(player.getPlayer() == currentPlayer) {
                 currentPlayerUI = player;
+                ArrayList<Piece> plPieces = currentPlayer.getPieces();
+                for (Piece p : plPieces){
+                    //System.out.print(p.getLetter() + "\n");
+                }
+                rack.setPieces(plPieces);
                 break;
             }
         }
 
         float hsb[] = new float[3];
         float color[];
-        /*
-        BasicStroke backShadow = new BasicStroke(4f);
-        bg.setStroke(backShadow);
-        color = Color.RGBtoHSB(58,144,163,hsb);
-        bg.setColor(Color.getHSBColor(color[0], color[1], color[2]));
-        bg.drawRoundRect(currentPlayerUI.getX() - 20, currentPlayerUI.getY() - 20, currentPlayerUI.getW(), currentPlayerUI.getH(), 20, 20);
-        */
+
         color = Color.RGBtoHSB(190,218,212,hsb); // 192,128,64
         bg.setColor(Color.getHSBColor(color[0], color[1], color[2]));
         bg.fillRoundRect(currentPlayerUI.getX() - 20, currentPlayerUI.getY() - 20, currentPlayerUI.getW() + 240, currentPlayerUI.getH() + 40, 20, 20);
 
+        rack.draw(bg, this);
 
         for (UIPiece piece : playedPieces)
             piece.draw(bg, this);
@@ -376,7 +371,7 @@ public class GameController extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == playButton) {
-            for (int i = 0; i < 4; i++) {
+            //for (int i = 0; i < 4; i++) {
                 // Random Players for UI pattern design
                 Player p1 = new Player(player1textField.getText(),"assets/avatar/ivorra_player.png");
                 Player p2 = new Player(player2textField.getText(),"assets/avatar/enrique_avatar.png");
@@ -384,6 +379,14 @@ public class GameController extends JFrame implements ActionListener {
                 Player p4 = new Player(player4textField.getText(),"assets/avatar/jon_nieve.jpg");
                 ArrayList<Player> player = new ArrayList<Player>();
                 player.add(p1);    player.add(p2);    player.add(p3);    player.add(p4);
+                try {
+                    player.get(0).fillRack(game.getBag());
+                    player.get(1).fillRack(game.getBag());
+                    player.get(2).fillRack(game.getBag());
+                    player.get(3).fillRack(game.getBag());
+                } catch (NoPiecesInBagException e1) {
+                    e1.printStackTrace();
+                }
 
                 UIPlayer uip1 = new UIPlayer(1000,75,150,p1);
                 UIPlayer uip2 = new UIPlayer(1400,75,150,p2);
@@ -395,7 +398,7 @@ public class GameController extends JFrame implements ActionListener {
 
                 game.setPlayers(player);
                 currentPlayer = game.getPlayers().get(game.getTurn());
-            }
+            //}
 
             // Delete all components
             removeAll();

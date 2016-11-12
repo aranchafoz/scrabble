@@ -28,11 +28,6 @@ public class UIRack extends UIObject {
         h = height;
 
         pieces = new ArrayList<>();
-        // Design only, delete after finished
-        for(int i=0;i<7;i++) {
-            Piece piece = new Piece('Z',1);
-            pieces.add(new UIPiece(x + backHmargin + backHpadding + ((86 + pieceSeparator) * i), y + backTopPadding, piece, true));
-        }
     }
 
     public void setPieces(ArrayList<Piece> pieces) {
@@ -40,6 +35,7 @@ public class UIRack extends UIObject {
         // Check if pieces size equals to 7, else ERROR
         for (Piece p : pieces) {
             this.pieces.add(new UIPiece(x + backHmargin + backHpadding + ((UIPiece.sideWidthRack + pieceSeparator) * i), y + backTopPadding, p, true));
+            i++;
         }
     }
 
@@ -69,8 +65,9 @@ public class UIRack extends UIObject {
         g2.setColor(Color.getHSBColor(color[0], color[1], color[2]));
         g2.fillRoundRect(x, y + h - frontHeight, w, frontHeight, 15, 15);
 
-        for (UIPiece piece : pieces)
+        for (UIPiece piece : pieces) {
             piece.draw(g2, context);
+        }
     }
 
     public UIPiece getSelectedPiece(Point point) throws OccupiedCellException {
