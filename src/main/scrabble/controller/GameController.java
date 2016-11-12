@@ -378,10 +378,10 @@ public class GameController extends JFrame implements ActionListener {
         if (e.getSource() == playButton) {
             for (int i = 0; i < 4; i++) {
                 // Random Players for UI pattern design
-                Player p1 = new Player(player1textField.getText(),"assets/ivorra_player.png");
-                Player p2 = new Player(player2textField.getText(),"assets/enrique_avatar.png");
-                Player p3 = new Player(player3textField.getText(),"assets/arancha_avatar.png");
-                Player p4 = new Player(player4textField.getText(),"assets/ivorra_player.png");
+                Player p1 = new Player(player1textField.getText(),"assets/avatar/ivorra_player.png");
+                Player p2 = new Player(player2textField.getText(),"assets/avatar/enrique_avatar.png");
+                Player p3 = new Player(player3textField.getText(),"assets/avatar/arancha_avatar.png");
+                Player p4 = new Player(player4textField.getText(),"assets/avatar/jon_nieve.jpg");
                 ArrayList<Player> player = new ArrayList<Player>();
                 player.add(p1);    player.add(p2);    player.add(p3);    player.add(p4);
 

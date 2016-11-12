@@ -69,22 +69,22 @@ public class UICell extends UIObject {
 
         switch (type) {
             case PLAIN:
-                setImage("assets/plain.png");
+                setImage("assets/cell/plain.png");
                 break;
             case DOUBLE_LETTER:
-                setImage("assets/dl.png");
+                setImage("assets/cell/dl.png");
                 break;
             case TRIPLE_LETTER:
-                setImage("assets/tl.png");
+                setImage("assets/cell/tl.png");
                 break;
             case DOUBLE_WORD:
-                setImage("assets/dw.png");
+                setImage("assets/cell/dw.png");
                 break;
             case TRIPLE_WORD:
-                setImage("assets/tw.png");
+                setImage("assets/cell/tw.png");
                 break;
             case CENTRAL_CELL:
-                setImage("assets/startCell.png");
+                setImage("assets/cell/startCell.png");
                 break;
         }
     }
