@@ -44,21 +44,6 @@ public class MenuController extends JFrame implements ActionListener {
             removeAll();
             finished = true;
 
-            (new Thread() {
-                @Override
-                public void run() {
-                    super.run();
-                    GameController g = null;
-                    try {
-                        g = new GameController(getPlayers());
-                    } catch (WrongCoordinateException e1) {
-                        e1.printStackTrace();
-                    }
-                    setVisible(false);
-                    g.run();
-                }
-            }).run();
-
             // Set next GameState
         } /*else if (e.getSource() == test) {
             System.out.print("kdksmkckmc");
@@ -162,5 +147,19 @@ public class MenuController extends JFrame implements ActionListener {
     public static void main(String[] args) throws WrongCoordinateException, InterruptedException {
         MenuController menu = new MenuController();
         menu.run();
+
+        while (!menu.hasFinished()) {
+            Thread.sleep(100);
+        }
+
+
+        GameController g = null;
+        try {
+            g = new GameController(menu.getPlayers());
+        } catch (WrongCoordinateException e1) {
+            e1.printStackTrace();
+        }
+        menu.setVisible(false);
+        g.run();
     }
 }
