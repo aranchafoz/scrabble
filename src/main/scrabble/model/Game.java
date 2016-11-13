@@ -33,7 +33,13 @@ public class Game {
 
         round = 0;
         turn = (new Random()).nextInt(players.size());
-        // Borrar después, solo pruebas
+
+        for (Player p : players)
+            try {
+                p.fillRack(bag);
+            } catch (NoPiecesInBagException e) {
+                e.printStackTrace();
+            }
     }
 
     public void fillPlayerRack() throws NoPiecesInBagException {
@@ -68,6 +74,10 @@ public class Game {
         this.players = players;
 
         turn = (new Random()).nextInt(players.size());
+    }
+
+    public Player getCurrentPlayer() {
+        return players.get(turn);
     }
 
     public Player getBestPlayer() {

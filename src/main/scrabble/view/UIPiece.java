@@ -38,6 +38,8 @@ public class UIPiece extends UIObject {
         setImage("assets/alphabet/" + piece.getLetter() +".png");
     }
 
+    public Image getImage() { return image; }
+
     public Piece getPiece() {
         return piece;
     }

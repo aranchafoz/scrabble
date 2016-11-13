@@ -10,10 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.ButtonUI;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
@@ -24,7 +21,8 @@ import java.util.ArrayList;
 /**
  * Created by enrique on 26/09/16.
  */
-public class GameController extends JFrame implements ActionListener {
+
+public class GameController extends JFrame /* implements ActionListener */ {
     private Game game;
     private GameState state;
     private Player currentPlayer;
@@ -42,7 +40,7 @@ public class GameController extends JFrame implements ActionListener {
 
     private InputHandler inputHandler;
 
-    private UIPiece selectedPiece;
+    private UIPiece selectedPiece = null;
 
     private UIBackground background;
     private ArrayList<UIPiece> playedPieces;
@@ -51,21 +49,20 @@ public class GameController extends JFrame implements ActionListener {
     private UIRack rack; // The rack already includes the player's pieces
     private ArrayList<UIPlayer> players;
 
-    private JButton playButton;
+//    private JButton playButton;
     //private JButton test;
 
     private UIButton pass;
     private UIButton mix;
     private UIButton exchange;
     private UIButton undo;
-
+/*
     private TextField player1textField;
     private TextField player2textField;
     private TextField player3textField;
     private TextField player4textField;
-
-
-    public GameController() throws WrongCoordinateException {
+*/
+    public GameController(ArrayList<Player> players) throws WrongCoordinateException {
         setTitle(WINDOW_TITLE);
 
         // Responsive screensize
@@ -93,7 +90,7 @@ public class GameController extends JFrame implements ActionListener {
         this.addMouseListener(inputHandler);
 
         // Initialize game status
-        state = GameState.START_MENU;
+        state = GameState.IN_GAME;
 
         // Background & Board
         background = new UIBackground(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -103,18 +100,33 @@ public class GameController extends JFrame implements ActionListener {
         // Rack
         rack = new UIRack(1000 + 20, 500, 700, 126);//170);
 
-        game = new Game();
+        game = new Game(players);
+
+        UIPlayer uip1 = new UIPlayer(1000, 75, 150, players.get(0));
+        UIPlayer uip2 = new UIPlayer(1400, 75, 150, players.get(1));
+        UIPlayer uip3 = new UIPlayer(1000, 225 + 50, 150, players.get(2));
+        UIPlayer uip4 = new UIPlayer(1400, 225 + 50, 150, players.get(3));
+
+        this.players = new ArrayList<UIPlayer>();
+        this.players.add(uip1);
+        this.players.add(uip2);
+        this.players.add(uip3);
+        this.players.add(uip4);
+
+        currentPlayer = game.getCurrentPlayer();
 
         // Buttons
+        /*
         playButton = new JButton("START");
         playButton.setBounds(155,500,200,100);
-
+        */
         pass = new UIButton(1000 + 530 + 40, 750, "Pass","assets/buttons/Play-90.png");
         mix = new UIButton(1000 + 370 + 40, 750, "Shuffle","assets/buttons/Shuffle-90.png");
         exchange = new UIButton(1000 + 210 + 40, 750, "Exchange","assets/buttons/Replace-90.png");
         undo = new UIButton(1000 + 50 + 40, 750, "Undo","assets/buttons/Undo-90.png");
 
         // Text fields
+        /*
         player1textField = new TextField();
         player1textField.setFont(new Font("Monaco",Font.PLAIN, 15));
         player1textField.setBounds(50,150,400,35);
@@ -130,21 +142,32 @@ public class GameController extends JFrame implements ActionListener {
         player4textField = new TextField();
         player4textField.setFont(new Font("Monaco",Font.PLAIN, 15));
         player4textField.setBounds(50,420,400,35);
-
+        */
 
         playedPieces = new ArrayList<>();
         tempPieces = new ArrayList<>();
     }
 
     public static void main(String[] args) throws WrongCoordinateException {
-        GameController g = new GameController();
+        Player p1 = new Player("asdf","assets/avatar/ivorra_player.png");
+        Player p2 = new Player("asdf","assets/avatar/enrique_avatar.png");
+        Player p3 = new Player("asdf","assets/avatar/arancha_avatar.png");
+        Player p4 = new Player("asdf","assets/avatar/jon_nieve.jpg");
+
+        ArrayList<Player> p = new ArrayList<>();
+        p.add(p1);
+        p.add(p2);
+        p.add(p3);
+        p.add(p4);
+
+        GameController g = new GameController(p);
         g.run();
     }
 
-    private void run() {
+    public void run() {
         switch (state){
             case START_MENU:
-                drawInitial();
+                //drawInitial();
                 break;
             case IN_GAME:
                 newTurn();
@@ -182,7 +205,6 @@ public class GameController extends JFrame implements ActionListener {
         Point mouseClick = inputHandler.getInputs();
         if (mouseClick != null) {
 
-
             if (rack.receiveInput(mouseClick)){
                 selectedPiece = rack.getSelectedPiece(mouseClick);
             } else {
@@ -193,7 +215,6 @@ public class GameController extends JFrame implements ActionListener {
                      * if (selectedPiece)
                      *  take the piece from the rake and put it in the
                      */
-
                 } else if (pass.isPressed(mouseClick)) {
                     /**
                      * TODO
@@ -260,7 +281,7 @@ public class GameController extends JFrame implements ActionListener {
         float hsb[] = new float[3];
         float color[];
 
-        color = Color.RGBtoHSB(190,218,212,hsb); // 192,128,64
+        color = Color.RGBtoHSB(190, 218, 212, hsb); // 192,128,64
         bg.setColor(Color.getHSBColor(color[0], color[1], color[2]));
         bg.fillRoundRect(currentPlayerUI.getX() - 20, currentPlayerUI.getY() - 20, currentPlayerUI.getW() + 240, currentPlayerUI.getH() + 40, 20, 20);
 
@@ -274,26 +295,33 @@ public class GameController extends JFrame implements ActionListener {
             player.draw(bg, this);
         }
 
+        if (selectedPiece != null)
+            bg.drawImage(
+                    selectedPiece.getImage(),
+                    selectedPiece.getX() + 3,
+                    selectedPiece.getY() + 3,
+                    selectedPiece.getW() - 6,
+                    selectedPiece.getH() - 6,
+                    this
+            );
+
+
         // Draw best player
         Player bestp = game.getBestPlayer();
         for (UIPlayer player : players) {
             if (player.getPlayer() == bestp) {
-                player.drawCrown(bg,this);
-
+                player.drawCrown(bg, this);
             }
         }
 
-        pass.draw(bg,this);
-        mix.draw(bg,this);
-        exchange.draw(bg,this);
-        undo.draw(bg,this);
-
-
+        pass.draw(bg, this);
+        mix.draw(bg, this);
+        exchange.draw(bg, this);
+        undo.draw(bg, this);
 
         g2.drawImage(buffer, 0, 0, this);
-
     }
-
+/*
     private void drawInitial() {
 
         setSize(500, 600);
@@ -303,8 +331,8 @@ public class GameController extends JFrame implements ActionListener {
 
         // Info
         JLabel info = new JLabel("Input players");
-        info.setBounds(150,70,400,100);
-        info.setFont(new Font("Monaco",Font.BOLD, 25));
+        info.setBounds(150, 70, 400, 100);
+        info.setFont(new Font("Monaco", Font.BOLD, 25));
         info.setForeground(Color.BLACK);
         info.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -314,17 +342,17 @@ public class GameController extends JFrame implements ActionListener {
         // Players
         Panel panelDisplay = new Panel(new GridLayout(8, 1, 50, 30));
 
-        for(int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             JLabel player = new JLabel("Player " + (i + 1));
-            player.setBounds(50, 110 + (i * 90),400,30);
-            player.setFont(new Font("Monaco",Font.ITALIC, 20));
+            player.setBounds(50, 110 + (i * 90), 400, 30);
+            player.setFont(new Font("Monaco", Font.ITALIC, 20));
             player.setForeground(Color.darkGray);
             player.setHorizontalAlignment(SwingConstants.LEFT);
 
             container.add(player);
 
             // Input Player names
-            switch (i){
+            switch (i) {
                 case 0:
                     container.add(player1textField);
                     break;
@@ -355,9 +383,8 @@ public class GameController extends JFrame implements ActionListener {
         container.setBackground(Color.getHSBColor(color[0], color[1], color[2]));
 
         this.setContentPane(container);
-
     }
-
+*/
     public void revokeTempPieces() {
 
     }
@@ -366,7 +393,7 @@ public class GameController extends JFrame implements ActionListener {
 //       currentPlayer = game.nextTurn();
 //        rack.setPieces(currentPlayer.getPieces());
     }
-
+/*
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -408,6 +435,34 @@ public class GameController extends JFrame implements ActionListener {
             run();
         } /*else if (e.getSource() == test) {
             System.out.print("kdksmkckmc");
-        }*/
+        }* /
     }
+*/
+/*
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("Click");
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        System.out.println("Pressed");
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        System.out.println("Released");
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }*/
 }

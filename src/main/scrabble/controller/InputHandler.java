@@ -12,17 +12,18 @@ public class InputHandler implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        System.out.println("Click");
         lastClick = new Point(e.getPoint());
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        System.out.println("Pressed");
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        System.out.println("Released");
     }
 
     @Override
