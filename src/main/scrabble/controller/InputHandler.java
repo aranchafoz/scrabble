@@ -17,9 +17,7 @@ public class InputHandler implements MouseListener {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-        System.out.println("Pressed");
-    }
+    public void mousePressed(MouseEvent e) { }
 
     @Override
     public void mouseReleased(MouseEvent e) {
