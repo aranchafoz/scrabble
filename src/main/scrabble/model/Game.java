@@ -47,11 +47,11 @@ public class Game {
     }
 
     public Player nextTurn() {
-        Player player = players.get(turn++);
+        turn++;
         if (turn >= players.size()) {
             turn = 0;
         }
-        return player;
+        return players.get(turn);
     }
 
     public int playTurn(Word word) throws WrongWordException, OutOfBoundsException, OccupiedCellException, NoPieceInCenterException, AloneWordException {

@@ -291,7 +291,7 @@ public class BoardTest {
         assertEquals('t', board.getCell(13, 14).getPiece().getLetter());
         assertEquals('e', board.getCell(14, 14).getPiece().getLetter());
 
-        assertEquals(145, score); //(7*6+6)*3+1 = 145
+        assertEquals(147, score); //(7*6+6)*3+1 = 145
 
         word = new Word(board.getCell(7, 4), Direction.HORIZONTAL, letPieces);
         score = board.playWord(word);
@@ -321,7 +321,7 @@ public class BoardTest {
         assertEquals('e', board.getCell(13, 1).getPiece().getLetter());
         assertEquals('m', board.getCell(14, 1).getPiece().getLetter());
 
-        assertEquals(67, score); //(6*4+4+4)*2+3 = 67
+        assertEquals(70, score); //(6*4+4+4)*2+3 = 67
 
         word = new Word(board.getCell(0, 0), Direction.HORIZONTAL, paramedicPieces);
         score = board.playWord(word);
@@ -335,7 +335,7 @@ public class BoardTest {
         assertEquals('i', board.getCell(7, 0).getPiece().getLetter());
         assertEquals('c', board.getCell(8, 0).getPiece().getLetter());
 
-        assertEquals(409, score); //(8*5+5)*9+4 = 409
+        assertEquals(432, score); //(8*5+5)*9+4 = 409
 
         word = new Word(board.getCell(14, 10), Direction.VERTICAL, primePieces);
         score = board.playWord(word);
@@ -354,7 +354,7 @@ public class BoardTest {
         assertEquals('t', board.getCell(6, 10).getPiece().getLetter());
         assertEquals('e', board.getCell(7, 10).getPiece().getLetter());
 
-        assertEquals(49, score); //(3*8+0)*2+1 = 49
+        assertEquals(50, score); //(3*8+0)*2+1 = 49
 
         word = new Word(board.getCell(5, 8), Direction.HORIZONTAL, promotionsPieces);
         score = board.playWord(word);
