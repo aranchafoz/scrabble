@@ -49,6 +49,8 @@ public class GameController extends JFrame /* implements ActionListener */ {
     private UIRack rack; // The rack already includes the player's pieces
     private ArrayList<UIPlayer> players;
 
+    private UIMessageBox messageBox;
+
     private UIButton pass;
     private UIButton mix;
     private UIButton exchange;
@@ -105,10 +107,13 @@ public class GameController extends JFrame /* implements ActionListener */ {
         currentPlayer = game.getCurrentPlayer();
 
         // Buttons
-        pass = new UIButton(1000 + 530 + 40, 750, "Pass","assets/buttons/Play-90.png");
-        mix = new UIButton(1000 + 370 + 40, 750, "Shuffle","assets/buttons/Shuffle-90.png");
-        exchange = new UIButton(1000 + 210 + 40, 750, "Exchange","assets/buttons/Replace-90.png");
-        undo = new UIButton(1000 + 50 + 40, 750, "Undo","assets/buttons/Undo-90.png");
+        pass = new UIButton(1000 + 530 + 35, 700, "Pass","assets/buttons/Play-90.png");
+        mix = new UIButton(1000 + 370 + 35, 700, "Shuffle","assets/buttons/Shuffle-90.png");
+        exchange = new UIButton(1000 + 210 + 35, 700, "Exchange","assets/buttons/Replace-90.png");
+        undo = new UIButton(1000 + 50 + 35, 700, "Undo","assets/buttons/Undo-90.png");
+
+        // Message Box
+        messageBox = new UIMessageBox(1000 + 45, 870, 650, 100);
 
         //playedPieces = new ArrayList<>();
         tempPieces = new TreeMap<>();
@@ -345,6 +350,7 @@ public class GameController extends JFrame /* implements ActionListener */ {
         bg.setColor(Color.getHSBColor(color[0], color[1], color[2]));
         bg.fillRoundRect(currentPlayerUI.getX() - 20, currentPlayerUI.getY() - 20, currentPlayerUI.getW() + 240, currentPlayerUI.getH() + 40, 20, 20);
 
+
         rack.draw(bg, this);
 /*
         for (UIPiece piece : playedPieces)
@@ -373,6 +379,10 @@ public class GameController extends JFrame /* implements ActionListener */ {
                     selectedPiece.getH() + 4
             );
 
+        // Message box
+        messageBox.draw(bg,this);
+
+        // Buttons
         pass.draw(bg, this);
         mix.draw(bg, this);
         exchange.draw(bg, this);
