@@ -28,6 +28,10 @@ public class BoardTest {
     ArrayList<Piece> requiemPieces = new ArrayList<>();
     ArrayList<Piece> paramedicPieces = new ArrayList<>();
     ArrayList<Piece> liberatePieces = new ArrayList<>();
+    ArrayList<Piece> primePieces = new ArrayList<>();
+    ArrayList<Piece> matePieces = new ArrayList<>();
+    ArrayList<Piece> promotionsPieces = new ArrayList<>();
+
 
 
     ArrayList<Piece> incorrectWordPieces = new ArrayList<>();
@@ -139,6 +143,25 @@ public class BoardTest {
         liberatePieces.add(new Piece('t', 6));
         liberatePieces.add(new Piece('e', 6));
 
+        primePieces.add(new Piece('p', 7));
+        primePieces.add(new Piece('r', 7));
+        primePieces.add(new Piece('i', 7));
+        primePieces.add(new Piece('m', 7));
+
+        matePieces.add(new Piece('m', 8));
+        matePieces.add(new Piece('a', 8));
+        matePieces.add(new Piece('t', 8));
+
+        promotionsPieces.add(new Piece('p', 9));
+        promotionsPieces.add(new Piece('r', 9));
+        promotionsPieces.add(new Piece('m', 9));
+        promotionsPieces.add(new Piece('o', 9));
+        promotionsPieces.add(new Piece('t', 9));
+        promotionsPieces.add(new Piece('i', 9));
+        promotionsPieces.add(new Piece('o', 9));
+        promotionsPieces.add(new Piece('n', 9));
+        promotionsPieces.add(new Piece('s', 9));
+
 
         incorrectWordPieces.add(new Piece('a', 2));
         incorrectWordPieces.add(new Piece('b', 2));
@@ -238,7 +261,7 @@ public class BoardTest {
     }
 
     @Test
-    public void insertWordOutOufBounds() throws Exception{
+    public void insertSeveralWords() throws Exception{
         Board board = new Board();
         Word word = new Word(board.getCell(7, 4), Direction.VERTICAL, labiodentalPieces);
         int score = board.playWord(word);
@@ -313,6 +336,41 @@ public class BoardTest {
         assertEquals('c', board.getCell(8, 0).getPiece().getLetter());
 
         assertEquals(409, score); //(8*5+5)*9+4 = 409
+
+        word = new Word(board.getCell(14, 10), Direction.VERTICAL, primePieces);
+        score = board.playWord(word);
+        assertEquals('p', board.getCell(14, 10).getPiece().getLetter());
+        assertEquals('r', board.getCell(14, 11).getPiece().getLetter());
+        assertEquals('i', board.getCell(14, 12).getPiece().getLetter());
+        assertEquals('m', board.getCell(14, 13).getPiece().getLetter());
+        assertEquals('e', board.getCell(14, 14).getPiece().getLetter());
+
+        assertEquals(41, score); //(4*7+7)*1+6 = 41
+
+        word = new Word(board.getCell(4, 10), Direction.HORIZONTAL, matePieces);
+        score = board.playWord(word);
+        assertEquals('m', board.getCell(4, 10).getPiece().getLetter());
+        assertEquals('a', board.getCell(5, 10).getPiece().getLetter());
+        assertEquals('t', board.getCell(6, 10).getPiece().getLetter());
+        assertEquals('e', board.getCell(7, 10).getPiece().getLetter());
+
+        assertEquals(49, score); //(3*8+0)*2+1 = 49
+
+        word = new Word(board.getCell(5, 8), Direction.HORIZONTAL, promotionsPieces);
+        score = board.playWord(word);
+        assertEquals('p', board.getCell(5, 8).getPiece().getLetter());
+        assertEquals('r', board.getCell(6, 8).getPiece().getLetter());
+        assertEquals('o', board.getCell(7, 8).getPiece().getLetter());
+        assertEquals('m', board.getCell(8, 8).getPiece().getLetter());
+        assertEquals('o', board.getCell(9, 8).getPiece().getLetter());
+        assertEquals('t', board.getCell(10, 8).getPiece().getLetter());
+        assertEquals('i', board.getCell(11, 8).getPiece().getLetter());
+        assertEquals('o', board.getCell(12, 8).getPiece().getLetter());
+        assertEquals('n', board.getCell(13, 8).getPiece().getLetter());
+        assertEquals('s', board.getCell(14, 8).getPiece().getLetter());
+
+
+        assertEquals(109, score); //(9*9+9*3)*1+1 = 109
 
     }
 }
