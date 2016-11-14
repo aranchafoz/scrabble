@@ -11,7 +11,6 @@ public class Bag {
 
     private ArrayList<Piece> pieces;
     private HashMap letters;
-    private HashMap punctuations;
 
     public Bag() {
         pieces = new ArrayList<>();
@@ -62,6 +61,7 @@ public class Bag {
         if (pieces.size() <= 0) throw new NoPiecesInBagException();
         Piece p = pieces.get(0);
         pieces.remove(0);
+        System.out.println(pieces.size() + " pieces remaining in bag.");
         return p;
     }
 

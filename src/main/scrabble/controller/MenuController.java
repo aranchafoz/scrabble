@@ -152,7 +152,6 @@ public class MenuController extends JFrame implements ActionListener {
             Thread.sleep(100);
         }
 
-
         GameController g = null;
         try {
             g = new GameController(menu.getPlayers());

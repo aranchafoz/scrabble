@@ -100,6 +100,7 @@ public class Board {
         boolean validPosition = false;
 
         if (cells[7][7].isEmpty()) {
+
             if (word.getDirection() == Direction.VERTICAL) {
                 if (word.getOrigin().getX() != 7) {
                     throw new NoPieceInCenterException();
@@ -110,7 +111,7 @@ public class Board {
             } else {
                 if (word.getOrigin().getY() != 7) {
                     throw new NoPieceInCenterException();
-                } else if (word.getOrigin().getX() > 7 &&
+                } else if (word.getOrigin().getX() > 7 ||
                         word.getOrigin().getX() + word.getPieces().size() < 7) {
                     throw new NoPieceInCenterException();
                 }
