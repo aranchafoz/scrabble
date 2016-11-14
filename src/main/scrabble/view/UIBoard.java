@@ -28,7 +28,7 @@ public class UIBoard extends UIObject {
 
         for(int i = 0; i < sideSizeCells; i++) {
             for(int j = 0; j < sideSizeCells; j++) {
-                UICell cell = new UICell(x + i * (UICell.sideWidth + cellSeparator), y + j * (UICell.sideWidth + cellSeparator), b.getCell(i,j));
+                UICell cell = new UICell(getCellX(i), getCellY(j), b.getCell(i,j));
                 cells.add(cell);
             }
         }
@@ -36,32 +36,39 @@ public class UIBoard extends UIObject {
 
     @Override
     public void draw(Graphics2D g2, JFrame context) {
-
         // Draw Board
         BasicStroke in = new BasicStroke(6f);
         g2.setStroke(in);
         g2.setColor(Color.white);
-        g2.drawRect(x-3,y-3,w+6,h+6);
+        g2.drawRect(x - 3, y - 3, w + 6, h + 6);
         g2.setColor(Color.white);
-        g2.fillRect(x,y,w,h);
+        g2.fillRect(x, y, w, h);
         BasicStroke mid = new BasicStroke(2f);
         g2.setStroke(mid);
         g2.setColor(Color.black);
-        g2.drawRect(x-7,y-7,w+14,h+14);
+        g2.drawRect(x - 7, y - 7, w + 14, h + 14);
         BasicStroke out = new BasicStroke(8f);
         g2.setStroke(out);
         g2.setColor(Color.white);
-        g2.drawRect(x-12,y-12,w+24,h+24);
+        g2.drawRect(x - 12, y - 12, w + 24, h + 24);
 
         // Draw Cells
         for (UICell cell : cells)
             cell.draw(g2, context);
     }
 
-    public Cell getSelectedCell(Point p) {
-        int h = (int) ((p.x - x) / (w / 15f));
-        int v = (int) ((p.y - y) / (h / 15f));
+    public int getCellX(int i) {
+        return x + i * (UICell.sideWidth + cellSeparator);
+    }
 
-        return cells.get(h + v * 15).getCell();
+    public int getCellY(int i) {
+        return y + i * (UICell.sideWidth + cellSeparator);
+    }
+
+    public Point getSelectedCell(Point p) {
+        int h = (int) ((p.x - x) / (w / 15f));
+        int v = (int) ((p.y - y) / (this.h / 15f));
+
+        return new Point(h, v);
     }
 }

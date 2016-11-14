@@ -1,8 +1,7 @@
 package main.scrabble.controller;
 
-import main.scrabble.exceptions.NoPiecesInBagException;
-import main.scrabble.exceptions.OccupiedCellException;
-import main.scrabble.exceptions.WrongCoordinateException;
+import com.sun.istack.internal.Nullable;
+import main.scrabble.exceptions.*;
 import main.scrabble.model.*;
 import main.scrabble.view.*;
 
@@ -16,7 +15,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Created by enrique on 26/09/16.
@@ -43,25 +42,18 @@ public class GameController extends JFrame /* implements ActionListener */ {
     private UIPiece selectedPiece = null;
 
     private UIBackground background;
-    private ArrayList<UIPiece> playedPieces;
-    private ArrayList<UIPiece> tempPieces; // Pieces in the board but not yet played
+
+    private Map<Integer, UIPiece> tempPieces;
+    //private ArrayList<UIPiece> tempPieces; // Pieces in the board but not yet played
     private UIBoard board; // The board already includes all cells
     private UIRack rack; // The rack already includes the player's pieces
     private ArrayList<UIPlayer> players;
-
-//    private JButton playButton;
-    //private JButton test;
 
     private UIButton pass;
     private UIButton mix;
     private UIButton exchange;
     private UIButton undo;
-/*
-    private TextField player1textField;
-    private TextField player2textField;
-    private TextField player3textField;
-    private TextField player4textField;
-*/
+
     public GameController(ArrayList<Player> players) throws WrongCoordinateException {
         setTitle(WINDOW_TITLE);
 
@@ -82,7 +74,7 @@ public class GameController extends JFrame /* implements ActionListener */ {
                 System.exit(0);
             }
         });
-
+        game = new Game(players);
 
         buffer = new BufferedImage(WINDOW_WIDTH, WINDOW_HEIGHT, BufferedImage.TYPE_INT_RGB);
 
@@ -94,13 +86,10 @@ public class GameController extends JFrame /* implements ActionListener */ {
 
         // Background & Board
         background = new UIBackground(WINDOW_WIDTH, WINDOW_HEIGHT);
-        Board b = new Board();
-        board = new UIBoard(50, 75, 883, b); //game.getBoard); // 675 for 15 cells of 45 + 28 for 14 lines of 2
+        board = new UIBoard(50, 75, 883, game.getBoard()); //game.getBoard); // 675 for 15 cells of 45 + 28 for 14 lines of 2
 
         // Rack
         rack = new UIRack(1000 + 20, 500, 700, 126);//170);
-
-        game = new Game(players);
 
         UIPlayer uip1 = new UIPlayer(1000, 75, 150, players.get(0));
         UIPlayer uip2 = new UIPlayer(1400, 75, 150, players.get(1));
@@ -116,43 +105,20 @@ public class GameController extends JFrame /* implements ActionListener */ {
         currentPlayer = game.getCurrentPlayer();
 
         // Buttons
-        /*
-        playButton = new JButton("START");
-        playButton.setBounds(155,500,200,100);
-        */
         pass = new UIButton(1000 + 530 + 40, 750, "Pass","assets/buttons/Play-90.png");
         mix = new UIButton(1000 + 370 + 40, 750, "Shuffle","assets/buttons/Shuffle-90.png");
         exchange = new UIButton(1000 + 210 + 40, 750, "Exchange","assets/buttons/Replace-90.png");
         undo = new UIButton(1000 + 50 + 40, 750, "Undo","assets/buttons/Undo-90.png");
 
-        // Text fields
-        /*
-        player1textField = new TextField();
-        player1textField.setFont(new Font("Monaco",Font.PLAIN, 15));
-        player1textField.setBounds(50,150,400,35);
-
-        player2textField = new TextField();
-        player2textField.setFont(new Font("Monaco",Font.PLAIN, 15));
-        player2textField.setBounds(50,240,400,35);
-
-        player3textField = new TextField();
-        player3textField.setFont(new Font("Monaco",Font.PLAIN, 15));
-        player3textField.setBounds(50,330,400,35);
-
-        player4textField = new TextField();
-        player4textField.setFont(new Font("Monaco",Font.PLAIN, 15));
-        player4textField.setBounds(50,420,400,35);
-        */
-
-        playedPieces = new ArrayList<>();
-        tempPieces = new ArrayList<>();
+        //playedPieces = new ArrayList<>();
+        tempPieces = new TreeMap<>();
     }
 
     public static void main(String[] args) throws WrongCoordinateException {
-        Player p1 = new Player("asdf","assets/avatar/ivorra_player.png");
-        Player p2 = new Player("asdf","assets/avatar/enrique_avatar.png");
-        Player p3 = new Player("asdf","assets/avatar/arancha_avatar.png");
-        Player p4 = new Player("asdf","assets/avatar/jon_nieve.jpg");
+        Player p1 = new Player("asdf", "assets/avatar/ivorra_player.png");
+        Player p2 = new Player("asdf", "assets/avatar/enrique_avatar.png");
+        Player p3 = new Player("asdf", "assets/avatar/arancha_avatar.png");
+        Player p4 = new Player("asdf", "assets/avatar/jon_nieve.jpg");
 
         ArrayList<Player> p = new ArrayList<>();
         p.add(p1);
@@ -197,7 +163,6 @@ public class GameController extends JFrame /* implements ActionListener */ {
             case FINAL:
                 break;
         }
-
     }
 
     private void update() throws OccupiedCellException, NoPiecesInBagException {
@@ -205,10 +170,29 @@ public class GameController extends JFrame /* implements ActionListener */ {
         Point mouseClick = inputHandler.getInputs();
         if (mouseClick != null) {
 
-            if (rack.receiveInput(mouseClick)){
+            if (rack.receiveInput(mouseClick)) {
                 selectedPiece = rack.getSelectedPiece(mouseClick);
+                if (selectedPiece != null)
+                    System.out.println("Selected piece: " + selectedPiece.getPiece().getLetter());
             } else {
                 if (board.receiveInput(mouseClick)) {
+                    if (selectedPiece != null) {
+                        Point cellCoordinates = board.getSelectedCell(mouseClick);
+
+                        int linearCoordinates = cellCoordinates.x + 15 * cellCoordinates.y;
+
+                        if (!tempPieces.containsKey(linearCoordinates)) {
+                            rack.removePiece(selectedPiece);
+
+                            // gets the new coordinates of the piece
+                            int xPos = board.getCellX(cellCoordinates.x);
+                            int yPos = board.getCellY(cellCoordinates.y);
+
+                            tempPieces.put(linearCoordinates, new UIPiece(xPos, yPos, selectedPiece.getPiece(), false));
+                            System.out.println("Piece " + selectedPiece.getPiece().getLetter() + " inserted on " + cellCoordinates.getX() + ", " + cellCoordinates.getY());
+                            selectedPiece = null;
+                        }
+                    }
 
                     /**
                      * TODO
@@ -223,21 +207,97 @@ public class GameController extends JFrame /* implements ActionListener */ {
                      * - Take them out from the player
                      */
 
-                    game.fillPlayerRack();
-                    newTurn();
+                    if (!tempPieces.isEmpty()) {
+                        Word word = getWord();
+                        if (word != null) {
+                            try {
+                                int score = game.playTurn(word);
+                                currentPlayer.increaseScore(score);
+                                System.out.println(score + " points to " + currentPlayer.getName());
+
+                                for (Piece p : word.getPieces())
+                                    currentPlayer.removePiece(p);
+
+                                game.fillPlayerRack();
+                                newTurn();
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                    } else {
+                        newTurn();
+                    }
                 } else if (mix.isPressed(mouseClick)) {
-                    currentPlayer.mixPieces();
-                    rack.setPieces(currentPlayer.getPieces());
+                    if (tempPieces.isEmpty()) {
+                        currentPlayer.mixPieces();
+                        rack.setPieces(currentPlayer.getPieces());
+                    }
                 } else if (exchange.isPressed(mouseClick)) {
-                    currentPlayer.addPiece(game.playTurn(selectedPiece.getPiece()));
-                    newTurn();
+                    if (selectedPiece != null) {
+                        if (tempPieces.isEmpty()) {
+                            System.out.println("-- Changing piece --");
+                            System.out.print("Pieces before:");
+                            for (Piece p : currentPlayer.getPieces())
+                                System.out.print(" " + p.getLetter());
+                            currentPlayer.addPiece(game.playTurn(selectedPiece.getPiece()));
+                            currentPlayer.removePiece(selectedPiece.getPiece());
+                            selectedPiece = null;
+                            System.out.print("Pieces after:");
+                            for (Piece p : currentPlayer.getPieces())
+                                System.out.print(" " + p.getLetter());
+                            rack.setPieces(currentPlayer.getPieces());
+                            newTurn();
+                        }
+                    }
                 } else if (undo.isPressed(mouseClick)) {
                     revokeTempPieces();
                 }
 
                 selectedPiece = null; // We nullify this if anything but piece is clicked
             }
+
         }
+    }
+
+    // returns true if pieces are aligned vertical or horizontally
+    private Word getWord() {
+        boolean h = true;
+        boolean v = true;
+
+        float prevX = -1;
+        float prevY = -1;
+
+        Cell origin = null;
+        ArrayList<Piece> wordPieces = new ArrayList<>();
+
+        for (Map.Entry<Integer, UIPiece> entry : tempPieces.entrySet()) {
+            int x = entry.getKey() % 15;
+            int y = entry.getKey() / 15;
+
+            if (origin == null) {
+                prevX = x;
+                prevY = y;
+                origin = game.getBoard().getCell(x, y);
+            }
+
+            wordPieces.add(entry.getValue().getPiece());
+
+            if (prevX != x) v = false;
+            if (prevY != y) h = false;
+        }
+
+        if (!(h || v)) return null;
+
+        Direction dir;
+
+        if (h) dir = Direction.HORIZONTAL;
+        else dir = Direction.VERTICAL;
+
+        Word word = new Word(origin, dir, wordPieces);
+
+        System.out.println(word.toString());
+
+        return word;
     }
 
     private void draw() {
@@ -273,7 +333,7 @@ public class GameController extends JFrame /* implements ActionListener */ {
                 for (Piece p : plPieces){
                     //System.out.print(p.getLetter() + "\n");
                 }
-                rack.setPieces(plPieces);
+                //rack.setPieces(plPieces);
                 break;
             }
         }
@@ -286,25 +346,16 @@ public class GameController extends JFrame /* implements ActionListener */ {
         bg.fillRoundRect(currentPlayerUI.getX() - 20, currentPlayerUI.getY() - 20, currentPlayerUI.getW() + 240, currentPlayerUI.getH() + 40, 20, 20);
 
         rack.draw(bg, this);
-
+/*
         for (UIPiece piece : playedPieces)
+            piece.draw(bg, this);*/
+        for (Map.Entry<Integer, UIPiece> entry : tempPieces.entrySet()) {
+            UIPiece piece = entry.getValue();
             piece.draw(bg, this);
-        for (UIPiece piece : tempPieces)
-            piece.draw(bg, this);
+        }
         for (UIPlayer player : players) {
             player.draw(bg, this);
         }
-
-        if (selectedPiece != null)
-            bg.drawImage(
-                    selectedPiece.getImage(),
-                    selectedPiece.getX() + 3,
-                    selectedPiece.getY() + 3,
-                    selectedPiece.getW() - 6,
-                    selectedPiece.getH() - 6,
-                    this
-            );
-
 
         // Draw best player
         Player bestp = game.getBestPlayer();
@@ -314,6 +365,14 @@ public class GameController extends JFrame /* implements ActionListener */ {
             }
         }
 
+        if (selectedPiece != null)
+            bg.drawRect(
+                    selectedPiece.getX() - 2,
+                    selectedPiece.getY() - 2,
+                    selectedPiece.getW() + 4,
+                    selectedPiece.getH() + 4
+            );
+
         pass.draw(bg, this);
         mix.draw(bg, this);
         exchange.draw(bg, this);
@@ -321,77 +380,16 @@ public class GameController extends JFrame /* implements ActionListener */ {
 
         g2.drawImage(buffer, 0, 0, this);
     }
-/*
-    private void drawInitial() {
 
-        setSize(500, 600);
-
-        Container container = this.getContentPane();
-        setLayout(new BorderLayout());
-
-        // Info
-        JLabel info = new JLabel("Input players");
-        info.setBounds(150, 70, 400, 100);
-        info.setFont(new Font("Monaco", Font.BOLD, 25));
-        info.setForeground(Color.BLACK);
-        info.setHorizontalAlignment(SwingConstants.CENTER);
-
-        container.add(info, BorderLayout.PAGE_START);
-
-
-        // Players
-        Panel panelDisplay = new Panel(new GridLayout(8, 1, 50, 30));
-
-        for (int i = 0; i < 4; i++) {
-            JLabel player = new JLabel("Player " + (i + 1));
-            player.setBounds(50, 110 + (i * 90), 400, 30);
-            player.setFont(new Font("Monaco", Font.ITALIC, 20));
-            player.setForeground(Color.darkGray);
-            player.setHorizontalAlignment(SwingConstants.LEFT);
-
-            container.add(player);
-
-            // Input Player names
-            switch (i) {
-                case 0:
-                    container.add(player1textField);
-                    break;
-                case 1:
-                    container.add(player2textField);
-                    break;
-                case 2:
-                    container.add(player3textField);
-                    break;
-                case 3:
-                    container.add(player4textField);
-                    break;
-            }
-        }
-
-        container.add(panelDisplay, BorderLayout.CENTER);
-
-        // Play Button
-        container.add(playButton, BorderLayout.PAGE_END);
-
-        playButton.addActionListener(this);
-
-
-        // Background
-        float hsb[] = new float[3]; float color[];
-
-        color = Color.RGBtoHSB(188, 180,139,hsb);
-        container.setBackground(Color.getHSBColor(color[0], color[1], color[2]));
-
-        this.setContentPane(container);
-    }
-*/
     public void revokeTempPieces() {
-
+        tempPieces.clear();
+        rack.setPieces(currentPlayer.getPieces());
     }
 
     public void newTurn() {
-//       currentPlayer = game.nextTurn();
-//        rack.setPieces(currentPlayer.getPieces());
+        currentPlayer = game.nextTurn();
+        rack.setPieces(currentPlayer.getPieces());
+        tempPieces.clear();
     }
 
 }

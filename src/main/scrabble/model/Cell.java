@@ -19,6 +19,7 @@ public class Cell {
             cx = x;
             cy = y;
             this.type = type;
+            piece = null;
         } else {
             throw new WrongCoordinateException(x, y);
         }

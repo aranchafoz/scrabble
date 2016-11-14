@@ -36,4 +36,14 @@ public class Word {
         return start;
     }
 
+    public String toString() {
+        String str = "Origin: " + start.getX() + ", " + start.getY() + " Word: ";
+        for (Piece p : pieces) {
+            str += p.getLetter();
+        }
+        str += " Orientation: " + dir.toString();
+
+        return str;
+    }
+
 }

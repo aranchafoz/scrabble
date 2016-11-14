@@ -201,7 +201,6 @@ public class BoardTest {
         assertEquals(10, score); //(3+1) + (5+1) = 4+6 = 10
 
         heroPieces.add(0,new Piece('h', 10));
-
     }
 
     @Test

@@ -47,8 +47,8 @@ public class Bag {
         Iterator i = letters.entrySet().iterator();
         while(i.hasNext()) {
             Map.Entry me = (Map.Entry)i.next();
-            for (int j = 0; j < ((Integer[])me.getValue())[1]; j++)
-                pieces.add(new Piece((char)me.getKey(), ((Integer[])me.getValue())[0]));
+            for (int j = 0; j < ((Integer[])me.getValue())[0]; j++)
+                pieces.add(new Piece((char)me.getKey(), ((Integer[])me.getValue())[1]));
         }
 
         mix();

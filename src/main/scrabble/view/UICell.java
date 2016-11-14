@@ -19,6 +19,7 @@ import static com.sun.javafx.tk.Toolkit.getToolkit;
 /**
  * Created by enrique on 27/09/16.
  */
+
 public class UICell extends UIObject {
     private Cell cell;
 
@@ -64,6 +65,16 @@ public class UICell extends UIObject {
         JLabel label = new JLabel(new ImageIcon(image));
         context.getContentPane().add(label);
     }*/
+
+    @Override
+    public void draw(Graphics2D g2, JFrame context) {
+        if (cell.getPiece() != null) {
+            UIPiece piece = new UIPiece(x, y, cell.getPiece(), false);
+            piece.draw(g2, context);
+        } else {
+            g2.drawImage(image, x, y, w, h, context);
+        }
+    }
 
     public void setImageforType(CellType type) {
 

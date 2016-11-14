@@ -22,19 +22,20 @@ public class UIPiece extends UIObject {
         w = sideWidthBoard;
         h = sideWidthBoard;
 
-        setImage("assets/alphabet/" + piece.getLetter() +".png");
+        setImage("assets/alphabet/" + piece.getLetter() + ".png");
     }
 
-    public UIPiece(int x, int y, Piece piece, boolean drawInRack) {
+    public UIPiece(int x, int y, Piece piece, boolean drawnInRack) {
         super(x, y);
         this.piece = piece;
-        if (drawInRack) {
+        if (drawnInRack) {
             w = sideWidthRack;
             h = sideWidthRack;
         } else {
-            w = -1;
-            h = -1;
+            w = sideWidthBoard;
+            h = sideWidthBoard;
         }
+
         setImage("assets/alphabet/" + piece.getLetter() +".png");
     }
 

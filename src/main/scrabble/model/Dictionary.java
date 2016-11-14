@@ -28,7 +28,7 @@ public class Dictionary {
     }
 
     public static boolean existWord(String word) {
-        return words.contains(word);
+        return words.contains(word.toLowerCase());
     }
 
     public static ArrayList<String> getWords(int size) {
