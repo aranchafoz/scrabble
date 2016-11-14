@@ -39,7 +39,7 @@ public class GameController extends JFrame /* implements ActionListener */ {
 
     private InputHandler inputHandler;
 
-    private UIPiece selectedPiece = null;
+    private ArrayList<UIPiece> selectedPieces;
 
     private UIBackground background;
 
@@ -103,6 +103,8 @@ public class GameController extends JFrame /* implements ActionListener */ {
         this.players.add(uip4);
 
         currentPlayer = game.getCurrentPlayer();
+
+        selectedPieces = new ArrayList<>();
 
         // Buttons
         pass = new UIButton(1000 + 530 + 40, 750, "Pass","assets/buttons/Play-90.png");
@@ -171,26 +173,29 @@ public class GameController extends JFrame /* implements ActionListener */ {
         if (mouseClick != null) {
 
             if (rack.receiveInput(mouseClick)) {
+                UIPiece selectedPiece;
                 selectedPiece = rack.getSelectedPiece(mouseClick);
-                if (selectedPiece != null)
+                if (selectedPiece != null) {
                     System.out.println("Selected piece: " + selectedPiece.getPiece().getLetter());
+                    selectedPieces.add(selectedPiece);
+                }
             } else {
                 if (board.receiveInput(mouseClick)) {
-                    if (selectedPiece != null) {
+                    if (selectedPieces.size() == 1) {
                         Point cellCoordinates = board.getSelectedCell(mouseClick);
 
                         int linearCoordinates = cellCoordinates.x + 15 * cellCoordinates.y;
 
                         if (!tempPieces.containsKey(linearCoordinates)) {
-                            rack.removePiece(selectedPiece);
+                            rack.removePiece(selectedPieces.get(0));
 
                             // gets the new coordinates of the piece
                             int xPos = board.getCellX(cellCoordinates.x);
                             int yPos = board.getCellY(cellCoordinates.y);
 
-                            tempPieces.put(linearCoordinates, new UIPiece(xPos, yPos, selectedPiece.getPiece(), false));
-                            System.out.println("Piece " + selectedPiece.getPiece().getLetter() + " inserted on " + cellCoordinates.getX() + ", " + cellCoordinates.getY());
-                            selectedPiece = null;
+                            tempPieces.put(linearCoordinates, new UIPiece(xPos, yPos, selectedPieces.get(0).getPiece(), false));
+                            System.out.println("Piece " + selectedPieces.get(0).getPiece().getLetter() + " inserted on " + cellCoordinates.getX() + ", " + cellCoordinates.getY());
+                            selectedPieces.clear();
                         }
                     }
 
@@ -233,27 +238,34 @@ public class GameController extends JFrame /* implements ActionListener */ {
                         rack.setPieces(currentPlayer.getPieces());
                     }
                 } else if (exchange.isPressed(mouseClick)) {
-                    if (selectedPiece != null) {
-                        if (tempPieces.isEmpty()) {
-                            System.out.println("-- Changing piece --");
-                            System.out.print("Pieces before:");
-                            for (Piece p : currentPlayer.getPieces())
-                                System.out.print(" " + p.getLetter());
+
+                    if (!selectedPieces.isEmpty()) {
+                        System.out.println("-- Changing piece --");
+                        System.out.print("Pieces before:");
+                        for (Piece p : currentPlayer.getPieces())
+                            System.out.print(" " + p.getLetter());
+                        System.out.println();
+
+                        for (UIPiece selectedPiece : selectedPieces) {
                             currentPlayer.addPiece(game.playTurn(selectedPiece.getPiece()));
-                            currentPlayer.removePiece(selectedPiece.getPiece());
-                            selectedPiece = null;
-                            System.out.print("Pieces after:");
-                            for (Piece p : currentPlayer.getPieces())
-                                System.out.print(" " + p.getLetter());
-                            rack.setPieces(currentPlayer.getPieces());
-                            newTurn();
+
+                            if (tempPieces.isEmpty()) {
+                                currentPlayer.removePiece(selectedPiece.getPiece());
+                            }
                         }
+                        System.out.print("Pieces after:");
+                        for (Piece p : currentPlayer.getPieces())
+                            System.out.print(" " + p.getLetter());
+                        System.out.println();
+                        selectedPieces.clear();
+                        newTurn();
+                        rack.setPieces(currentPlayer.getPieces());
                     }
                 } else if (undo.isPressed(mouseClick)) {
                     revokeTempPieces();
                 }
 
-                selectedPiece = null; // We nullify this if anything but piece is clicked
+                selectedPieces.clear(); // We nullify this if anything but piece is clicked
             }
 
         }
@@ -365,13 +377,15 @@ public class GameController extends JFrame /* implements ActionListener */ {
             }
         }
 
-        if (selectedPiece != null)
-            bg.drawRect(
-                    selectedPiece.getX() - 2,
-                    selectedPiece.getY() - 2,
-                    selectedPiece.getW() + 4,
-                    selectedPiece.getH() + 4
-            );
+        for (UIPiece selectedPiece : selectedPieces) {
+            if (selectedPiece != null)
+                bg.drawRect(
+                        selectedPiece.getX() - 2,
+                        selectedPiece.getY() - 2,
+                        selectedPiece.getW() + 4,
+                        selectedPiece.getH() + 4
+                );
+        }
 
         pass.draw(bg, this);
         mix.draw(bg, this);

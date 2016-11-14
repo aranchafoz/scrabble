@@ -28,6 +28,15 @@ public class Dictionary {
     }
 
     public static boolean existWord(String word) {
+        if (word.contains("_")) {
+            boolean exists = false;
+
+            for (char i = 'a'; i <= 'z'; i++) {
+                if (existWord(word.replaceFirst("_", String.valueOf(i))))
+                    exists = true;
+            }
+            return exists;
+        }
         return words.contains(word.toLowerCase());
     }
 

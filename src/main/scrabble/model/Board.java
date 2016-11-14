@@ -99,6 +99,13 @@ public class Board {
     }
 
     public int playWord(Word word) throws OccupiedCellException, WrongWordException, NoPieceInCenterException, OutOfBoundsException, AloneWordException {
+        int score = checkInsertion(word);
+        insertWord(word);
+
+        return score;
+    }
+
+    public int checkInsertion(Word word) throws AloneWordException, WrongWordException, OutOfBoundsException, NoPieceInCenterException {
         boolean validPosition = false;
 
         if (cells[7][7].isEmpty()) {
@@ -161,11 +168,10 @@ public class Board {
             newWord.add(p.getLetter());
             wordScore += p.getScore() * currentCell.getLetterMultiplier();
             wordMultiplier *= currentCell.getWordMultiplier();
-                extraWordsScore += checkOppositeDirection(p, currentCell, oppositeDir);
+            extraWordsScore += checkOppositeDirection(p, currentCell, oppositeDir);
 
             if (word.getPieces().indexOf(p) != word.getPieces().size() - 1)
                 currentCell = getNextCell(currentCell, word.getDirection());
-
         }
 
         try {
@@ -192,9 +198,8 @@ public class Board {
         }
 
         int totalScore = wordScore * wordMultiplier + extraWordsScore;
-        System.out.println("Word: " + nw + "\tBase score: " + Integer.toString(wordScore * wordMultiplier) + "\tTotal Score: " + Integer.toString(totalScore));
 
-        insertWord(word);
+        System.out.println("Word: " + nw + "\tBase score: " + Integer.toString(wordScore * wordMultiplier) + "\tTotal Score: " + Integer.toString(totalScore));
 
         return totalScore;
     }

@@ -47,4 +47,10 @@ public class DictionaryTest {
         assertFalse(words.contains("fired"));
     }
 
+    @Test
+    public void existWithWildcard() throws Exception {
+        assertTrue(Dictionary.existWord("ho_se"));
+        assertTrue(Dictionary.existWord("h__se"));
+        assertFalse(Dictionary.existWord("_xya_"));
+    }
 }
