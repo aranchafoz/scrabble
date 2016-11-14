@@ -43,7 +43,8 @@ public class Board {
             if (!currentCell.isEmpty()) {
                 score += currentCell.getPiece().getScore();
                 newWord.add(currentCell.getPiece().getLetter());
-            }
+            } else
+                break;
             try {
                 currentCell = getNextCell(currentCell, direction);
             } catch (OutOfBoundsException e) {
@@ -92,7 +93,8 @@ public class Board {
             while (!currentCell.isEmpty())
                 currentCell = getNextCell(currentCell, word.getDirection());
             cells[currentCell.getX()][currentCell.getY()].setPiece(p);
-            currentCell = getNextCell(currentCell, word.getDirection());
+            if (word.getPieces().indexOf(p) != word.getPieces().size() - 1)
+                currentCell = getNextCell(currentCell, word.getDirection());
         }
     }
 
@@ -159,9 +161,11 @@ public class Board {
             newWord.add(p.getLetter());
             wordScore += p.getScore() * currentCell.getLetterMultiplier();
             wordMultiplier *= currentCell.getWordMultiplier();
-            extraWordsScore += checkOppositeDirection(p, currentCell, oppositeDir);
+                extraWordsScore += checkOppositeDirection(p, currentCell, oppositeDir);
 
-            currentCell = getNextCell(currentCell, word.getDirection());
+            if (word.getPieces().indexOf(p) != word.getPieces().size() - 1)
+                currentCell = getNextCell(currentCell, word.getDirection());
+
         }
 
         try {
