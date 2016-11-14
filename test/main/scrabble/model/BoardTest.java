@@ -32,12 +32,14 @@ public class BoardTest {
     ArrayList<Piece> matePieces = new ArrayList<>();
     ArrayList<Piece> promotionsPieces = new ArrayList<>();
 
+    ArrayList<Piece> oPieces = new ArrayList<>();
+    ArrayList<Piece> iPieces = new ArrayList<>();
+
+
 
 
     ArrayList<Piece> incorrectWordPieces = new ArrayList<>();
     ArrayList<Piece> momyyPieces = new ArrayList<>();
-
-
 
     @Before
     public void setUp() {
@@ -162,6 +164,8 @@ public class BoardTest {
         promotionsPieces.add(new Piece('n', 9));
         promotionsPieces.add(new Piece('s', 9));
 
+        oPieces.add(new Piece('o', 1));
+        iPieces.add(new Piece('i', 1));
 
         incorrectWordPieces.add(new Piece('a', 2));
         incorrectWordPieces.add(new Piece('b', 2));
@@ -371,6 +375,23 @@ public class BoardTest {
 
 
         assertEquals(109, score); //(9*9+9*3)*1+1 = 109
+
+    }
+
+    @Test
+    public void directionBug() throws Exception {
+        Board board = new Board();
+        Word word = new Word(board.getCell(7, 7), Direction.HORIZONTAL, oPieces);
+        int score = board.playWord(word);
+        assertEquals('o', board.getCell(7, 7).getPiece().getLetter());
+
+        assertEquals(2, score); //(1*1+1)*1 = 2
+
+        word = new Word(board.getCell(6, 7), Direction.HORIZONTAL, iPieces);
+        score = board.playWord(word);
+        assertEquals('i', board.getCell(6, 7).getPiece().getLetter());
+
+        assertEquals(2, score); //(1*1+0)*1+1 = 2
 
     }
 }
