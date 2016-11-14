@@ -229,12 +229,20 @@ public class GameController extends JFrame /* implements ActionListener */ {
                                     currentPlayer.removePiece(p);
 
                                 game.fillPlayerRack();
+                                messageBox.setMessage(currentPlayer.getName() + " has obtained " + score + " points");
+                                draw();
                                 newTurn();
+                            } catch (WrongWordException e) {
+                                System.out.println(e.getMessage());
+                                messageBox.setMessage(e.getMessage());
+                                draw();
                             } catch (Exception e) {
                                 System.out.println(e.getMessage());
                             }
                         }
                     } else {
+                        messageBox.setMessage("Have fun! :D");
+                        draw();
                         newTurn();
                     }
                 } else if (mix.isPressed(mouseClick)) {
@@ -265,9 +273,13 @@ public class GameController extends JFrame /* implements ActionListener */ {
                         selectedPieces.clear();
                         newTurn();
                         rack.setPieces(currentPlayer.getPieces());
+                        messageBox.setMessage("Have fun! :D");
+                        draw();
                     }
                 } else if (undo.isPressed(mouseClick)) {
                     revokeTempPieces();
+                    messageBox.setMessage("Have fun! :D");
+                    draw();
                 }
 
                 selectedPieces.clear(); // We nullify this if anything but piece is clicked

@@ -5,6 +5,6 @@ package main.scrabble.exceptions;
  */
 public class NoPieceInCenterException extends Exception {
     public String getMessage() {
-        return "Error, no piece placed ni the middle";
+        return "Error, no piece placed in the middle";
     }
 }
