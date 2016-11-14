@@ -42,7 +42,7 @@ public class Bag {
         letters.put('X', new Integer[]{2, 8});
         letters.put('Y', new Integer[]{1, 4});
         letters.put('Z', new Integer[]{1, 10});
-        letters.put(' ', new Integer[]{2, 0});
+        letters.put('_', new Integer[]{2, 0});
 
         Iterator i = letters.entrySet().iterator();
         while(i.hasNext()) {
