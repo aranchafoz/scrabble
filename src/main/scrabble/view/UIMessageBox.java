@@ -34,11 +34,17 @@ public class UIMessageBox extends UIObject {
 
         BasicStroke backShadow = new BasicStroke(4f);
         g2.setStroke(backShadow);
-        g2.setColor(Color.GRAY);
-        g2.drawRoundRect(x, y, w, h, 10, 10);
-
         color = Color.RGBtoHSB(190, 218, 212,hsb);
         g2.setColor(Color.getHSBColor(color[0], color[1], color[2]));
+        //g2.setColor(Color.GRAY);
+        g2.drawRoundRect(x, y, w, h, 10, 10);
+
+        color = Color.RGBtoHSB(61, 160, 178, hsb);  //190, 218, 212,hsb);
+        g2.setColor(Color.getHSBColor(color[0], color[1], color[2]));
         g2.fillRoundRect(x, y, w, h, 10, 10);
+
+        g2.setColor(Color.WHITE);
+        g2.setFont(new Font("Monaco",Font.PLAIN, 20));
+        g2.drawString(message, x + 30, y + 55);
     }
 }
