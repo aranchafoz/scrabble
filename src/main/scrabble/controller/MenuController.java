@@ -2,6 +2,7 @@ package main.scrabble.controller;
 
 import main.scrabble.exceptions.NoPiecesInBagException;
 import main.scrabble.exceptions.WrongCoordinateException;
+import main.scrabble.model.NPC;
 import main.scrabble.model.Player;
 import main.scrabble.view.UIPlayer;
 
@@ -32,7 +33,7 @@ public class MenuController extends JFrame implements ActionListener {
             // for (int i = 0; i < 4; i++) {
             // Random Players for UI pattern design
             Player p1 = new Player(player1textField.getText(), "assets/avatar/ivorra_player.png");
-            Player p2 = new Player(player2textField.getText(), "assets/avatar/enrique_avatar.png");
+            NPC p2 = new NPC(player2textField.getText(), "assets/avatar/enrique_avatar.png");
             Player p3 = new Player(player3textField.getText(), "assets/avatar/arancha_avatar.png");
             Player p4 = new Player(player4textField.getText(), "assets/avatar/jon_nieve.jpg");
 
@@ -50,6 +51,9 @@ public class MenuController extends JFrame implements ActionListener {
         }*/
 
     }
+
+
+
 
     private MenuController() throws WrongCoordinateException {
         // Text fields
