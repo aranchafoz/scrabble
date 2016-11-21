@@ -1,7 +1,6 @@
 package main.scrabble.view;
 
 import main.scrabble.model.Board;
-import main.scrabble.model.Cell;
 
 import javax.swing.*;
 import java.awt.*;

@@ -26,7 +26,7 @@ public class GameController extends JFrame /* implements ActionListener */ {
     private GameState state;
     private Player currentPlayer;
 
-    private final int FPS = 60;
+    private final int FPS = 30;
 
     private final String WINDOW_TITLE = "Scrabble";
 
@@ -145,6 +145,8 @@ public class GameController extends JFrame /* implements ActionListener */ {
             case IN_GAME:
                 newTurn();
                 while (isRunning) {
+
+
                     long time = System.currentTimeMillis();
 
                     try {
@@ -164,6 +166,7 @@ public class GameController extends JFrame /* implements ActionListener */ {
 
                         }
                     }
+
                 }
                 setVisible(false);
                 break;
@@ -175,104 +178,114 @@ public class GameController extends JFrame /* implements ActionListener */ {
     private void update() throws OccupiedCellException, NoPiecesInBagException {
 
         Point mouseClick = inputHandler.getInputs();
-        if (mouseClick != null) {
 
-            if (rack.receiveInput(mouseClick)) {
-                UIPiece selectedPiece;
-                selectedPiece = rack.getSelectedPiece(mouseClick);
-                if (selectedPiece != null) {
-                    System.out.println("Selected piece: " + selectedPiece.getPiece().getLetter());
-                    selectedPieces.add(selectedPiece);
+        if (currentPlayer instanceof NPC) {
+            Word word = ((NPC) currentPlayer).playTurn(game.getBoard());
+
+            if (word != null) {
+                try {
+                    int score = game.playTurn(word);
+                    currentPlayer.increaseScore(score);
+                    System.out.println(score + " points to " + currentPlayer.getName());
+
+                    for (Piece p : word.getPieces())
+                        currentPlayer.removePiece(p);
+
+                    game.fillPlayerRack();
+                    newTurn();
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
             } else {
-                if (board.receiveInput(mouseClick)) {
-                    if (selectedPieces.size() == 1) {
-                        Point cellCoordinates = board.getSelectedCell(mouseClick);
-
-                        int linearCoordinates = cellCoordinates.x + 15 * cellCoordinates.y;
-
-                        if (!tempPieces.containsKey(linearCoordinates)) {
-                            rack.removePiece(selectedPieces.get(0));
-
-                            // gets the new coordinates of the piece
-                            int xPos = board.getCellX(cellCoordinates.x);
-                            int yPos = board.getCellY(cellCoordinates.y);
-
-                            tempPieces.put(linearCoordinates, new UIPiece(xPos, yPos, selectedPieces.get(0).getPiece(), false));
-                            System.out.println("Piece " + selectedPieces.get(0).getPiece().getLetter() + " inserted on " + cellCoordinates.getX() + ", " + cellCoordinates.getY());
-                            selectedPieces.clear();
-                        }
-                    }
-
-                    /**
-                     * TODO
-                     * if (selectedPiece)
-                     *  take the piece from the rake and put it in the
-                     */
-                } else if (pass.isPressed(mouseClick)) {
-                    /**
-                     * TODO
-                     * - Take temp pieces and check if can be played
-                     * - Try to insert in board
-                     * - Take them out from the player
-                     */
-
-                    if (!tempPieces.isEmpty()) {
-                        Word word = getWord();
-                        if (word != null) {
-                            try {
-                                int score = game.playTurn(word);
-                                currentPlayer.increaseScore(score);
-                                System.out.println(score + " points to " + currentPlayer.getName());
-
-                                for (Piece p : word.getPieces())
-                                    currentPlayer.removePiece(p);
-
-                                game.fillPlayerRack();
-                                newTurn();
-                            } catch (Exception e) {
-                                System.out.println(e.getMessage());
-                            }
-                        }
-                    } else {
-                        newTurn();
-                    }
-                } else if (mix.isPressed(mouseClick)) {
-                    if (tempPieces.isEmpty()) {
-                        currentPlayer.mixPieces();
-                        rack.setPieces(currentPlayer.getPieces());
-                    }
-                } else if (exchange.isPressed(mouseClick)) {
-
-                    if (!selectedPieces.isEmpty()) {
-                        System.out.println("-- Changing piece --");
-                        System.out.print("Pieces before:");
-                        for (Piece p : currentPlayer.getPieces())
-                            System.out.print(" " + p.getLetter());
-                        System.out.println();
-
-                        for (UIPiece selectedPiece : selectedPieces) {
-                            currentPlayer.addPiece(game.playTurn(selectedPiece.getPiece()));
-
-                            if (tempPieces.isEmpty()) {
-                                currentPlayer.removePiece(selectedPiece.getPiece());
-                            }
-                        }
-                        System.out.print("Pieces after:");
-                        for (Piece p : currentPlayer.getPieces())
-                            System.out.print(" " + p.getLetter());
-                        System.out.println();
-                        selectedPieces.clear();
-                        newTurn();
-                        rack.setPieces(currentPlayer.getPieces());
-                    }
-                } else if (undo.isPressed(mouseClick)) {
-                    revokeTempPieces();
-                }
-
-                selectedPieces.clear(); // We nullify this if anything but piece is clicked
+                newTurn();
             }
+        } else {
+            if (mouseClick != null) {
 
+                if (rack.receiveInput(mouseClick)) {
+                    UIPiece selectedPiece;
+                    selectedPiece = rack.getSelectedPiece(mouseClick);
+                    if (selectedPiece != null) {
+                        System.out.println("Selected piece: " + selectedPiece.getPiece().getLetter());
+                        selectedPieces.add(selectedPiece);
+                    }
+                } else {
+                    if (board.receiveInput(mouseClick)) {
+                        if (selectedPieces.size() == 1) {
+                            Point cellCoordinates = board.getSelectedCell(mouseClick);
+
+                            int linearCoordinates = cellCoordinates.x + 15 * cellCoordinates.y;
+
+                            if (!tempPieces.containsKey(linearCoordinates)) {
+                                rack.removePiece(selectedPieces.get(0));
+
+                                // gets the new coordinates of the piece
+                                int xPos = board.getCellX(cellCoordinates.x);
+                                int yPos = board.getCellY(cellCoordinates.y);
+
+                                tempPieces.put(linearCoordinates, new UIPiece(xPos, yPos, selectedPieces.get(0).getPiece(), false));
+                                System.out.println("Piece " + selectedPieces.get(0).getPiece().getLetter() + " inserted on " + cellCoordinates.getX() + ", " + cellCoordinates.getY());
+                                selectedPieces.clear();
+                            }
+                        }
+
+                    } else if (pass.isPressed(mouseClick)) {
+                        if (!tempPieces.isEmpty()) {
+                            Word word = getWord();
+                            if (word != null) {
+                                try {
+                                    int score = game.playTurn(word);
+                                    currentPlayer.increaseScore(score);
+                                    System.out.println(score + " points to " + currentPlayer.getName());
+
+                                    for (Piece p : word.getPieces())
+                                        currentPlayer.removePiece(p);
+
+                                    game.fillPlayerRack();
+                                    newTurn();
+                                } catch (Exception e) {
+                                    System.out.println(e.getMessage());
+                                }
+                            }
+                        } else {
+                            newTurn();
+                        }
+                    } else if (mix.isPressed(mouseClick)) {
+                        if (tempPieces.isEmpty()) {
+                            currentPlayer.mixPieces();
+                            rack.setPieces(currentPlayer.getPieces());
+                        }
+                    } else if (exchange.isPressed(mouseClick)) {
+
+                        if (!selectedPieces.isEmpty()) {
+                            System.out.println("-- Changing piece --");
+                            System.out.print("Pieces before:");
+                            for (Piece p : currentPlayer.getPieces())
+                                System.out.print(" " + p.getLetter());
+                            System.out.println();
+
+                            for (UIPiece selectedPiece : selectedPieces) {
+                                currentPlayer.addPiece(game.playTurn(selectedPiece.getPiece()));
+
+                                if (tempPieces.isEmpty()) {
+                                    currentPlayer.removePiece(selectedPiece.getPiece());
+                                }
+                            }
+                            System.out.print("Pieces after:");
+                            for (Piece p : currentPlayer.getPieces())
+                                System.out.print(" " + p.getLetter());
+                            System.out.println();
+                            selectedPieces.clear();
+                            newTurn();
+                            rack.setPieces(currentPlayer.getPieces());
+                        }
+                    } else if (undo.isPressed(mouseClick)) {
+                        revokeTempPieces();
+                    }
+
+                    selectedPieces.clear(); // We nullify this if anything but piece is clicked
+                }
+            }
         }
     }
 

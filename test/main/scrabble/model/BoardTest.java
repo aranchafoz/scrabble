@@ -371,6 +371,5 @@ public class BoardTest {
 
 
         assertEquals(109, score); //(9*9+9*3)*1+1 = 109
-
     }
 }

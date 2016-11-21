@@ -1,5 +1,6 @@
 package main.scrabble.model;
 
+import main.scrabble.exceptions.WrongCoordinateException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,7 +31,7 @@ public class DictionaryTest {
         ArrayList<String> words = Dictionary.getWordsWith(chars);
 
         assertTrue(words.contains("hello"));
-        assertFalse(words.contains("hell"));
+        assertTrue(words.contains("hell"));
         assertFalse(words.contains("alskdjf"));
 
         chars = new ArrayList<>();
@@ -44,7 +45,7 @@ public class DictionaryTest {
 
         assertTrue(words.contains("friend"));
         assertTrue(words.contains("finder"));
-        assertFalse(words.contains("fired"));
+        assertTrue(words.contains("fired"));
     }
 
     @Test
@@ -52,5 +53,33 @@ public class DictionaryTest {
         assertTrue(Dictionary.existWord("ho_se"));
         assertTrue(Dictionary.existWord("h__se"));
         assertFalse(Dictionary.existWord("_xya_"));
+    }
+
+    @Test
+    public void findWords() throws Exception {
+        ArrayList<Cell> cells = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            cells.add(new Cell(0, i, CellType.PLAIN));
+        }
+        cells.get(5).setPiece(new Piece('M', 3));
+        cells.get(6).setPiece(new Piece('E', 3));
+
+        ArrayList<Piece> pieces = new ArrayList<>();
+        Piece h = new Piece('H', 3);
+        Piece o = new Piece('O', 3);
+
+        pieces.add(h);
+        pieces.add(o);
+
+        Word word = new Word(cells.get(3), Direction.HORIZONTAL, pieces);
+
+        boolean correct = false;
+
+        for (Word w : Dictionary.findWords(cells, pieces, Direction.HORIZONTAL)) {
+            if (w.toString().equals(word.toString()))
+                correct = true;
+        }
+
+        assertTrue(correct);
     }
 }

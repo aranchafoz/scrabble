@@ -13,7 +13,7 @@ public class Piece {
     }
 
     public char getLetter() {
-        return letter;
+        return Character.toLowerCase(letter);
     }
 
     public int getScore() {

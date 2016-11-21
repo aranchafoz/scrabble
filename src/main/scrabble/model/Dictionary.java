@@ -1,10 +1,11 @@
 package main.scrabble.model;
 
+import com.sun.source.tree.ArrayAccessTree;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Scanner;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Created by enrique on 27/09/16.
@@ -61,8 +62,6 @@ public class Dictionary {
     }
 
     private static boolean wordFits(ArrayList<Character> letters, ArrayList<Character> word) {
-        if (letters.size() != word.size())
-            return false;
         ArrayList<Character> l = new ArrayList<>(letters);
         for (char c : word) {
             if (l.contains(c))
@@ -70,11 +69,58 @@ public class Dictionary {
             else
                 return false;
         }
-        return l.isEmpty(); // If it's not empty (error) it returns false
+        return true;
+    }
+
+    public static ArrayList<Word> findWords(ArrayList<Cell> cells, ArrayList<Piece> pieces, Direction dir) {
+        ArrayList<Word> words = new ArrayList<>();
+        String ins = "";
+
+        for (Cell c : cells)
+            if (c.getPiece() != null)
+                ins += c.getPiece().getLetter();
+            else
+                ins += "_";
+
+        ArrayList<String> insertedWords = new ArrayList<>(Arrays.asList(ins.split("_")));
+        if (insertedWords.size() == 0)
+            return words;
+
+        ArrayList<Character> p = new ArrayList<>();
+
+        for (Piece piece : pieces)
+            p.add(piece.getLetter());
+
+        for (String inserted : insertedWords) {
+            if (!inserted.isEmpty())
+                for (String str : getWordsContaining(p, inserted)) {
+                    for (int i = 0; i < cells.size(); i++) {
+                        Cell c = cells.get(i);
+                        if (c.getPiece() != null) {
+                            if (c.getPiece().getLetter() == inserted.charAt(0)) {
+                                int index = i - str.indexOf(inserted);
+                                if (index >= 0) {
+                                    Cell origin = cells.get(index);
+                                    String letters = str.replace(inserted, "");
+                                    ArrayList<Piece> wordPieces = new ArrayList<>();
+                                    for (Piece piece : pieces) {
+                                        if (letters.contains("" + piece.getLetter())) {
+                                            wordPieces.add(piece);
+                                            letters = letters.replace("" + piece.getLetter(), "");
+                                        }
+                                    }
+                                    words.add(new Word(origin, dir, wordPieces));
+                                }
+                            }
+                        }
+                    }
+                }
+        }
+
+        return words;
     }
 
     public static ArrayList<String> getWordsWith(ArrayList<Character> letters) {
-        ArrayList<String> words = getWords(letters.size());
         ArrayList<String> validWords = new ArrayList<>();
         for (String w : dic.words) {
             ArrayList<Character> word = new ArrayList<>();
@@ -85,4 +131,50 @@ public class Dictionary {
         }
         return validWords;
     }
+
+
+    public static ArrayList<Word> getWordsForMiddle(ArrayList<Piece> pieces) {
+        ArrayList<Word> words = new ArrayList<>();
+
+        ArrayList<Character> letters = new ArrayList<>();
+        for (Piece p : pieces)
+            letters.add(p.getLetter());
+
+        for (String str : getWordsWith(letters)) {
+            ArrayList<Piece> p = new ArrayList<>();
+            ArrayList<Piece> wordPieces = new ArrayList<>();
+            p.addAll(pieces);
+
+            for (char c : str.toCharArray()) {
+                for (Piece piece : p) {
+                    //if (piece.getLetter() == c.)
+                }
+            }
+        }
+
+        return words;
+    }
+
+    public static ArrayList<String> getWordsContaining(ArrayList<Character> letters, String substring) {
+        ArrayList<String> words = new ArrayList<>();
+
+        for (String word : dic.words) {
+            String w = word;
+            if (w.contains(substring.toLowerCase()) && (word.length() != substring.length())) {
+                w = w.replace(substring.toLowerCase(), "");
+                ArrayList<Character> l = new ArrayList<>(letters);
+                boolean insert = true;
+                for (int i = 0; i < w.length() && insert; i++) {
+                    if (l.contains(w.charAt(i)))
+                        l.remove((Object) w.charAt(i));
+                    else
+                        insert = false;
+                }
+                if (insert) words.add(word);
+            }
+        }
+
+        return words;
+    }
+
 }

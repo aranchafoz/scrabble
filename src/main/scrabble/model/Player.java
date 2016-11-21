@@ -8,12 +8,19 @@ import java.util.Collections;
 import java.util.Random;
 
 public class Player {
-    private final int RACK_SIZE = 7;
-    private int score;
+    protected final int RACK_SIZE = 7;
+    protected int score;
 
-    private String name;
-    private String avatarPath;
-    private ArrayList<Piece> pieces;
+    protected String name;
+    protected String avatarPath;
+    protected ArrayList<Piece> pieces;
+
+    public Player() {
+        name = "";
+        avatarPath = "";
+        pieces = new ArrayList<>();
+        score = 0;
+    }
 
     public Player(String name, String avatarPath) {
         this.name = name;
