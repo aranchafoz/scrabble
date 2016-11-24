@@ -197,6 +197,8 @@ public class GameController extends JFrame /* implements ActionListener */ {
                     System.out.println(e.getMessage());
                 }
             } else {
+                Piece p = currentPlayer.getPieces().get(0);
+                currentPlayer.addPiece(game.playTurn(p));
                 newTurn();
             }
         } else {

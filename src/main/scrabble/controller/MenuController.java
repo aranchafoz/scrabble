@@ -52,7 +52,6 @@ public class MenuController extends JFrame implements ActionListener {
 
     }
 
-
     private MenuController() throws WrongCoordinateException {
         // Text fields
         players = new ArrayList<>();

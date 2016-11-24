@@ -49,13 +49,13 @@ public class NPC extends Player {
                     bestWord = word;
                 }
             } catch (AloneWordException e) {
-                e.printStackTrace();
+
             } catch (WrongWordException e) {
-                e.printStackTrace();
+
             } catch (OutOfBoundsException e) {
-                e.printStackTrace();
+
             } catch (NoPieceInCenterException e) {
-                e.printStackTrace();
+
             }
         }
 
