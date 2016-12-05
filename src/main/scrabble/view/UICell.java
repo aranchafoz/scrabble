@@ -80,22 +80,22 @@ public class UICell extends UIObject {
 
         switch (type) {
             case PLAIN:
-                setImage("assets/cell/plain.png");
+                setImage(getClass().getResource("/cell/plain.png"));
                 break;
             case DOUBLE_LETTER:
-                setImage("assets/cell/dl.png");
+                setImage(getClass().getResource("/cell/dl.png"));
                 break;
             case TRIPLE_LETTER:
-                setImage("assets/cell/tl.png");
+                setImage(getClass().getResource("/cell/tl.png"));
                 break;
             case DOUBLE_WORD:
-                setImage("assets/cell/dw.png");
+                setImage(getClass().getResource("/cell/dw.png"));
                 break;
             case TRIPLE_WORD:
-                setImage("assets/cell/tw.png");
+                setImage(getClass().getResource("/cell/tw.png"));
                 break;
             case CENTRAL_CELL:
-                setImage("assets/cell/startCell.png");
+                setImage(getClass().getResource("/cell/startCell.png"));
                 break;
         }
     }

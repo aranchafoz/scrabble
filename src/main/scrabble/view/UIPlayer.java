@@ -26,7 +26,7 @@ public class UIPlayer extends UIObject {
         h = sideWidth;
         player = p;
 
-        setImage(player.getAvatarPath());
+        setImage(getClass().getResource(player.getAvatarPath()));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class UIPlayer extends UIObject {
     public void drawCrown(Graphics2D g2, JFrame context) {
 
         try {
-            Image crown = ImageIO.read(new File("assets/Queen UK-80.png"));
+            Image crown = ImageIO.read(getClass().getResource("/Queen UK-80.png"));
             g2.drawImage(crown, x + crownHfit, y + crownVfit, context);
         } catch (IOException e) {
 

@@ -2,6 +2,7 @@ package main.scrabble.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 /**
  * Created by enrique on 30/09/16.
@@ -12,7 +13,6 @@ public class UIBackground extends UIObject {
         w = width;
         h = height;
 
-        setImage("assets/bck2.png");
+        setImage(getClass().getResource("/bck2.png"));
     }
-
 }

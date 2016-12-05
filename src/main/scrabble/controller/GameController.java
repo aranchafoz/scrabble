@@ -109,10 +109,10 @@ public class GameController extends JFrame /* implements ActionListener */ {
         selectedPieces = new ArrayList<>();
 
         // Buttons
-        pass = new UIButton(1000 + 530 + 35, 700, "Pass","assets/buttons/Play-90.png");
-        mix = new UIButton(1000 + 370 + 35, 700, "Shuffle","assets/buttons/Shuffle-90.png");
-        exchange = new UIButton(1000 + 210 + 35, 700, "Exchange","assets/buttons/Replace-90.png");
-        undo = new UIButton(1000 + 50 + 35, 700, "Undo","assets/buttons/Undo-90.png");
+        pass = new UIButton(1000 + 530 + 35, 700, "Pass","/buttons/Play-90.png");
+        mix = new UIButton(1000 + 370 + 35, 700, "Shuffle","/buttons/Shuffle-90.png");
+        exchange = new UIButton(1000 + 210 + 35, 700, "Exchange","/buttons/Replace-90.png");
+        undo = new UIButton(1000 + 50 + 35, 700, "Undo","/buttons/Undo-90.png");
 
         // Message Box
         messageBox = new UIMessageBox(1000 + 45, 870, 650, 100);
@@ -122,10 +122,10 @@ public class GameController extends JFrame /* implements ActionListener */ {
     }
 
     public static void main(String[] args) throws WrongCoordinateException {
-        Player p1 = new Player("Player 1", "assets/avatar/ivorra_player.png");
-        Player p2 = new Player("Player 2", "assets/avatar/enrique_avatar.png");
-        NPC p3 = new NPC("NPC 1", "assets/avatar/arancha_avatar.png");
-        NPC p4 = new NPC("NPC 2", "assets/avatar/jon_nieve.jpg");
+        Player p1 = new Player("Player 1", "/avatar/ivorra_player.png");
+        Player p2 = new Player("Player 2", "/avatar/enrique_avatar.png");
+        NPC p3 = new NPC("NPC 1", "/avatar/arancha_avatar.png");
+        NPC p4 = new NPC("NPC 2", "/avatar/jon_nieve.jpg");
 
         ArrayList<Player> p = new ArrayList<>();
         p.add(p1);

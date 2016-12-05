@@ -1,10 +1,8 @@
 package main.scrabble.model;
 
-import com.sun.source.tree.ArrayAccessTree;
-
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -12,7 +10,7 @@ import java.util.*;
  */
 
 public class Dictionary {
-    private static final String FILENAME = "eng_dic";
+    private static final String FILENAME = "eng_dic.txt";
     private static ArrayList<String> words;
 
     private static Dictionary dic = new Dictionary();
@@ -20,11 +18,11 @@ public class Dictionary {
     private Dictionary() {
         words = new ArrayList<>();
         try {
-            Scanner input = new Scanner(new FileReader("assets/" + FILENAME));
+            Scanner input = new Scanner(getClass().getResourceAsStream("/eng_dic.txt"));
             while (input.hasNext())
                 words.add(input.next());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.exit(90);
         }
     }
 

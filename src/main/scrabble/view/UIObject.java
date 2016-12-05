@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * Created by enrique on 26/09/16.
@@ -49,6 +50,14 @@ public abstract class UIObject {
     public void setImage(String imagePath) {
         try {
             image = ImageIO.read(new File(imagePath));
+        } catch (IOException e) {
+
+        }
+    }
+
+    public void setImage(URL imagePath) {
+        try {
+            image = ImageIO.read(imagePath);
         } catch (IOException e) {
 
         }

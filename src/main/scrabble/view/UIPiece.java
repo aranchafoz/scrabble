@@ -22,7 +22,7 @@ public class UIPiece extends UIObject {
         w = sideWidthBoard;
         h = sideWidthBoard;
 
-        setImage("assets/alphabet/" + Character.toUpperCase(piece.getLetter()) + ".png");
+        setImage(getClass().getResource("/alphabet/" + Character.toUpperCase(piece.getLetter()) + ".png"));
     }
 
     public UIPiece(int x, int y, Piece piece, boolean drawnInRack) {
@@ -36,7 +36,7 @@ public class UIPiece extends UIObject {
             h = sideWidthBoard;
         }
 
-        setImage("assets/alphabet/" + Character.toUpperCase(piece.getLetter()) +".png");
+        setImage(getClass().getResource("/alphabet/" + Character.toUpperCase(piece.getLetter()) +".png"));
     }
 
     public Image getImage() { return image; }

@@ -32,7 +32,7 @@ public class UIButton extends UIObject {
         h = sideWidth;
 
         this.text = text;
-        setImage(image);
+        setImage(getClass().getResource(image));
     }
 
     public boolean isPressed(Point p) throws OccupiedCellException {
