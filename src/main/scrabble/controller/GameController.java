@@ -122,10 +122,10 @@ public class GameController extends JFrame /* implements ActionListener */ {
     }
 
     public static void main(String[] args) throws WrongCoordinateException {
-        Player p1 = new Player("asdf", "assets/avatar/ivorra_player.png");
-        Player p2 = new Player("asdf", "assets/avatar/enrique_avatar.png");
-        Player p3 = new Player("asdf", "assets/avatar/arancha_avatar.png");
-        Player p4 = new Player("asdf", "assets/avatar/jon_nieve.jpg");
+        Player p1 = new Player("Player 1", "assets/avatar/ivorra_player.png");
+        Player p2 = new Player("Player 2", "assets/avatar/enrique_avatar.png");
+        NPC p3 = new NPC("NPC 1", "assets/avatar/arancha_avatar.png");
+        NPC p4 = new NPC("NPC 2", "assets/avatar/jon_nieve.jpg");
 
         ArrayList<Player> p = new ArrayList<>();
         p.add(p1);
